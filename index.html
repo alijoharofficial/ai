@@ -219,7 +219,7 @@ footer{border-top:1px solid var(--br);padding:3.5rem 6% 2rem;background:var(--bg
   </div>
   <div id="step2" style="display:none;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><button onclick="goBack()" style="background:var(--bg4);border:1px solid var(--br);color:var(--t2);font-size:0.78rem;padding:6px 12px;border-radius:var(--rs);cursor:pointer;">&#8592; Back</button><p style="font-size:0.82rem;color:var(--t2);">Pick a date &amp; time for your free call</p></div>
-    <div style="border-radius:var(--rs);overflow:hidden;border:1px solid var(--br);"><div class="calendly-inline-widget" id="cal-widget" data-url="https://calendly.com/alijohar36/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=09090b&text_color=fafafa&primary_color=2563eb&theme=dark" style="min-width:100%;height:700px;"></div></div>
+    <div style="border-radius:var(--rs);overflow:hidden;border:1px solid var(--br);"><div class="calendly-inline-widget" id="cal-widget" data-url="https://calendly.com/alijohar36/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=09090b&text_color=fafafa&primary_color=2563eb" style="min-width:100%;height:700px;"></div></div>
     <p class="fnote" style="margin-top:10px;">&#128274; Your details are pre-filled &middot; Confirmation sent to your email instantly</p>
   </div>
   <div id="step3" style="display:none;padding:2.5rem;text-align:center;"><div style="font-size:2.5rem;margin-bottom:1rem;">&#127881;</div><h4 style="font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;">Call Booked &amp; Confirmed!</h4><p style="font-size:0.85rem;color:var(--t2);line-height:1.7;">A confirmation email has been sent to your inbox.<br>The meeting has been added to both calendars automatically.</p><p style="font-size:0.75rem;color:var(--t3);margin-top:0.8rem;">You&rsquo;ll receive a reminder from Calendly before the call.</p></div>
@@ -295,11 +295,11 @@ function goToCalendly(){
   // Calendly widget — clear and re-init with prefill
   const widget=document.getElementById("cal-widget");
   widget.innerHTML="";
-  const calendlyBase="https://calendly.com/alijohar36/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=09090b&text_color=fafafa&primary_color=2563eb&theme=dark";
+  const calendlyBase="https://calendly.com/alijohar36/30min";
   if(window.Calendly){
-    window.Calendly.initInlineWidget({url:calendlyBase,parentElement:widget,prefill:{name:fn,email:em}});
+    window.Calendly.initInlineWidget({url:calendlyBase,parentElement:widget,prefill:{name:fn,email:em},pageSettings:{backgroundColor:"09090b",textColor:"fafafa",primaryColor:"2563eb",hideLandingPageDetails:true,hideGdprBanner:true}});
   } else {
-    widget.setAttribute("data-url",calendlyBase+"&name="+encodeURIComponent(fn)+"&email="+encodeURIComponent(em));
+    widget.setAttribute("data-url",calendlyBase+"?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=09090b&text_color=fafafa&primary_color=2563eb&name="+encodeURIComponent(fn)+"&email="+encodeURIComponent(em));
   }
 
   document.getElementById("step1").style.display="none";
