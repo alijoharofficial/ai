@@ -806,7 +806,159 @@
 
   .serp-placeholder { color: #3f3f46; font-style: italic; }
 
+  /* ── Author ── */
+  .author-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .author-avatar-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--bg4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--muted);
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+
+  .author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .author-avatar.loaded { border-color: var(--accent); }
+
+  .author-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* status selector */
+  .status-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .status-option {
+    position: relative;
+  }
+
+  .status-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .status-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .status-option input:checked + .status-card {
+    border-color: var(--accent);
+    background: rgba(37,99,235,0.08);
+  }
+
+  .status-option.published input:checked + .status-card {
+    border-color: #22c55e;
+    background: rgba(34,197,94,0.08);
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-dot.draft     { background: var(--muted); }
+  .status-dot.published { background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,0.5); }
+
+  .status-info strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .status-info span {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* publish bar at the bottom */
+  .publish-bar {
+    margin-top: 32px;
+    padding: 20px 24px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .publish-bar-info strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .publish-bar-info span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .publish-bar-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .btn-lg {
+    padding: 10px 24px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
   @media (max-width: 640px) {
+    .author-grid    { grid-template-columns: 1fr; }
+    .status-options { grid-template-columns: 1fr; }
+    .publish-bar    { flex-direction: column; align-items: stretch; }
+    .publish-bar-actions { justify-content: flex-end; }
+  }
     .fields-row  { grid-template-columns: 1fr; }
     .readtime-row{ grid-template-columns: 1fr; }
     .cover-row   { grid-template-columns: 1fr; }
@@ -1128,6 +1280,98 @@
 
   </div>
 
+  <!-- Author -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">&#128100;</div>
+      <div class="card-title">Author</div>
+    </div>
+
+    <div class="author-grid">
+
+      <!-- Avatar preview -->
+      <div class="author-avatar-col">
+        <div class="author-avatar" id="authorAvatar">AJ</div>
+        <span style="font-size:10px;color:#52525b;text-align:center;max-width:80px;">Photo preview</span>
+      </div>
+
+      <div class="author-fields">
+
+        <!-- Name + Photo URL row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+          <div class="field">
+            <label for="author_name">Author Name</label>
+            <div class="field-hint">Display name on the post</div>
+            <input
+              type="text"
+              id="author_name"
+              placeholder="Ali Johar"
+              value="Ali Johar"
+              oninput="updateAuthorInitial(this.value)"
+            >
+          </div>
+
+          <div class="field">
+            <label for="author_photo">Author Photo</label>
+            <div class="field-hint">Headshot URL — shown next to the byline</div>
+            <input
+              type="url"
+              id="author_photo"
+              placeholder="https://example.com/headshot.jpg"
+              oninput="updateAuthorPhoto(this.value)"
+            >
+          </div>
+
+        </div>
+
+        <!-- Status -->
+        <div class="field">
+          <label>Status <span class="req">*</span></label>
+          <div class="field-hint">Draft is invisible to visitors — Published makes it live</div>
+          <div class="status-options">
+
+            <label class="status-option">
+              <input type="radio" name="status" id="statusDraft" value="draft" checked onchange="updatePublishBar()">
+              <div class="status-card">
+                <div class="status-dot draft"></div>
+                <div class="status-info">
+                  <strong>Draft</strong>
+                  <span>Saved but not visible to visitors</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="status-option published">
+              <input type="radio" name="status" id="statusPublished" value="published" onchange="updatePublishBar()">
+              <div class="status-card">
+                <div class="status-dot published"></div>
+                <div class="status-info">
+                  <strong>Published</strong>
+                  <span>Live and indexed by Google</span>
+                </div>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Publish bar -->
+  <div class="publish-bar" id="publishBar">
+    <div class="publish-bar-info">
+      <strong id="publishBarTitle">Save as Draft</strong>
+      <span id="publishBarSub">Your post will be saved but won't be visible to visitors.</span>
+    </div>
+    <div class="publish-bar-actions">
+      <button class="btn btn-ghost btn-lg" onclick="handleSave('draft')">Save Draft</button>
+      <button class="btn btn-primary btn-lg" id="publishBarBtn" onclick="handleSave('publish')">Publish</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -1340,6 +1584,77 @@
   // keep OG meta in sync when title/summary change
   document.getElementById('title').addEventListener('input', () => { if (document.getElementById('ogPreviewWrap').classList.contains('visible')) updateOgPreview(document.getElementById('og_image').value); });
   document.getElementById('meta_title').addEventListener('input', () => { if (document.getElementById('ogPreviewWrap').classList.contains('visible')) updateOgPreview(document.getElementById('og_image').value); });
+
+  // ── Author ──
+  function updateAuthorInitial(name) {
+    const av = document.getElementById('authorAvatar');
+    if (av.querySelector('img')) return; // photo is set, don't overwrite
+    const initials = name.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0,2) || '?';
+    av.textContent = initials;
+  }
+
+  function updateAuthorPhoto(url) {
+    const av = document.getElementById('authorAvatar');
+    if (!url) {
+      av.classList.remove('loaded');
+      av.innerHTML = '';
+      updateAuthorInitial(document.getElementById('author_name').value);
+      return;
+    }
+    const img = new Image();
+    img.onload = () => {
+      av.innerHTML = '';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+      av.appendChild(img);
+      av.classList.add('loaded');
+    };
+    img.onerror = () => {
+      av.classList.remove('loaded');
+      av.innerHTML = '';
+      updateAuthorInitial(document.getElementById('author_name').value);
+    };
+    img.src = url;
+  }
+
+  // Publish bar reacts to status selection
+  function updatePublishBar() {
+    const published = document.getElementById('statusPublished').checked;
+    const title = document.getElementById('publishBarTitle');
+    const sub   = document.getElementById('publishBarSub');
+    const btn   = document.getElementById('publishBarBtn');
+    if (published) {
+      title.textContent = 'Ready to publish';
+      sub.textContent   = 'This post will go live and be indexed by Google.';
+      btn.textContent   = 'Publish Now';
+      btn.style.background = '#16a34a';
+    } else {
+      title.textContent = 'Save as Draft';
+      sub.textContent   = 'Your post will be saved but won\'t be visible to visitors.';
+      btn.textContent   = 'Publish';
+      btn.style.background = '';
+    }
+  }
+
+  function handleSave(action) {
+    const required = [
+      { id: 'title',    label: 'Title' },
+      { id: 'slug',     label: 'Slug' },
+      { id: 'date',     label: 'Date' },
+      { id: 'summary',  label: 'Summary' },
+      { id: 'content',  label: 'Content' },
+      { id: 'category', label: 'Category' },
+    ];
+    const missing = required.filter(f => !document.getElementById(f.id).value.trim());
+    if (missing.length) {
+      alert('Please fill in: ' + missing.map(f => f.label).join(', '));
+      document.getElementById(missing[0].id).focus();
+      return;
+    }
+    const status = action === 'publish' ? 'published' : 'draft';
+    document.getElementById(status === 'published' ? 'statusPublished' : 'statusDraft').checked = true;
+    updatePublishBar();
+    alert(status === 'published' ? '🎉 Post published!' : '✅ Draft saved.');
+  }
 
   // ── Classification ──
 
