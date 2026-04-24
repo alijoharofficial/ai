@@ -279,7 +279,7 @@ function goToCalendly(){
     headers:{"Content-Type":"application/json","Accept":"application/json"},
     body:JSON.stringify({
       access_key    :W3F_KEY,
-      subject       :"ÃÂ°ÃÂÃÂÃÂ New Lead ÃÂ¢ÃÂÃÂ Picking Time: "+fn+" ("+co+")",
+      subject       :"New Lead - Picking Time: "+fn+" ("+co+")",
       from_name     :"Ali Johar Website",
       "Name"        :fn,
       "Email"       :em,
@@ -329,7 +329,7 @@ window.addEventListener("message",function(e){
       headers:{"Content-Type":"application/json","Accept":"application/json"},
       body:JSON.stringify({
         access_key    :W3F_KEY,
-        subject       :"ÃÂ¢ÃÂÃÂ BOOKED ÃÂ¢ÃÂÃÂ "+ld.fn+" ("+ld.co+")",
+        subject       :"BOOKED - "+ld.fn+" ("+ld.co+")",
         from_name     :"Ali Johar Website",
         "Name"        :ld.fn||"",
         "Email"       :ld.em||"",
