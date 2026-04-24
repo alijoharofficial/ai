@@ -661,11 +661,157 @@
     background: #eab308;
   }
 
+  /* ── SEO ── */
+  .seo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .char-bar-wrap {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .char-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--bg4);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .char-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.2s, background 0.2s;
+    background: #22c55e;
+  }
+
+  .char-count {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* OG image preview */
+  .og-preview-wrap {
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg2);
+    display: none;
+  }
+
+  .og-preview-wrap.visible { display: block; }
+
+  .og-img-box {
+    width: 100%;
+    aspect-ratio: 1200/630;
+    background: var(--bg4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  .og-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+  .og-meta {
+    padding: 10px 14px 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .og-domain {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .og-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .og-desc {
+    font-size: 12px;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Google SERP preview */
+  .serp-box {
+    margin-top: 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .serp-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .serp-url {
+    font-size: 12px;
+    color: #22c55e;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .serp-title {
+    font-size: 18px;
+    color: #8ab4f8;
+    font-weight: 400;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  .serp-title:hover { text-decoration: underline; }
+
+  .serp-desc {
+    font-size: 13px;
+    color: #bdc1c6;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .serp-placeholder { color: #3f3f46; font-style: italic; }
+
   @media (max-width: 640px) {
     .fields-row  { grid-template-columns: 1fr; }
     .readtime-row{ grid-template-columns: 1fr; }
     .cover-row   { grid-template-columns: 1fr; }
     .class-row   { grid-template-columns: 1fr; }
+    .seo-grid    { grid-template-columns: 1fr; }
     header { padding: 0 16px; }
     .page  { padding: 24px 16px 60px; }
   }
@@ -891,6 +1037,97 @@
 
   </div>
 
+  <!-- SEO -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">&#128269;</div>
+      <div class="card-title">SEO</div>
+    </div>
+
+    <div class="seo-grid">
+
+      <!-- Meta Title -->
+      <div class="field">
+        <label for="meta_title">Meta Title</label>
+        <div class="field-hint">Shown in Google results — can differ from the post title</div>
+        <input
+          type="text"
+          id="meta_title"
+          placeholder="Auto-filled from title…"
+          maxlength="120"
+          oninput="updateSerpPreview(); updateCharBar('meta_title','metaTitleBar','metaTitleCount', 60)"
+        >
+        <div class="char-bar-wrap">
+          <div class="char-bar"><div class="char-bar-fill" id="metaTitleBar" style="width:0%"></div></div>
+          <span class="char-count"><span id="metaTitleCount">0</span> / 60</span>
+        </div>
+      </div>
+
+      <!-- Meta Description -->
+      <div class="field">
+        <label for="meta_description">Meta Description</label>
+        <div class="field-hint">The snippet text shown under the Google result</div>
+        <textarea
+          id="meta_description"
+          rows="3"
+          placeholder="Auto-filled from summary…"
+          maxlength="300"
+          oninput="updateSerpPreview(); updateCharBar('meta_description','metaDescBar','metaDescCount', 160)"
+          style="resize:none;"
+        ></textarea>
+        <div class="char-bar-wrap">
+          <div class="char-bar"><div class="char-bar-fill" id="metaDescBar" style="width:0%"></div></div>
+          <span class="char-count"><span id="metaDescCount">0</span> / 160</span>
+        </div>
+      </div>
+
+      <!-- OG Image -->
+      <div class="field">
+        <label for="og_image">OG Image</label>
+        <div class="field-hint">Preview card on LinkedIn, WhatsApp, X — 1200×630px ideal</div>
+        <input
+          type="url"
+          id="og_image"
+          placeholder="https://example.com/og-image.jpg"
+          oninput="updateOgPreview(this.value)"
+        >
+        <div class="og-preview-wrap" id="ogPreviewWrap">
+          <div class="og-img-box" id="ogImgBox">Loading…</div>
+          <div class="og-meta">
+            <div class="og-domain" id="ogDomain">alijoharofficial.github.io</div>
+            <div class="og-title" id="ogTitle">Post title</div>
+            <div class="og-desc" id="ogDesc">Post description</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canonical URL -->
+      <div class="field">
+        <label for="canonical_url">Canonical URL</label>
+        <div class="field-hint">Prevents Google from penalising duplicate content</div>
+        <input
+          type="url"
+          id="canonical_url"
+          placeholder="Auto-suggested from slug…"
+          oninput="updateSerpPreview()"
+        >
+        <div style="margin-top:8px;font-size:11px;color:#52525b;line-height:1.5;">
+          Leave blank to auto-generate from slug on publish.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Google SERP Preview -->
+    <div class="serp-box">
+      <div class="serp-label">&#128269; Google search preview</div>
+      <div class="serp-url"  id="serpUrl">alijoharofficial.github.io/blog/<span style="color:#a3e635">your-slug</span></div>
+      <div class="serp-title" id="serpTitle"><span class="serp-placeholder">Post title will appear here</span></div>
+      <div class="serp-desc"  id="serpDesc"><span class="serp-placeholder">Meta description will appear here</span></div>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
@@ -982,6 +1219,127 @@
       btn.textContent = '👁 Preview';
     }
   }
+
+  // ── SEO auto-fill from title / summary ──
+  document.getElementById('title').addEventListener('input', function () {
+    const mt = document.getElementById('meta_title');
+    if (!mt.dataset.edited) {
+      mt.value = this.value;
+      updateSerpPreview();
+      updateCharBar('meta_title','metaTitleBar','metaTitleCount', 60);
+    }
+    // auto-suggest canonical
+    const slug = document.getElementById('slug').value;
+    const cu = document.getElementById('canonical_url');
+    if (!cu.dataset.edited && slug) {
+      cu.value = `https://alijoharofficial.github.io/blog/${slug}`;
+      updateSerpPreview();
+    }
+  });
+
+  document.getElementById('slug').addEventListener('input', function () {
+    const cu = document.getElementById('canonical_url');
+    if (!cu.dataset.edited) {
+      cu.value = this.value ? `https://alijoharofficial.github.io/blog/${this.value}` : '';
+      updateSerpPreview();
+    }
+  });
+
+  document.getElementById('summary').addEventListener('input', function () {
+    const md = document.getElementById('meta_description');
+    if (!md.dataset.edited) {
+      md.value = this.value;
+      updateSerpPreview();
+      updateCharBar('meta_description','metaDescBar','metaDescCount', 160);
+    }
+  });
+
+  // mark fields as manually edited so auto-fill stops overwriting
+  ['meta_title','meta_description','canonical_url'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function () {
+      this.dataset.edited = '1';
+    });
+  });
+
+  // Character bar (green → amber → red as you cross ideal length)
+  function updateCharBar(fieldId, barId, countId, ideal) {
+    const val = document.getElementById(fieldId).value.length;
+    document.getElementById(countId).textContent = val;
+    const pct = Math.min(100, (val / (ideal * 1.33)) * 100);
+    const fill = document.getElementById(barId);
+    fill.style.width = pct + '%';
+    fill.style.background = val === 0 ? '#22c55e'
+      : val <= ideal       ? '#22c55e'
+      : val <= ideal * 1.1 ? '#f59e0b'
+      :                      '#ef4444';
+  }
+
+  // Google SERP live preview
+  function updateSerpPreview() {
+    const title = document.getElementById('meta_title').value
+               || document.getElementById('title').value
+               || '';
+    const desc  = document.getElementById('meta_description').value
+               || document.getElementById('summary').value
+               || '';
+    const slug  = document.getElementById('slug').value || 'your-slug';
+    const cu    = document.getElementById('canonical_url').value;
+
+    let displayUrl = `alijoharofficial.github.io/blog/${slug}`;
+    if (cu) {
+      try { displayUrl = new URL(cu).hostname + new URL(cu).pathname; } catch {}
+    }
+
+    const urlEl   = document.getElementById('serpUrl');
+    const titleEl = document.getElementById('serpTitle');
+    const descEl  = document.getElementById('serpDesc');
+
+    urlEl.textContent = displayUrl;
+
+    if (title) {
+      titleEl.innerHTML = escHtml(title.length > 60 ? title.slice(0,57) + '…' : title);
+    } else {
+      titleEl.innerHTML = '<span class="serp-placeholder">Post title will appear here</span>';
+    }
+
+    if (desc) {
+      descEl.innerHTML = escHtml(desc.length > 160 ? desc.slice(0,157) + '…' : desc);
+    } else {
+      descEl.innerHTML = '<span class="serp-placeholder">Meta description will appear here</span>';
+    }
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // OG image live preview
+  function updateOgPreview(url) {
+    const wrap  = document.getElementById('ogPreviewWrap');
+    const box   = document.getElementById('ogImgBox');
+    const title = document.getElementById('ogTitle');
+    const desc  = document.getElementById('ogDesc');
+
+    title.textContent = document.getElementById('meta_title').value
+                     || document.getElementById('title').value
+                     || 'Post title';
+    desc.textContent  = document.getElementById('meta_description').value
+                     || document.getElementById('summary').value
+                     || 'Post description';
+
+    if (!url) { wrap.classList.remove('visible'); return; }
+
+    wrap.classList.add('visible');
+    box.textContent = 'Loading…';
+    const img = new Image();
+    img.onload  = () => { box.innerHTML = ''; box.appendChild(img); img.style.cssText='width:100%;height:100%;object-fit:cover;'; };
+    img.onerror = () => { box.textContent = 'Could not load image'; };
+    img.src = url;
+  }
+
+  // keep OG meta in sync when title/summary change
+  document.getElementById('title').addEventListener('input', () => { if (document.getElementById('ogPreviewWrap').classList.contains('visible')) updateOgPreview(document.getElementById('og_image').value); });
+  document.getElementById('meta_title').addEventListener('input', () => { if (document.getElementById('ogPreviewWrap').classList.contains('visible')) updateOgPreview(document.getElementById('og_image').value); });
 
   // ── Classification ──
 
