@@ -453,7 +453,169 @@
     background: #22c55e;
   }
 
-  /* ── Classification ── */
+  /* ── App layout & Sidebar ── */
+  :root {
+    --sb-w:   224px;
+    --sb-col: 62px;
+  }
+
+  .app { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: var(--sb-w);
+    background: var(--bg3);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.25s ease;
+    overflow: hidden;
+  }
+
+  .sidebar.collapsed { width: var(--sb-col); }
+
+  .sb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .sb-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .sb-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .sidebar.collapsed .sb-name { opacity: 0; pointer-events: none; }
+
+  .sb-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .sb-toggle:hover { color: var(--text); border-color: #52525b; }
+
+  .sb-nav {
+    flex: 1;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .sb-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .sb-link:hover  { background: var(--bg4); color: var(--text); }
+  .sb-link.active { background: rgba(37,99,235,0.12); color: #93c5fd; }
+
+  .sb-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .sb-label { transition: opacity 0.2s; }
+  .sidebar.collapsed .sb-label { opacity: 0; width: 0; pointer-events: none; }
+
+  .sb-footer { padding: 8px; border-top: 1px solid var(--border); flex-shrink: 0; }
+  .sb-logout:hover { color: #f87171 !important; background: rgba(248,113,113,0.08) !important; }
+
+  .main-wrap {
+    margin-left: var(--sb-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left 0.25s ease;
+  }
+
+  .main-wrap.collapsed { margin-left: var(--sb-col); }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 199;
+  }
+
+  .overlay.on { display: block; }
+
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); width: var(--sb-w) !important; transition: transform 0.25s, width 0s; }
+    .sidebar.mob-open { transform: translateX(0); }
+    .main-wrap, .main-wrap.collapsed { margin-left: 0; }
+  }
+
+
   .class-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -971,14 +1133,48 @@
 </head>
 <body>
 
+<div class="overlay" id="overlay" onclick="closeMob()"></div>
+
+<div class="app">
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-head">
+    <a href="/" class="sb-brand">
+      <div class="logo-mark">AJ</div>
+      <span class="sb-name">Ali Johar</span>
+    </a>
+    <button class="sb-toggle" id="sbToggle" onclick="toggleSidebar()" title="Collapse">&#8249;</button>
+  </div>
+  <div class="sb-nav">
+    <a href="welcome.html" class="sb-link active">
+      <span class="sb-icon">&#9998;</span>
+      <span class="sb-label">New Post</span>
+    </a>
+    <a href="blogs.html" class="sb-link">
+      <span class="sb-icon">&#9776;</span>
+      <span class="sb-label">All Blogs</span>
+    </a>
+  </div>
+  <div class="sb-footer">
+    <button class="sb-link sb-logout" onclick="logout()">
+      <span class="sb-icon">&#8592;</span>
+      <span class="sb-label">Logout</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<div class="main-wrap" id="mainWrap">
+
 <header>
   <div class="header-left">
     <a href="/" class="logo">AJ</a>
     <div class="breadcrumb">Blog / <span>New Post</span></div>
   </div>
   <div class="header-actions">
-    <button class="btn btn-ghost">Save Draft</button>
-    <button class="btn btn-primary">Publish</button>
+    <button class="btn btn-ghost" onclick="handleSave('draft')">Save Draft</button>
+    <button class="btn btn-primary" onclick="handleSave('publish')">Publish</button>
   </div>
 </header>
 
@@ -1372,9 +1568,13 @@
     </div>
   </div>
 
-</div>
+</div><!-- /page -->
+
+</div><!-- /main-wrap -->
+</div><!-- /app -->
 
 <script>
+  const STORAGE_KEY = 'aj_blog_posts';
   let readTimeManual = false;
 
   // Set today's date as default
@@ -1650,11 +1850,101 @@
       document.getElementById(missing[0].id).focus();
       return;
     }
+
     const status = action === 'publish' ? 'published' : 'draft';
+
+    const post = {
+      id:               editingId || ('p' + Date.now()),
+      title:            document.getElementById('title').value.trim(),
+      slug:             document.getElementById('slug').value.trim(),
+      date:             document.getElementById('date').value,
+      summary:          document.getElementById('summary').value.trim(),
+      content:          document.getElementById('content').value,
+      cover_image:      document.getElementById('cover_image').value.trim(),
+      read_time:        parseInt(document.getElementById('read_time').value) || null,
+      category:         document.getElementById('category').value,
+      tags:             tags,
+      featured:         document.getElementById('featured').checked,
+      meta_title:       document.getElementById('meta_title').value.trim(),
+      meta_description: document.getElementById('meta_description').value.trim(),
+      og_image:         document.getElementById('og_image').value.trim(),
+      canonical_url:    document.getElementById('canonical_url').value.trim(),
+      author_name:      document.getElementById('author_name').value.trim(),
+      author_photo:     document.getElementById('author_photo').value.trim(),
+      status:           status,
+      created_at:       editingId ? undefined : new Date().toISOString(),
+    };
+
+    const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (editingId) {
+      const idx = all.findIndex(p => p.id === editingId);
+      if (idx !== -1) all[idx] = { ...all[idx], ...post };
+      else all.push(post);
+    } else {
+      all.push(post);
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+
     document.getElementById(status === 'published' ? 'statusPublished' : 'statusDraft').checked = true;
     updatePublishBar();
-    alert(status === 'published' ? '🎉 Post published!' : '✅ Draft saved.');
+    window.location.href = 'blogs.html';
   }
+
+  // ── Sidebar ──
+  let editingId = null;
+
+  (function initPage() {
+    const params = new URLSearchParams(location.search);
+    const editId = params.get('edit');
+    if (editId) {
+      const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const post = all.find(p => p.id === editId);
+      if (post) {
+        editingId = editId;
+        document.getElementById('title').value       = post.title || '';
+        document.getElementById('slug').value        = post.slug  || '';
+        document.getElementById('date').value        = post.date  || '';
+        document.getElementById('summary').value     = post.summary || '';
+        document.getElementById('content').value     = post.content || '';
+        document.getElementById('cover_image').value = post.cover_image || '';
+        document.getElementById('read_time').value   = post.read_time || '';
+        document.getElementById('meta_title').value       = post.meta_title || '';
+        document.getElementById('meta_description').value = post.meta_description || '';
+        document.getElementById('og_image').value         = post.og_image || '';
+        document.getElementById('canonical_url').value    = post.canonical_url || '';
+        document.getElementById('author_name').value      = post.author_name || '';
+        document.getElementById('author_photo').value     = post.author_photo || '';
+        if (post.category) {
+          document.querySelector(`.cat-pill[data-val="${post.category}"]`)?.click();
+        }
+        if (post.tags) post.tags.forEach(t => addTag(t));
+        if (post.featured) document.getElementById('featured').checked = true;
+        if (post.status === 'published') { document.getElementById('statusPublished').checked = true; updatePublishBar(); }
+        document.querySelector('.page-title') && (document.querySelector('.page-title').textContent = 'Edit Post');
+        document.getElementById('summaryCount').textContent = (post.summary||'').length;
+      }
+    }
+    const col = localStorage.getItem('aj_sb_collapsed') === '1';
+    if (col) {
+      document.getElementById('sidebar').classList.add('collapsed');
+      document.getElementById('mainWrap').classList.add('collapsed');
+      document.getElementById('sbToggle').innerHTML = '&#8250;';
+    }
+  })();
+
+  function toggleSidebar() {
+    const sb  = document.getElementById('sidebar');
+    const mw  = document.getElementById('mainWrap');
+    const btn = document.getElementById('sbToggle');
+    const collapsed = sb.classList.toggle('collapsed');
+    mw.classList.toggle('collapsed', collapsed);
+    btn.innerHTML = collapsed ? '&#8250;' : '&#8249;';
+    localStorage.setItem('aj_sb_collapsed', collapsed ? '1' : '0');
+  }
+
+  function openMob()  { document.getElementById('sidebar').classList.add('mob-open');    document.getElementById('overlay').classList.add('on'); }
+  function closeMob() { document.getElementById('sidebar').classList.remove('mob-open'); document.getElementById('overlay').classList.remove('on'); }
+  function logout()   { window.location.href = 'login.html'; }
 
   // ── Classification ──
 

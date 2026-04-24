@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Posts — Ali Johar</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Plus Jakarta Sans,sans-serif' font-weight='800' font-size='13' fill='white'>AJ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:     #09090b;
+  --bg2:    #111113;
+  --bg3:    #18181b;
+  --bg4:    #27272a;
+  --border: #2e2e33;
+  --text:   #fafafa;
+  --muted:  #71717a;
+  --accent: #2563eb;
+  --accent-h:#1d4ed8;
+  --radius: 10px;
+  --sb-w:   224px;
+  --sb-col: 62px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Layout ── */
+.app { display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sb-w);
+  background: var(--bg3);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed { width: var(--sb-col); }
+
+.sb-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  height: 60px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sb-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 12px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sb-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.sidebar.collapsed .sb-name { opacity: 0; pointer-events: none; }
+
+.sb-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+  line-height: 1;
+}
+
+.sb-toggle:hover { color: var(--text); border-color: #52525b; }
+
+.sb-nav {
+  flex: 1;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.sb-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sb-link:hover { background: var(--bg4); color: var(--text); }
+
+.sb-link.active { background: rgba(37,99,235,0.12); color: #93c5fd; }
+
+.sb-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.sb-label { transition: opacity 0.2s; }
+
+.sidebar.collapsed .sb-label { opacity: 0; width: 0; pointer-events: none; }
+
+.sb-footer {
+  padding: 8px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sb-logout:hover { color: #f87171 !important; background: rgba(248,113,113,0.08) !important; }
+
+/* ── Main ── */
+.main-wrap {
+  margin-left: var(--sb-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left 0.25s ease;
+}
+
+.main-wrap.collapsed { margin-left: var(--sb-col); }
+
+/* mobile topbar */
+.topbar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  flex-shrink: 0;
+}
+
+.topbar-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 199;
+}
+
+.overlay.on { display: block; }
+
+.page-content { padding: 32px 36px 60px; flex: 1; }
+
+/* ── Page header ── */
+.page-hd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.page-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.page-sub   { font-size: 13px; color: var(--muted); }
+
+/* ── Buttons ── */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-h); }
+.btn-ghost { background: var(--bg4); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: #3f3f46; }
+
+/* ── Filters bar ── */
+.filters-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.search-wrap input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 9px 14px 9px 34px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.search-wrap input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+.search-wrap input::placeholder { color: #3f3f46; }
+
+/* Status tabs */
+.status-tabs {
+  display: flex;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+  gap: 2px;
+}
+
+.stab {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.stab:hover { color: var(--text); }
+.stab.active { background: var(--bg4); color: var(--text); }
+
+.stab-n {
+  background: var(--bg4);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.stab.active .stab-n { background: var(--accent); color: #fff; }
+
+/* Select filters */
+.filter-select {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 9px 32px 9px 12px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='none' stroke='%2371717a' stroke-width='1.5' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.15s;
+}
+
+.filter-select:focus { border-color: var(--accent); }
+
+/* ── Table ── */
+.table-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead {
+  background: var(--bg4);
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+  text-align: left;
+  padding: 11px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.data-table th.sortable { cursor: pointer; transition: color 0.15s; }
+.data-table th.sortable:hover { color: var(--text); }
+
+.sort-arrow { font-size: 10px; margin-left: 3px; opacity: 0.35; }
+.data-table th.sort-asc  .sort-arrow { opacity: 1; }
+.data-table th.sort-desc .sort-arrow { opacity: 1; }
+
+.data-table tbody tr {
+  border-top: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+.data-table tbody tr:first-child { border-top: none; }
+.data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+.data-table td {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  vertical-align: middle;
+}
+
+/* cells */
+.td-title    { font-weight: 600; color: var(--text); }
+.td-slug     { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.td-mono     { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.td-center   { text-align: center; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.bdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.badge-article    { color:#93c5fd; background:rgba(59,130,246,0.1);  border-color:rgba(59,130,246,0.3); }
+.badge-case-study { color:#c4b5fd; background:rgba(139,92,246,0.1);  border-color:rgba(139,92,246,0.3); }
+.badge-insight    { color:#fcd34d; background:rgba(245,158,11,0.1);  border-color:rgba(245,158,11,0.3); }
+.badge-published  { color:#86efac; background:rgba(34,197,94,0.1);   border-color:rgba(34,197,94,0.3); }
+.badge-published .bdot { background:#22c55e; }
+.badge-draft      { color:#a1a1aa; background:rgba(82,82,91,0.1);    border-color:rgba(82,82,91,0.3); }
+.badge-draft .bdot { background:#71717a; }
+
+/* ── Tags ── */
+.tags-cell { display:flex; flex-wrap:wrap; gap:4px; }
+
+.tag-sm {
+  padding: 2px 8px;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tag-more { color:#60a5fa; border-color:rgba(37,99,235,0.25); }
+
+/* ── Action buttons ── */
+.act-cell { display:flex; gap:5px; }
+
+.act-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+}
+
+.act-btn:hover { background:var(--bg4); color:var(--text); border-color:#52525b; }
+.act-btn.del:hover { background:rgba(239,68,68,0.1); color:#f87171; border-color:rgba(239,68,68,0.3); }
+
+/* ── Empty state ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  gap: 12px;
+}
+
+.empty-icon  { font-size: 52px; line-height: 1; }
+.empty-title { font-size: 18px; font-weight: 700; }
+.empty-sub   { font-size: 13px; color: var(--muted); max-width: 300px; line-height: 1.6; margin-bottom: 4px; }
+
+/* ── Table footer ── */
+.table-foot {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .topbar { display: flex; }
+  .sidebar { transform: translateX(-100%); width: var(--sb-w) !important; transition: transform 0.25s, width 0s; }
+  .sidebar.mob-open { transform: translateX(0); }
+  .main-wrap, .main-wrap.collapsed { margin-left: 0; }
+  .page-content { padding: 20px 16px 48px; }
+  .filters-bar { flex-direction: column; align-items: stretch; }
+  .search-wrap { min-width: unset; }
+  .table-card { overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeMob()"></div>
+
+<div class="app">
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <a href="/" class="sb-brand">
+        <div class="logo-mark">AJ</div>
+        <span class="sb-name">Ali Johar</span>
+      </a>
+      <button class="sb-toggle" id="sbToggle" onclick="toggleSidebar()" title="Collapse">&#8249;</button>
+    </div>
+
+    <div class="sb-nav">
+      <a href="welcome.html" class="sb-link">
+        <span class="sb-icon">&#9998;</span>
+        <span class="sb-label">New Post</span>
+      </a>
+      <a href="blogs.html" class="sb-link active">
+        <span class="sb-icon">&#9776;</span>
+        <span class="sb-label">All Blogs</span>
+      </a>
+    </div>
+
+    <div class="sb-footer">
+      <button class="sb-link sb-logout" onclick="logout()">
+        <span class="sb-icon">&#8592;</span>
+        <span class="sb-label">Logout</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <div class="main-wrap" id="mainWrap">
+
+    <!-- mobile topbar -->
+    <div class="topbar">
+      <button class="topbar-btn" onclick="openMob()">&#9776;</button>
+      <span style="font-size:14px;font-weight:700;">All Posts</span>
+    </div>
+
+    <div class="page-content">
+
+      <!-- header -->
+      <div class="page-hd">
+        <div>
+          <h1 class="page-title">All Posts</h1>
+          <p class="page-sub" id="pageSubText">Manage and track all your blog content</p>
+        </div>
+        <a href="welcome.html" class="btn btn-primary">&#43;&nbsp;New Post</a>
+      </div>
+
+      <!-- filters -->
+      <div class="filters-bar">
+
+        <div class="search-wrap">
+          <span class="search-icon">&#128269;</span>
+          <input type="search" id="searchInput" placeholder="Search by title, tag, or keyword…" oninput="applyFilters()">
+        </div>
+
+        <div class="status-tabs">
+          <button class="stab active" onclick="setStatus(this,'')">All <span class="stab-n" id="cAll">0</span></button>
+          <button class="stab" onclick="setStatus(this,'published')">Published <span class="stab-n" id="cPublished">0</span></button>
+          <button class="stab" onclick="setStatus(this,'draft')">Draft <span class="stab-n" id="cDraft">0</span></button>
+        </div>
+
+        <select class="filter-select" id="catFilter" onchange="applyFilters()">
+          <option value="">All Categories</option>
+          <option value="article">Article</option>
+          <option value="case-study">Case Study</option>
+          <option value="insight">Insight</option>
+        </select>
+
+        <select class="filter-select" id="sortSel" onchange="applyFilters()">
+          <option value="date-desc">Latest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="title-asc">Title A → Z</option>
+          <option value="title-desc">Title Z → A</option>
+          <option value="read-asc">Shortest read</option>
+        </select>
+
+      </div>
+
+      <!-- table card -->
+      <div class="table-card">
+        <table class="data-table" id="postsTable">
+          <thead>
+            <tr>
+              <th class="sortable" data-col="title"     onclick="colSort('title')">    Title     <span class="sort-arrow" id="arr-title">↕</span></th>
+              <th class="sortable" data-col="category"  onclick="colSort('category')"> Category  <span class="sort-arrow" id="arr-category">↕</span></th>
+              <th>Tags</th>
+              <th class="sortable sort-desc" data-col="status" onclick="colSort('status')">Status <span class="sort-arrow" id="arr-status">↕</span></th>
+              <th class="sortable sort-desc" data-col="date"   onclick="colSort('date')">  Date   <span class="sort-arrow" id="arr-date">↓</span></th>
+              <th class="sortable" data-col="read_time" onclick="colSort('read_time')"> Read     <span class="sort-arrow" id="arr-read_time">↕</span></th>
+              <th class="td-center">&#9733;</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+
+        <!-- empty state -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <div class="empty-icon">&#128219;</div>
+          <h3 class="empty-title" id="emptyTitle">No posts yet</h3>
+          <p class="empty-sub" id="emptySub">Create your first blog post to get started.</p>
+          <button class="btn btn-primary" id="emptyBtn" onclick="window.location.href='welcome.html'">Create Post</button>
+        </div>
+      </div>
+
+      <!-- table foot -->
+      <div class="table-foot" id="tableFoot"></div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-wrap -->
+
+</div><!-- /app -->
+
+<script>
+const KEY = 'aj_blog_posts';
+
+const SAMPLES = [
+  { id:'s1', title:'How AI is Transforming Recruitment in 2025', slug:'ai-transforming-recruitment-2025', date:'2025-03-15', summary:'A deep dive into how AI tools are reshaping hiring workflows, from screening to onboarding.', read_time:6, category:'article', tags:['AI','HR','Recruitment'], featured:true,  author_name:'Ali Johar', status:'published' },
+  { id:'s2', title:'Case Study: 3× Lead Gen with GHL Automation', slug:'case-study-3x-lead-gen-ghl',        date:'2025-02-28', summary:'How we tripled lead generation for a Malaysian staffing firm using Go High Level automations.',  read_time:8, category:'case-study',tags:['GHL','Automation','Recruitment'], featured:false, author_name:'Ali Johar', status:'published' },
+  { id:'s3', title:'The Hidden Cost of Manual HR Workflows',      slug:'hidden-cost-manual-hr',             date:'2025-04-01', summary:'Most HR teams waste 12+ hours a week on tasks that AI can handle in minutes.',               read_time:4, category:'insight',   tags:['HR','Operations'],            featured:false, author_name:'Ali Johar', status:'draft'     }
+];
+
+let posts = [];
+let sortCol = 'date';
+let sortDir = 'desc';
+let filterStatus = '';
+
+/* ── Init ── */
+function init() {
+  const raw = localStorage.getItem(KEY);
+  posts = raw ? JSON.parse(raw) : SAMPLES;
+  if (!raw) localStorage.setItem(KEY, JSON.stringify(posts));
+
+  const col = localStorage.getItem('aj_sb_collapsed') === '1';
+  if (col) { document.getElementById('sidebar').classList.add('collapsed'); document.getElementById('mainWrap').classList.add('collapsed'); document.getElementById('sbToggle').innerHTML='&#8250;'; }
+
+  updateCounts();
+  applyFilters();
+}
+
+/* ── Counts ── */
+function updateCounts() {
+  document.getElementById('cAll').textContent       = posts.length;
+  document.getElementById('cPublished').textContent = posts.filter(p=>p.status==='published').length;
+  document.getElementById('cDraft').textContent     = posts.filter(p=>p.status==='draft').length;
+}
+
+/* ── Status tab ── */
+function setStatus(btn, val) {
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filterStatus = val;
+  applyFilters();
+}
+
+/* ── Filter + sort ── */
+function applyFilters() {
+  const q   = document.getElementById('searchInput').value.toLowerCase().trim();
+  const cat = document.getElementById('catFilter').value;
+  const srt = document.getElementById('sortSel').value;
+
+  // override sort from dropdown only if no column sort active
+  if (srt === 'date-desc')  { sortCol='date';      sortDir='desc'; }
+  else if (srt === 'date-asc')   { sortCol='date';      sortDir='asc'; }
+  else if (srt === 'title-asc')  { sortCol='title';     sortDir='asc'; }
+  else if (srt === 'title-desc') { sortCol='title';     sortDir='desc'; }
+  else if (srt === 'read-asc')   { sortCol='read_time'; sortDir='asc'; }
+
+  let list = posts.filter(p => {
+    if (filterStatus && p.status !== filterStatus) return false;
+    if (cat && p.category !== cat) return false;
+    if (q) {
+      const hay = [p.title, p.summary, ...(p.tags||[])].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  list.sort((a,b) => {
+    let av = a[sortCol], bv = b[sortCol];
+    if (sortCol === 'date')      { av = new Date(av||0).getTime(); bv = new Date(bv||0).getTime(); }
+    else if (sortCol==='read_time'){ av=+(av||0); bv=+(bv||0); }
+    else { av=String(av||'').toLowerCase(); bv=String(bv||'').toLowerCase(); }
+    const c = av<bv?-1:av>bv?1:0;
+    return sortDir==='asc'?c:-c;
+  });
+
+  renderTable(list);
+}
+
+/* ── Column sort ── */
+function colSort(col) {
+  if (sortCol === col) sortDir = sortDir==='asc'?'desc':'asc';
+  else { sortCol=col; sortDir = col==='date'?'desc':'asc'; }
+
+  // update arrows
+  document.querySelectorAll('.sort-arrow').forEach(el=>{ el.textContent='↕'; el.style.opacity='0.35'; });
+  const arr = document.getElementById('arr-'+col);
+  if (arr) { arr.textContent = sortDir==='asc'?'↑':'↓'; arr.style.opacity='1'; }
+
+  // sync dropdown
+  const sel = document.getElementById('sortSel');
+  if (col==='date')      sel.value = sortDir==='desc'?'date-desc':'date-asc';
+  else if (col==='title')sel.value = sortDir==='asc'?'title-asc':'title-desc';
+  else if (col==='read_time') sel.value='read-asc';
+
+  applyFilters();
+}
+
+/* ── Render ── */
+function renderTable(list) {
+  const tbody  = document.getElementById('tableBody');
+  const empty  = document.getElementById('emptyState');
+  const table  = document.getElementById('postsTable');
+  const foot   = document.getElementById('tableFoot');
+
+  if (!list.length) {
+    tbody.innerHTML = '';
+    table.style.display = 'none';
+    empty.style.display = 'flex';
+    const noData = !posts.length;
+    document.getElementById('emptyTitle').textContent = noData ? 'No posts yet'       : 'No results found';
+    document.getElementById('emptySub').textContent   = noData ? 'Create your first blog post to get started.' : 'Try adjusting your search or filter criteria.';
+    const btn = document.getElementById('emptyBtn');
+    btn.textContent = noData ? 'Create Post' : 'Clear Filters';
+    btn.onclick     = noData ? ()=>location.href='welcome.html' : clearFilters;
+    foot.innerHTML  = '';
+    return;
+  }
+
+  table.style.display = '';
+  empty.style.display = 'none';
+
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td>
+        <div class="td-title">${esc(p.title)}</div>
+        <div class="td-slug">/${p.slug||'—'}</div>
+      </td>
+      <td>${catBadge(p.category)}</td>
+      <td>${tagChips(p.tags)}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td class="td-mono">${fmtDate(p.date)}</td>
+      <td class="td-mono">${p.read_time ? p.read_time+' min' : '—'}</td>
+      <td class="td-center">${p.featured ? '⭐' : '<span style="color:#3f3f46">☆</span>'}</td>
+      <td>
+        <div class="act-cell">
+          <a href="welcome.html?edit=${p.id}" class="act-btn" title="Edit">&#9998;</a>
+          <button class="act-btn del" onclick="deletePost('${p.id}')" title="Delete">&#128465;</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  const total = posts.length, shown = list.length;
+  foot.innerHTML = shown === total
+    ? `<span>${total} post${total!==1?'s':''}</span><span></span>`
+    : `<span>Showing <strong>${shown}</strong> of <strong>${total}</strong></span><button class="btn btn-ghost" style="padding:5px 12px;font-size:12px;" onclick="clearFilters()">Clear filters</button>`;
+}
+
+/* ── Helpers ── */
+function catBadge(c) {
+  const M = { article:['Article','badge-article'], 'case-study':['Case Study','badge-case-study'], insight:['Insight','badge-insight'] };
+  const [l,cls] = M[c]||[c||'—',''];
+  return `<span class="badge ${cls}">${l}</span>`;
+}
+
+function statusBadge(s) {
+  return s==='published'
+    ? `<span class="badge badge-published"><span class="bdot"></span>Published</span>`
+    : `<span class="badge badge-draft"><span class="bdot"></span>Draft</span>`;
+}
+
+function tagChips(tags) {
+  if(!tags||!tags.length) return '<span class="td-mono">—</span>';
+  const show=tags.slice(0,2), extra=tags.length-2;
+  return `<div class="tags-cell">${show.map(t=>`<span class="tag-sm">${esc(t)}</span>`).join('')}${extra>0?`<span class="tag-sm tag-more">+${extra}</span>`:''}</div>`;
+}
+
+function fmtDate(d) {
+  if(!d) return '—';
+  return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function deletePost(id) {
+  if(!confirm('Delete this post? This cannot be undone.')) return;
+  posts = posts.filter(p=>p.id!==id);
+  localStorage.setItem(KEY,JSON.stringify(posts));
+  updateCounts();
+  applyFilters();
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value='';
+  document.getElementById('catFilter').value='';
+  document.getElementById('sortSel').value='date-desc';
+  document.querySelectorAll('.stab').forEach((b,i)=>b.classList.toggle('active',i===0));
+  filterStatus=''; sortCol='date'; sortDir='desc';
+  document.querySelectorAll('.sort-arrow').forEach(el=>{el.textContent='↕';el.style.opacity='0.35';});
+  document.getElementById('arr-date').textContent='↓'; document.getElementById('arr-date').style.opacity='1';
+  applyFilters();
+}
+
+/* ── Sidebar ── */
+function toggleSidebar() {
+  const sb=document.getElementById('sidebar');
+  const mw=document.getElementById('mainWrap');
+  const btn=document.getElementById('sbToggle');
+  const collapsed=sb.classList.toggle('collapsed');
+  mw.classList.toggle('collapsed',collapsed);
+  btn.innerHTML = collapsed ? '&#8250;' : '&#8249;';
+  localStorage.setItem('aj_sb_collapsed', collapsed?'1':'0');
+}
+
+function openMob()  { document.getElementById('sidebar').classList.add('mob-open');    document.getElementById('overlay').classList.add('on'); }
+function closeMob() { document.getElementById('sidebar').classList.remove('mob-open'); document.getElementById('overlay').classList.remove('on'); }
+function logout()   { window.location.href='login.html'; }
+
+init();
+</script>
+</body>
+</html>
