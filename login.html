@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login &mdash; Ali Johar</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Plus Jakarta Sans,sans-serif' font-weight='800' font-size='13' fill='white'>AJ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#09090b;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.card{background:#111113;border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:2.5rem 2rem;width:100%;max-width:380px;margin:1rem;}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:2rem;justify-content:center;}
+.mark{width:36px;height:36px;background:#2563eb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;}
+.brand{font-size:1rem;font-weight:700;color:#fff;}
+.brand span{color:#2563eb;}
+h2{font-size:1.35rem;font-weight:800;color:#fff;text-align:center;margin-bottom:0.4rem;}
+p{font-size:0.8rem;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:1.8rem;}
+input[type="password"]{width:100%;background:#1a1a1e;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.85rem 1rem;font-size:0.95rem;color:#fff;font-family:inherit;outline:none;transition:border-color 0.2s;letter-spacing:0.05em;}
+input[type="password"]:focus{border-color:#2563eb;}
+input[type="password"]::placeholder{color:rgba(255,255,255,0.3);letter-spacing:normal;}
+.err{display:none;font-size:0.75rem;color:#ef4444;margin-top:0.5rem;text-align:center;}
+.err.show{display:block;}
+button{width:100%;margin-top:1.2rem;padding:0.88rem;background:#2563eb;border:none;border-radius:10px;color:#fff;font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background 0.2s,transform 0.15s;}
+button:hover{background:#1d4ed8;transform:translateY(-1px);}
+button:active{transform:translateY(0);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="mark">AJ</div>
+    <div class="brand">Ali <span>Johar</span></div>
+  </div>
+  <h2>Welcome Back</h2>
+  <p>Enter your access key to continue</p>
+  <input type="password" id="key" placeholder="Enter Key" autofocus>
+  <div class="err" id="err">Incorrect key. Please try again.</div>
+  <button onclick="login()">Access</button>
+</div>
+<script>
+var K = "Link2Lord";
+function login(){
+  var v = document.getElementById("key").value;
+  if(v === K){
+    window.location.href = "welcome.html";
+  } else {
+    var e = document.getElementById("err");
+    e.classList.add("show");
+    document.getElementById("key").value = "";
+    document.getElementById("key").focus();
+  }
+}
+document.getElementById("key").addEventListener("keydown", function(e){
+  if(e.key === "Enter") login();
+});
+</script>
+</body>
+</html>
