@@ -537,13 +537,13 @@ body {
     </div>
 
     <div class="sb-nav">
-      <a href="welcome.html" class="sb-link">
-        <span class="sb-icon">&#9998;</span>
-        <span class="sb-label">New Post</span>
-      </a>
       <a href="all-blogs.html" class="sb-link active">
         <span class="sb-icon">&#9776;</span>
         <span class="sb-label">All Blogs</span>
+      </a>
+      <a href="create-post.html" class="sb-link">
+        <span class="sb-icon">&#9998;</span>
+        <span class="sb-label">Create Post</span>
       </a>
     </div>
 
@@ -572,7 +572,7 @@ body {
           <h1 class="page-title">All Posts</h1>
           <p class="page-sub" id="pageSubText">Manage and track all your blog content</p>
         </div>
-        <a href="welcome.html" class="btn btn-primary">&#43;&nbsp;New Post</a>
+        <a href="create-post.html" class="btn btn-primary">&#43;&nbsp;New Post</a>
       </div>
 
       <!-- filters -->
@@ -629,7 +629,7 @@ body {
           <div class="empty-icon">&#128219;</div>
           <h3 class="empty-title" id="emptyTitle">No posts yet</h3>
           <p class="empty-sub" id="emptySub">Create your first blog post to get started.</p>
-          <button class="btn btn-primary" id="emptyBtn" onclick="window.location.href='welcome.html'">Create Post</button>
+          <button class="btn btn-primary" id="emptyBtn" onclick="window.location.href='create-post.html'">Create Post</button>
         </div>
       </div>
 
@@ -753,7 +753,7 @@ function renderTable(list) {
     document.getElementById('emptySub').textContent   = noData ? 'Create your first blog post to get started.' : 'Try adjusting your search or filter criteria.';
     const btn = document.getElementById('emptyBtn');
     btn.textContent = noData ? 'Create Post' : 'Clear Filters';
-    btn.onclick     = noData ? ()=>location.href='welcome.html' : clearFilters;
+    btn.onclick     = noData ? ()=>location.href='create-post.html' : clearFilters;
     foot.innerHTML  = '';
     return;
   }
@@ -775,7 +775,7 @@ function renderTable(list) {
       <td class="td-center">${p.featured ? '⭐' : '<span style="color:#3f3f46">☆</span>'}</td>
       <td>
         <div class="act-cell">
-          <a href="welcome.html?edit=${p.id}" class="act-btn" title="Edit">&#9998;</a>
+          <a href="create-post.html?edit=${p.id}" class="act-btn" title="Edit">&#9998;</a>
           <button class="act-btn del" onclick="deletePost('${p.id}')" title="Delete">&#128465;</button>
         </div>
       </td>
