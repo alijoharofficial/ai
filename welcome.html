@@ -3,15 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome &mdash; Ali Johar</title>
+<title>New Blog Post — Ali Johar</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Plus Jakarta Sans,sans-serif' font-weight='800' font-size='13' fill='white'>AJ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:#09090b;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:       #09090b;
+    --bg2:      #111113;
+    --bg3:      #18181b;
+    --bg4:      #27272a;
+    --border:   #2e2e33;
+    --text:     #fafafa;
+    --muted:    #71717a;
+    --accent:   #2563eb;
+    --accent-h: #1d4ed8;
+    --radius:   10px;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,9,11,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 60px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+    color: #fff;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .breadcrumb span { color: var(--text); font-weight: 600; }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .btn:active { transform: scale(0.97); }
+
+  .btn-ghost {
+    background: var(--bg4);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover { background: #3f3f46; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--accent-h); }
+
+  /* ── Page wrapper ── */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .page-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .card-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(37,99,235,0.15);
+    border: 1px solid rgba(37,99,235,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #a78bfa;
+  }
+
+  /* ── Fields ── */
+  .fields-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr;
+    gap: 16px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  label .req {
+    color: #f87171;
+    margin-left: 2px;
+  }
+
+  .field-hint {
+    font-size: 11px;
+    color: #52525b;
+    margin-top: -3px;
+  }
+
+  input[type="text"],
+  input[type="url"],
+  input[type="date"],
+  input[type="number"],
+  textarea,
+  select {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #3f3f46;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.4);
+    cursor: pointer;
+  }
+
+  /* slug prefix decoration */
+  .slug-wrapper {
+    position: relative;
+  }
+
+  .slug-prefix {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: var(--muted);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .slug-wrapper input {
+    padding-left: 28px;
+  }
+
+  @media (max-width: 640px) {
+    .fields-row { grid-template-columns: 1fr; }
+    header { padding: 0 16px; }
+    .page { padding: 24px 16px 60px; }
+  }
 </style>
 </head>
 <body>
+
+<header>
+  <div class="header-left">
+    <a href="/" class="logo">AJ</a>
+    <div class="breadcrumb">Blog / <span>New Post</span></div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost">Save Draft</button>
+    <button class="btn btn-primary">Publish</button>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="page-title">Create New Post</div>
+  <div class="page-sub">Fill in the details below to write and publish your blog post.</div>
+
+  <!-- Basic Info -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">&#9432;</div>
+      <div class="card-title">Basic Info</div>
+    </div>
+
+    <div class="fields-row">
+
+      <!-- Title -->
+      <div class="field">
+        <label for="title">Title <span class="req">*</span></label>
+        <div class="field-hint">Main headline of the post</div>
+        <input
+          type="text"
+          id="title"
+          placeholder="e.g. How AI is Changing Recruitment"
+          oninput="autoSlug(this.value)"
+        >
+      </div>
+
+      <!-- Slug -->
+      <div class="field">
+        <label for="slug">Slug <span class="req">*</span></label>
+        <div class="field-hint">URL-friendly ID</div>
+        <div class="slug-wrapper">
+          <span class="slug-prefix">/</span>
+          <input
+            type="text"
+            id="slug"
+            placeholder="url-friendly-id"
+          >
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="field">
+        <label for="date">Date <span class="req">*</span></label>
+        <div class="field-hint">Publish date</div>
+        <input type="date" id="date">
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Set today's date as default
+  document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+  // Auto-generate slug from title
+  function autoSlug(val) {
+    document.getElementById('slug').value = val
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  }
+</script>
+
 </body>
 </html>
