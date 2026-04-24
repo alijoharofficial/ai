@@ -453,12 +453,221 @@
     background: #22c55e;
   }
 
+  /* ── Classification ── */
+  .class-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* category pills */
+  .cat-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cat-pill {
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+
+  .cat-pill:hover {
+    border-color: #52525b;
+    color: var(--text);
+  }
+
+  .cat-pill.active {
+    border-color: var(--accent);
+    background: rgba(37,99,235,0.12);
+    color: #93c5fd;
+  }
+
+  /* tags input */
+  .tags-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    min-height: 44px;
+    cursor: text;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .tags-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(37,99,235,0.15);
+    border: 1px solid rgba(37,99,235,0.3);
+    color: #93c5fd;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px 3px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .tag-chip button {
+    background: none;
+    border: none;
+    color: #60a5fa;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity 0.1s;
+  }
+
+  .tag-chip button:hover { opacity: 1; }
+
+  .tag-input-inner {
+    flex: 1;
+    min-width: 100px;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 2px 4px;
+  }
+
+  .tag-input-inner::placeholder { color: #3f3f46; }
+
+  .tag-suggestions {
+    display: none;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .tag-suggestions.visible { display: flex; }
+
+  .tag-suggest-pill {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg4);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.1s, color 0.1s;
+  }
+
+  .tag-suggest-pill:hover {
+    border-color: var(--accent);
+    color: #93c5fd;
+  }
+
+  .tag-suggest-pill.used {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* featured toggle */
+  .featured-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    transition: border-color 0.15s;
+  }
+
+  .featured-row.on {
+    border-color: rgba(234,179,8,0.4);
+    background: rgba(234,179,8,0.05);
+  }
+
+  .featured-label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .featured-label strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .featured-label span {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: var(--bg4);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--muted);
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .toggle-switch input:checked + .toggle-track {
+    background: rgba(234,179,8,0.2);
+    border-color: rgba(234,179,8,0.5);
+  }
+
+  .toggle-switch input:checked + .toggle-track::after {
+    transform: translateX(20px);
+    background: #eab308;
+  }
+
   @media (max-width: 640px) {
-    .fields-row { grid-template-columns: 1fr; }
-    .readtime-row { grid-template-columns: 1fr; }
-    .cover-row { grid-template-columns: 1fr; }
+    .fields-row  { grid-template-columns: 1fr; }
+    .readtime-row{ grid-template-columns: 1fr; }
+    .cover-row   { grid-template-columns: 1fr; }
+    .class-row   { grid-template-columns: 1fr; }
     header { padding: 0 16px; }
-    .page { padding: 24px 16px 60px; }
+    .page  { padding: 24px 16px 60px; }
   }
 </style>
 </head>
@@ -621,6 +830,67 @@
     </div>
   </div>
 
+  <!-- Classification -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">&#127991;</div>
+      <div class="card-title">Classification</div>
+    </div>
+
+    <div class="class-row">
+
+      <!-- Category -->
+      <div class="field">
+        <label>Category <span class="req">*</span></label>
+        <div class="field-hint">Type of content being published</div>
+        <div class="cat-pills">
+          <button type="button" class="cat-pill" data-val="article"     onclick="selectCat(this)">Article</button>
+          <button type="button" class="cat-pill" data-val="case-study"  onclick="selectCat(this)">Case Study</button>
+          <button type="button" class="cat-pill" data-val="insight"     onclick="selectCat(this)">Insight</button>
+        </div>
+        <input type="hidden" id="category">
+      </div>
+
+      <!-- Tags -->
+      <div class="field">
+        <label>Tags</label>
+        <div class="field-hint">Press Enter or comma to add — click ✕ to remove</div>
+        <div class="tags-box" id="tagsBox" onclick="document.getElementById('tagInput').focus()">
+          <input
+            type="text"
+            id="tagInput"
+            class="tag-input-inner"
+            placeholder="e.g. HR, Recruitment, IT…"
+            onkeydown="handleTagKey(event)"
+            oninput="filterSuggestions(this.value)"
+          >
+        </div>
+        <input type="hidden" id="tagsHidden">
+        <div class="tag-suggestions" id="tagSuggestions">
+          <span style="font-size:11px;color:#52525b;align-self:center;margin-right:4px;">Quick add:</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Featured -->
+    <div class="field" style="margin-top:20px;">
+      <label>Featured</label>
+      <div class="field-hint" style="margin-bottom:10px;">Pin this post to the landing page blog section</div>
+      <div class="featured-row" id="featuredRow">
+        <div class="featured-label">
+          <strong id="featuredTitle">Not featured</strong>
+          <span id="featuredSub">This post won't appear in the landing page spotlight</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="featured" onchange="toggleFeatured(this)">
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
@@ -710,6 +980,103 @@
       preview.style.display = 'none';
       ta.style.display = 'block';
       btn.textContent = '👁 Preview';
+    }
+  }
+
+  // ── Classification ──
+
+  // Category pill selection
+  function selectCat(btn) {
+    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('category').value = btn.dataset.val;
+  }
+
+  // Tags
+  const SUGGESTED_TAGS = ['HR','IT Staffing','Recruitment','Automation','AI','Marketing','Finance','Operations','Sales','Analytics'];
+  let tags = [];
+
+  function buildSuggestions() {
+    const container = document.getElementById('tagSuggestions');
+    // keep the "Quick add:" label
+    const label = container.firstElementChild;
+    container.innerHTML = '';
+    container.appendChild(label);
+    SUGGESTED_TAGS.forEach(t => {
+      const pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'tag-suggest-pill' + (tags.includes(t) ? ' used' : '');
+      pill.textContent = t;
+      pill.onclick = () => addTag(t);
+      container.appendChild(pill);
+    });
+    container.classList.add('visible');
+  }
+
+  function addTag(val) {
+    const v = val.trim().replace(/,+$/, '');
+    if (!v || tags.includes(v)) return;
+    tags.push(v);
+    renderTags();
+    document.getElementById('tagInput').value = '';
+    buildSuggestions();
+  }
+
+  function removeTag(val) {
+    tags = tags.filter(t => t !== val);
+    renderTags();
+    buildSuggestions();
+  }
+
+  function renderTags() {
+    const box = document.getElementById('tagsBox');
+    const input = document.getElementById('tagInput');
+    // remove existing chips
+    box.querySelectorAll('.tag-chip').forEach(c => c.remove());
+    tags.forEach(t => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip';
+      chip.innerHTML = `${t}<button type="button" onclick="removeTag('${t}')" title="Remove">&#10005;</button>`;
+      box.insertBefore(chip, input);
+    });
+    document.getElementById('tagsHidden').value = tags.join(',');
+  }
+
+  function handleTagKey(e) {
+    const val = e.target.value;
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      addTag(val);
+    } else if (e.key === 'Backspace' && !val && tags.length) {
+      removeTag(tags[tags.length - 1]);
+    }
+  }
+
+  function filterSuggestions(val) {
+    buildSuggestions();
+    if (!val) return;
+    document.querySelectorAll('.tag-suggest-pill').forEach(p => {
+      const matches = p.textContent.toLowerCase().includes(val.toLowerCase());
+      p.style.display = matches ? '' : 'none';
+    });
+  }
+
+  // show suggestions on focus
+  document.getElementById('tagInput').addEventListener('focus', buildSuggestions);
+
+  // Featured toggle
+  function toggleFeatured(chk) {
+    const row   = document.getElementById('featuredRow');
+    const title = document.getElementById('featuredTitle');
+    const sub   = document.getElementById('featuredSub');
+    if (chk.checked) {
+      row.classList.add('on');
+      title.textContent = '⭐ Featured';
+      sub.textContent   = 'This post will appear in the landing page spotlight';
+    } else {
+      row.classList.remove('on');
+      title.textContent = 'Not featured';
+      sub.textContent   = 'This post won\'t appear in the landing page spotlight';
     }
   }
 
