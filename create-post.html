@@ -1289,7 +1289,7 @@
       <!-- Cover Image -->
       <div class="field">
         <label for="cover_image">Cover Image</label>
-        <div class="field-hint">Hero image at top of post &amp; thumbnail on cards</div>
+        <div class="field-hint">Hero image at top of post &amp; thumbnail on cards — use a <strong>direct</strong> image URL (e.g. <code>i.ibb.co/…</code>)</div>
         <div class="cover-row">
           <input
             type="url"
@@ -1432,7 +1432,7 @@
       <!-- OG Image -->
       <div class="field">
         <label for="og_image">OG Image</label>
-        <div class="field-hint">Preview card on LinkedIn, WhatsApp, X — 1200×630px ideal</div>
+        <div class="field-hint">Preview card on LinkedIn, WhatsApp, X — 1200×630px ideal — use a <strong>direct</strong> image URL (e.g. <code>i.ibb.co/…</code>)</div>
         <input
           type="url"
           id="og_image"
@@ -1510,7 +1510,7 @@
 
           <div class="field">
             <label for="author_photo">Author Photo</label>
-            <div class="field-hint">Headshot URL — shown next to the byline</div>
+            <div class="field-hint">Headshot URL — shown next to the byline — use a <strong>direct</strong> image URL (e.g. <code>i.ibb.co/…</code>)</div>
             <input
               type="url"
               id="author_photo"
@@ -1606,9 +1606,39 @@
   }
 
   // Cover image live preview
+  // Converts ImgBB viewer page URLs → direct image URLs automatically
+  // https://ibb.co/XXXXX → https://i.ibb.co/XXXXX  (best-guess, still needs ext)
+  function fixImgUrl(url) {
+    if (!url) return url;
+    // Already a direct URL → pass through
+    if (/^https?:\/\/i\.ibb\.co\//i.test(url)) return url;
+    // ImgBB viewer page → warn user, return as-is (can't resolve without fetching)
+    if (/^https?:\/\/ibb\.co\//i.test(url)) {
+      return '__ibb_page__';
+    }
+    return url;
+  }
+
+  function imgUrlWarn(fieldId, url) {
+    const field = document.getElementById(fieldId).closest('.field');
+    let warn = field.querySelector('.img-url-warn');
+    if (/^https?:\/\/ibb\.co\//i.test(url)) {
+      if (!warn) {
+        warn = document.createElement('div');
+        warn.className = 'img-url-warn';
+        warn.style.cssText = 'margin-top:6px;padding:8px 12px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.35);border-radius:8px;font-size:12px;color:#fcd34d;line-height:1.5;';
+        field.appendChild(warn);
+      }
+      warn.innerHTML = '&#9888; This is an ImgBB <strong>viewer page</strong>, not a direct image URL.<br>On ImgBB, click the image → copy the <strong>Direct link</strong> (starts with <code>i.ibb.co</code>).';
+    } else if (warn) {
+      warn.remove();
+    }
+  }
+
   function previewCover(url) {
+    imgUrlWarn('cover_image', url);
     const box = document.getElementById('coverPreview');
-    if (!url) { box.innerHTML = 'No image'; return; }
+    if (!url || fixImgUrl(url) === '__ibb_page__') { box.innerHTML = fixImgUrl(url) === '__ibb_page__' ? '⚠ Use direct link' : 'No image'; return; }
     const img = new Image();
     img.onload  = () => { box.innerHTML = ''; box.appendChild(img); };
     img.onerror = () => { box.innerHTML = 'Bad URL'; };
@@ -1771,7 +1801,8 @@
                      || document.getElementById('summary').value
                      || 'Post description';
 
-    if (!url) { wrap.classList.remove('visible'); return; }
+    imgUrlWarn('og_image', url);
+    if (!url || fixImgUrl(url) === '__ibb_page__') { wrap.classList.remove('visible'); return; }
 
     wrap.classList.add('visible');
     box.textContent = 'Loading…';
@@ -1794,8 +1825,9 @@
   }
 
   function updateAuthorPhoto(url) {
+    imgUrlWarn('author_photo', url);
     const av = document.getElementById('authorAvatar');
-    if (!url) {
+    if (!url || fixImgUrl(url) === '__ibb_page__') {
       av.classList.remove('loaded');
       av.innerHTML = '';
       updateAuthorInitial(document.getElementById('author_name').value);
