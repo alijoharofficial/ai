@@ -700,6 +700,7 @@ function renderFeatured(p) {
     : `<div class="featured-img-placeholder ${grad}" style="font-size:52px;">${CAT_ICONS[p.category]||'📝'}</div>`;
 
   card.innerHTML = `
+    <a href="post.html?slug=${p.slug}" style="display:contents;">
     <div class="featured-img">${imgHtml}</div>
     <div class="featured-body">
       <div class="featured-meta">
@@ -717,6 +718,7 @@ function renderFeatured(p) {
       </div>
       <span class="read-more">Read article &#8594;</span>
     </div>
+    </a>
   `;
 }
 
@@ -731,6 +733,7 @@ function postCard(p, i) {
     : initials(p.author_name);
 
   return `
+    <a href="post.html?slug=${p.slug}" style="display:contents;">
     <article class="post-card">
       <div class="card-img">
         ${imgHtml}
@@ -751,6 +754,7 @@ function postCard(p, i) {
         </div>
       </div>
     </article>
+    </a>
   `;
 }
 
