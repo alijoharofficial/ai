@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post — Ali Johar</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Plus Jakarta Sans,sans-serif' font-weight='800' font-size='13' fill='white'>AJ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg:     #09090b;
+  --bg2:    #111113;
+  --bg3:    #18181b;
+  --bg4:    #27272a;
+  --border: #2e2e33;
+  --text:   #fafafa;
+  --muted:  #71717a;
+  --soft:   #a1a1aa;
+  --accent: #2563eb;
+  --radius: 12px;
+}
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(9,9,11,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-logo { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; color: #fff; flex-shrink: 0; }
+.nav-name { font-size: 15px; font-weight: 700; }
+.nav-back { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.15s; display: flex; align-items: center; gap: 6px; }
+.nav-back:hover { color: var(--text); }
+
+/* Article layout */
+.article-wrap { max-width: 740px; margin: 0 auto; padding: 60px 24px 100px; }
+
+/* Cover */
+.cover-img { width: 100%; aspect-ratio: 16/7; object-fit: cover; border-radius: 16px; margin-bottom: 40px; }
+.cover-placeholder { width: 100%; aspect-ratio: 16/7; border-radius: 16px; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+
+/* Meta */
+.post-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.cat-badge { padding: 3px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid; }
+.badge-article    { color:#93c5fd; background:rgba(37,99,235,0.12); border-color:rgba(59,130,246,0.35); }
+.badge-case-study { color:#c4b5fd; background:rgba(139,92,246,0.12); border-color:rgba(139,92,246,0.35); }
+.badge-insight    { color:#fcd34d; background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.35); }
+.meta-dot { color: var(--border); }
+.meta-date { font-size: 13px; color: var(--muted); }
+.meta-rt   { font-size: 13px; color: var(--muted); }
+
+/* Title */
+.post-title { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; line-height: 1.18; letter-spacing: -0.01em; margin-bottom: 20px; }
+
+/* Summary */
+.post-summary { font-size: 1.1rem; line-height: 1.7; color: var(--soft); border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+
+/* Author */
+.post-author { display: flex; align-items: center; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+.author-av { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; flex-shrink: 0; overflow: hidden; }
+.author-av img { width: 100%; height: 100%; object-fit: cover; }
+.author-name { font-size: 15px; font-weight: 600; }
+.author-date { font-size: 13px; color: var(--muted); }
+
+/* Markdown content */
+.post-content { font-size: 1.05rem; line-height: 1.85; color: #d4d4d8; }
+.post-content h1, .post-content h2, .post-content h3, .post-content h4 {
+  font-family: 'Instrument Serif', serif; font-weight: 400; color: var(--text); margin: 2em 0 0.6em; line-height: 1.25;
+}
+.post-content h1 { font-size: 2rem; }
+.post-content h2 { font-size: 1.6rem; }
+.post-content h3 { font-size: 1.3rem; }
+.post-content h4 { font-size: 1.1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; }
+.post-content p  { margin-bottom: 1.4em; }
+.post-content ul, .post-content ol { margin: 0 0 1.4em 1.5em; }
+.post-content li { margin-bottom: 0.4em; }
+.post-content strong { color: var(--text); font-weight: 700; }
+.post-content em { font-style: italic; color: #93c5fd; }
+.post-content a  { color: #93c5fd; text-decoration: underline; text-underline-offset: 3px; }
+.post-content blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 20px; margin: 1.6em 0; color: var(--soft); font-style: italic; }
+.post-content code { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.88em; font-family: monospace; color: #a3e635; }
+.post-content pre { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 20px; overflow-x: auto; margin: 1.6em 0; }
+.post-content pre code { background: none; border: none; padding: 0; font-size: 0.9em; color: #a3e635; }
+.post-content hr { border: none; border-top: 1px solid var(--border); margin: 2.5em 0; }
+.post-content img { max-width: 100%; border-radius: 10px; margin: 1em 0; }
+
+/* Tags */
+.post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+.tag { padding: 4px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 99px; font-size: 12px; color: var(--soft); }
+
+/* Back link */
+.back-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 48px; font-size: 14px; color: var(--muted); transition: color 0.15s; }
+.back-link:hover { color: var(--text); }
+
+/* Not found */
+.not-found { text-align: center; padding: 100px 24px; }
+.not-found h2 { font-size: 1.5rem; margin-bottom: 12px; }
+.not-found p  { color: var(--muted); margin-bottom: 24px; }
+.btn-back { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-weight: 600; font-size: 14px; padding: 10px 20px; border-radius: 8px; }
+
+/* Grad placeholders */
+.grad-1 { background: linear-gradient(135deg,#1e3a5f 0%,#0f172a 100%); }
+.grad-2 { background: linear-gradient(135deg,#2d1b5e 0%,#0f0a1e 100%); }
+.grad-3 { background: linear-gradient(135deg,#3d2500 0%,#1c1000 100%); }
+.grad-4 { background: linear-gradient(135deg,#0a2e1a 0%,#061008 100%); }
+.grad-5 { background: linear-gradient(135deg,#1a1040 0%,#09090b 100%); }
+.grad-6 { background: linear-gradient(135deg,#2a0e1e 0%,#09090b 100%); }
+
+/* Footer */
+.blog-footer { border-top: 1px solid var(--border); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.footer-brand { display: flex; align-items: center; gap: 8px; }
+
+@media (max-width: 640px) {
+  .nav { padding: 0 20px; }
+  .article-wrap { padding: 40px 20px 80px; }
+  .blog-footer { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-logo">AJ</div>
+    <span class="nav-name">Ali Johar</span>
+  </a>
+  <a href="blogs.html" class="nav-back">&#8592; All Posts</a>
+</nav>
+
+<div id="root"></div>
+
+<footer class="blog-footer">
+  <div class="footer-brand">
+    <div class="nav-logo" style="width:24px;height:24px;font-size:9px;">AJ</div>
+    <span>Ali Johar &copy; 2025</span>
+  </div>
+  <span>AI Marketing &amp; Automation Specialist &mdash; Kuala Lumpur</span>
+</footer>
+
+<script>
+const KEY = 'aj_blog_posts';
+const GRADS = ['grad-1','grad-2','grad-3','grad-4','grad-5','grad-6'];
+const CAT_LABELS = { article:'Article', 'case-study':'Case Study', insight:'Insight' };
+
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+}
+
+function initials(name) {
+  return (name||'AJ').trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+}
+
+/* Simple Markdown → HTML */
+function mdToHtml(md) {
+  if (!md) return '';
+  let html = md
+    // Code blocks
+    .replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) =>
+      `<pre><code>${esc(code.trim())}</code></pre>`)
+    // Headings
+    .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+    .replace(/^### (.+)$/gm,  '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,   '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm,    '<h1>$1</h1>')
+    // Horizontal rule
+    .replace(/^---$/gm, '<hr>')
+    // Blockquote
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    // Unordered list items
+    .replace(/^\s*[-*] (.+)$/gm, '<li>$1</li>')
+    // Ordered list items
+    .replace(/^\s*\d+\. (.+)$/gm, '<li>$1</li>')
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    // Inline code
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // Links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    // Images
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`);
+
+  // Paragraphs: split by double newline, wrap non-block elements
+  const blocks = html.split(/\n{2,}/);
+  html = blocks.map(block => {
+    block = block.trim();
+    if (!block) return '';
+    if (/^<(h[1-4]|ul|ol|li|pre|blockquote|hr)/.test(block)) return block;
+    return `<p>${block.replace(/\n/g, '<br>')}</p>`;
+  }).join('\n');
+
+  return html;
+}
+
+async function loadPost() {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug');
+  const id   = params.get('id');
+
+  if (!slug && !id) { showNotFound(); return; }
+
+  // 1. Check localStorage first
+  let post = null;
+  try {
+    const stored = JSON.parse(localStorage.getItem(KEY) || '[]');
+    post = stored.find(p => p.slug === slug || p.id === id);
+  } catch(e) {}
+
+  // 2. Fall back to data/posts.json
+  if (!post) {
+    try {
+      const resp = await fetch('data/posts.json?t=' + Date.now());
+      if (resp.ok) {
+        const posts = await resp.json();
+        post = posts.find(p => p.slug === slug || p.id === id);
+      }
+    } catch(e) {}
+  }
+
+  if (!post) { showNotFound(); return; }
+
+  // Update page title and meta
+  document.title = (post.meta_title || post.title) + ' — Ali Johar';
+  if (post.meta_description) {
+    const m = document.createElement('meta');
+    m.name = 'description'; m.content = post.meta_description;
+    document.head.appendChild(m);
+  }
+
+  renderPost(post);
+}
+
+function renderPost(p) {
+  const grad = GRADS[hashCode(p.id) % GRADS.length];
+  const coverHtml = p.cover_image
+    ? `<img class="cover-img" src="${esc(p.cover_image)}" alt="${esc(p.title)}">`
+    : `<div class="cover-placeholder ${grad}">&#128196;</div>`;
+
+  const avHtml = p.author_photo
+    ? `<img src="${esc(p.author_photo)}" alt="${esc(p.author_name||'Ali Johar')}">`
+    : initials(p.author_name);
+
+  const tagsHtml = (p.tags||[]).length
+    ? `<div class="post-tags">${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`
+    : '';
+
+  document.getElementById('root').innerHTML = `
+    <div class="article-wrap">
+      ${coverHtml}
+      <div class="post-meta">
+        <span class="cat-badge badge-${p.category}">${CAT_LABELS[p.category]||p.category}</span>
+        <span class="meta-dot">·</span>
+        <span class="meta-date">${fmtDate(p.date)}</span>
+        ${p.read_time ? `<span class="meta-dot">·</span><span class="meta-rt">${p.read_time} min read</span>` : ''}
+      </div>
+      <h1 class="post-title">${esc(p.title)}</h1>
+      ${p.summary ? `<p class="post-summary">${esc(p.summary)}</p>` : ''}
+      <div class="post-author">
+        <div class="author-av">${avHtml}</div>
+        <div>
+          <div class="author-name">${esc(p.author_name||'Ali Johar')}</div>
+          <div class="author-date">${fmtDate(p.date)}</div>
+        </div>
+      </div>
+      <div class="post-content">${mdToHtml(p.content)}</div>
+      ${tagsHtml}
+      <a href="blogs.html" class="back-link">&#8592; Back to all posts</a>
+    </div>
+  `;
+}
+
+function showNotFound() {
+  document.getElementById('root').innerHTML = `
+    <div class="not-found">
+      <h2>Post not found</h2>
+      <p>This article doesn't exist or may have been removed.</p>
+      <a href="blogs.html" class="btn-back">&#8592; Back to all posts</a>
+    </div>
+  `;
+}
+
+loadPost();
+</script>
+</body>
+</html>
