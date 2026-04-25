@@ -1,57 +1,27 @@
 [
   {
-    "id": "s1",
-    "title": "How AI is Transforming Recruitment in 2025",
-    "slug": "ai-transforming-recruitment-2025",
-    "date": "2025-03-15",
-    "summary": "A deep dive into how AI tools are reshaping hiring workflows, from screening to onboarding.",
-    "read_time": 6,
-    "category": "article",
-    "tags": [
-      "AI",
-      "HR",
-      "Recruitment"
-    ],
-    "featured": true,
-    "author_name": "Ali Johar",
-    "status": "published"
-  },
-  {
-    "id": "s2",
-    "title": "Case Study: 3× Lead Gen with GHL Automation",
-    "slug": "case-study-3x-lead-gen-ghl",
-    "date": "2025-02-28",
-    "summary": "How we tripled lead generation for a Malaysian staffing firm using Go High Level automations.",
-    "read_time": 8,
-    "category": "case-study",
-    "tags": [
-      "GHL",
-      "Automation",
-      "Recruitment"
-    ],
-    "featured": false,
-    "author_name": "Ali Johar",
-    "status": "published"
-  },
-  {
-    "id": "p1777093133848",
-    "title": "Ali Johar",
-    "slug": "ali-johar",
+    "id": "p1777093947641",
+    "title": "ALi",
+    "slug": "ali",
     "date": "2026-04-25",
-    "summary": "JOOOOOOOHAR",
-    "content": "ALIIIIIIIIII",
-    "cover_image": "",
+    "summary": "Johar",
+    "content": "I am Ali Johar",
+    "cover_image": "https://ibb.co/KxbHzTZs",
     "read_time": 1,
     "category": "insight",
-    "tags": [],
-    "featured": true,
-    "meta_title": "Ali Johar",
-    "meta_description": "JOOOOOOOHAR",
-    "og_image": "",
-    "canonical_url": "https://alijoharofficial.github.io/blog/ali-johar",
+    "tags": [
+      "HR",
+      "GHL",
+      "IT"
+    ],
+    "featured": false,
+    "meta_title": "ALi",
+    "meta_description": "Johar",
+    "og_image": "https://ibb.co/TMx00mhG",
+    "canonical_url": "https://alijoharofficial.github.io/blog/ali",
     "author_name": "Ali Johar",
-    "author_photo": "",
+    "author_photo": "https://ibb.co/KxbHzTZs",
     "status": "published",
-    "created_at": "2026-04-25T04:58:53.848Z"
+    "created_at": "2026-04-25T05:12:27.641Z"
   }
 ]
