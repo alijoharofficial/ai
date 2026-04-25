@@ -1575,9 +1575,6 @@
 
 <script>
   const STORAGE_KEY = 'aj_blog_posts';
-  const GITHUB_TOKEN = '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';
-  const GITHUB_OWNER = 'alijoharofficial';
-  const GITHUB_REPO  = 'ai';
   let readTimeManual = false;
 
   // Set today's date as default
@@ -1900,42 +1897,20 @@
   }
 
   async function pushToGitHub(publishedPosts) {
-    const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/posts.json`;
-    const headers = {
-      'Authorization': `token ${GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
-    };
-
     try {
-      // Get current file SHA
-      const getResp = await fetch(apiBase, { headers });
-      const getJson = await getResp.json();
-      const sha = getJson.sha;
-
-      // Encode new content as base64 (handles Unicode)
-      const jsonStr = JSON.stringify(publishedPosts, null, 2);
-      const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
-
-      // Write updated file back to GitHub
-      const putResp = await fetch(apiBase, {
-        method: 'PUT',
-        headers,
-        body: JSON.stringify({
-          message: `Publish post: ${publishedPosts[publishedPosts.length - 1]?.title || 'update'}`,
-          content: encoded,
-          sha
-        })
+      const resp = await fetch('/api/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ posts: publishedPosts })
       });
-
-      if (!putResp.ok) {
-        const err = await putResp.json();
-        console.error('GitHub API error:', err);
-        alert('Post saved locally but failed to update posts.json: ' + (err.message || putResp.status));
+      const data = await resp.json();
+      if (!resp.ok) {
+        console.error('publish API error:', data);
+        alert('Post saved locally but failed to update posts.json: ' + (data.error || resp.status));
       }
     } catch (e) {
       console.error('pushToGitHub failed:', e);
-      alert('Post saved locally but could not reach GitHub API: ' + e.message);
+      alert('Post saved locally but could not reach publish API: ' + e.message);
     }
   }
 
