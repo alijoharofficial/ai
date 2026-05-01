@@ -1,17 +1,17 @@
 {
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "installCommand": null,
-  "framework": null,
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
+  "version": 2,
+  "builds": [
+    { "src": "onboarding/server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
     {
-      "source": "/data/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    }
+      "src": "/data/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
+      "dest": "/data/$1"
+    },
+    { "src": "/(.*)", "dest": "onboarding/server.js" }
   ]
 }

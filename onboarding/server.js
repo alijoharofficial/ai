@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +17,12 @@ app.post('/api/submit', (req, res) => {
   res.json({ success: true, message: 'Registration successful! Welcome to your Islamic learning journey.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Islamic Education Onboarding running at http://localhost:${PORT}`);
-});
+// Local dev
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Islamic Education Onboarding running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
