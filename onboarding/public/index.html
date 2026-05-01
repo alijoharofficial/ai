@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Islamic Education — Start Your Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-pattern">
+    <div class="geo-shape geo-1"></div>
+    <div class="geo-shape geo-2"></div>
+    <div class="geo-shape geo-3"></div>
+    <div class="geo-shape geo-4"></div>
+    <div class="floating-crescent">☽</div>
+    <div class="floating-star">✦</div>
+    <div class="floating-star star-2">✦</div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="onboarding-wrapper">
+    <div class="onboarding-card">
+
+      <!-- Logo Header -->
+      <div class="brand-header">
+        <div class="brand-logo">
+          <span class="logo-icon">📖</span>
+          <span class="logo-text">NoorAcademy</span>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="step-dots">
+          <div class="step-dot active" data-step="1"><span>1</span></div>
+          <div class="step-dot" data-step="2"><span>2</span></div>
+          <div class="step-dot" data-step="3"><span>3</span></div>
+          <div class="step-dot" data-step="4"><span>4</span></div>
+        </div>
+      </div>
+
+      <!-- ===== STEP 1: Who Are You ===== -->
+      <div class="step-panel active" id="step1">
+        <div class="step-header">
+          <div class="arabic-blessing">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</div>
+          <h1 class="step-title">Start Your Journey</h1>
+          <p class="step-subtitle">Fill the form and claim your <span class="highlight">free trial classes</span></p>
+        </div>
+
+        <div class="question-label">Who are you choosing for?</div>
+        <div class="choice-cards">
+          <div class="choice-card" data-value="myself" onclick="selectChoice(this, 'learnerType')">
+            <div class="choice-illustration">
+              <div class="illustration-myself">
+                <div class="person-head"></div>
+                <div class="person-body"></div>
+                <div class="book-icon">📚</div>
+              </div>
+            </div>
+            <div class="choice-label">For Myself</div>
+          </div>
+          <div class="choice-card selected" data-value="children" onclick="selectChoice(this, 'learnerType')">
+            <div class="choice-illustration">
+              <div class="illustration-children">🧒👧</div>
+            </div>
+            <div class="choice-label">For My Children</div>
+            <div class="card-glow"></div>
+          </div>
+        </div>
+
+        <div class="children-count-section" id="childrenCountSection">
+          <div class="question-label">How many children will you add?</div>
+          <div class="count-pills">
+            <button class="count-pill active" data-count="1" onclick="selectCount(this)">1</button>
+            <button class="count-pill" data-count="2" onclick="selectCount(this)">2</button>
+            <button class="count-pill" data-count="3" onclick="selectCount(this)">3</button>
+            <button class="count-pill" data-count="4" onclick="selectCount(this)">4</button>
+            <button class="count-pill" data-count="5" onclick="selectCount(this)">5+</button>
+          </div>
+        </div>
+
+        <div class="step-footer single">
+          <button class="btn-primary" onclick="goToStep(2)">
+            Next <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 2: Student Details ===== -->
+      <div class="step-panel" id="step2">
+        <div class="step-header compact">
+          <h1 class="step-title">Fill Student Details</h1>
+          <p class="step-subtitle">Please provide accurate information for each student</p>
+        </div>
+
+        <div class="students-container" id="studentsContainer"></div>
+
+        <div class="add-student-row">
+          <button class="btn-add-student" id="addStudentBtn" onclick="addStudent()">
+            <span class="plus-icon">+</span> Add Student
+          </button>
+        </div>
+
+        <div class="step-footer">
+          <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
+          <div class="footer-right">
+            <span class="fill-hint" id="fillHint2">Fill all the data to continue</span>
+            <button class="btn-primary" onclick="goToStep(3)">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== STEP 3: Select Course ===== -->
+      <div class="step-panel" id="step3">
+        <div class="step-header compact">
+          <h1 class="step-title">Select Course</h1>
+          <p class="step-subtitle">Choose the perfect Islamic learning path</p>
+        </div>
+
+        <div class="courses-grid">
+          <div class="course-card selected" data-course="quran-reading" onclick="selectCourse(this)">
+            <div class="course-icon">🕌</div>
+            <div class="course-name">Learn Quranic Arabic</div>
+            <div class="course-tag">Beginner Friendly</div>
+          </div>
+          <div class="course-card" data-course="recitation" onclick="selectCourse(this)">
+            <div class="course-icon">🎙️</div>
+            <div class="course-name">Recitation of Quran</div>
+            <div class="course-tag">Tajweed Rules</div>
+          </div>
+          <div class="course-card" data-course="memorization" onclick="selectCourse(this)">
+            <div class="course-icon">🧠</div>
+            <div class="course-name">Memorization &amp; Hifz</div>
+            <div class="course-tag">Advanced</div>
+          </div>
+          <div class="course-card" data-course="islamic-studies" onclick="selectCourse(this)">
+            <div class="course-icon">📜</div>
+            <div class="course-name">Islamic Studies</div>
+            <div class="course-tag">All Levels</div>
+          </div>
+        </div>
+
+        <div class="course-details-panel">
+          <div class="detail-row">
+            <span class="detail-label">📅 Course Duration</span>
+            <span class="detail-value" id="courseDuration">1 Year</span>
+          </div>
+          <div class="detail-divider"></div>
+          <div class="detail-row">
+            <span class="detail-label">📆 Days / Week</span>
+            <div class="stepper">
+              <button class="stepper-btn" onclick="adjustDays(-1)">−</button>
+              <span class="stepper-value" id="daysPerWeek">2</span>
+              <button class="stepper-btn" onclick="adjustDays(1)">+</button>
+            </div>
+          </div>
+          <div class="detail-divider"></div>
+          <div class="detail-row">
+            <span class="detail-label">⏱️ Duration / Class</span>
+            <div class="stepper">
+              <button class="stepper-btn" onclick="adjustDuration(-1)">−</button>
+              <span class="stepper-value" id="classDuration">30 Mins</span>
+              <button class="stepper-btn" onclick="adjustDuration(1)">+</button>
+            </div>
+          </div>
+          <div class="detail-divider"></div>
+          <div class="detail-row">
+            <span class="detail-label">📚 Classes / Month</span>
+            <span class="detail-value" id="classesPerMonth">8 Classes</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">💰 Price</span>
+            <span class="price-value" id="coursePrice">$40 / Month</span>
+          </div>
+        </div>
+
+        <div class="step-footer">
+          <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
+          <button class="btn-primary" onclick="goToStep(4)">Next →</button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 4: Schedule Details ===== -->
+      <div class="step-panel" id="step4">
+        <div class="step-header compact">
+          <h1 class="step-title">Schedule Details</h1>
+          <p class="step-subtitle">Set your preferred learning schedule</p>
+        </div>
+
+        <div class="schedule-panel">
+          <div class="schedule-section">
+            <label class="schedule-label">Select Days <span class="days-count" id="daysSelectedCount">(0/2 selected)</span></label>
+            <div class="days-selector">
+              <button class="day-btn" data-day="Mon" onclick="toggleDay(this)">Mon</button>
+              <button class="day-btn" data-day="Tue" onclick="toggleDay(this)">Tue</button>
+              <button class="day-btn" data-day="Wed" onclick="toggleDay(this)">Wed</button>
+              <button class="day-btn" data-day="Thu" onclick="toggleDay(this)">Thu</button>
+              <button class="day-btn" data-day="Fri" onclick="toggleDay(this)">Fri</button>
+              <button class="day-btn" data-day="Sat" onclick="toggleDay(this)">Sat</button>
+              <button class="day-btn" data-day="Sun" onclick="toggleDay(this)">Sun</button>
+            </div>
+          </div>
+
+          <div class="schedule-section">
+            <label class="schedule-label">🌐 Timezone</label>
+            <div class="custom-select-wrapper">
+              <select class="custom-select" id="timezoneSelect">
+                <option value="">Select timezone...</option>
+                <option value="UTC-12">UTC-12:00 – Baker Island</option>
+                <option value="UTC-11">UTC-11:00 – Samoa</option>
+                <option value="UTC-10">UTC-10:00 – Hawaii (HST)</option>
+                <option value="UTC-8">UTC-08:00 – Pacific Time (PST)</option>
+                <option value="UTC-7">UTC-07:00 – Mountain Time (MST)</option>
+                <option value="UTC-6">UTC-06:00 – Central Time (CST)</option>
+                <option value="UTC-5">UTC-05:00 – Eastern Time (EST)</option>
+                <option value="UTC-4">UTC-04:00 – Atlantic Time (AST)</option>
+                <option value="UTC-3">UTC-03:00 – Buenos Aires</option>
+                <option value="UTC+0">UTC+00:00 – London (GMT)</option>
+                <option value="UTC+1">UTC+01:00 – Paris, Berlin (CET)</option>
+                <option value="UTC+2">UTC+02:00 – Cairo, Athens (EET)</option>
+                <option value="UTC+3">UTC+03:00 – Riyadh, Moscow</option>
+                <option value="UTC+4">UTC+04:00 – Dubai, Baku</option>
+                <option value="UTC+5">UTC+05:00 – Karachi, Islamabad</option>
+                <option value="UTC+5.5">UTC+05:30 – Mumbai, Delhi (IST)</option>
+                <option value="UTC+6">UTC+06:00 – Dhaka, Almaty</option>
+                <option value="UTC+7">UTC+07:00 – Bangkok, Jakarta</option>
+                <option value="UTC+8">UTC+08:00 – Beijing, Singapore</option>
+                <option value="UTC+9">UTC+09:00 – Tokyo, Seoul</option>
+                <option value="UTC+10">UTC+10:00 – Sydney, Melbourne</option>
+                <option value="UTC+12">UTC+12:00 – Auckland, Fiji</option>
+              </select>
+              <span class="select-arrow">▾</span>
+            </div>
+          </div>
+
+          <div class="schedule-row-2">
+            <div class="schedule-section half">
+              <label class="schedule-label">📅 Preferred Start Date</label>
+              <div class="custom-select-wrapper">
+                <input type="date" class="custom-select date-input" id="startDate" min="" />
+              </div>
+            </div>
+
+            <div class="schedule-section half">
+              <label class="schedule-label">🕐 Preferred Start Time</label>
+              <div class="custom-select-wrapper">
+                <select class="custom-select" id="startTime">
+                  <option value="">Select time...</option>
+                  <option>06:00 AM</option><option>06:30 AM</option>
+                  <option>07:00 AM</option><option>07:30 AM</option>
+                  <option>08:00 AM</option><option>08:30 AM</option>
+                  <option>09:00 AM</option><option>09:30 AM</option>
+                  <option>10:00 AM</option><option>10:30 AM</option>
+                  <option>11:00 AM</option><option>11:30 AM</option>
+                  <option>12:00 PM</option><option>12:30 PM</option>
+                  <option>01:00 PM</option><option>01:30 PM</option>
+                  <option>02:00 PM</option><option>02:30 PM</option>
+                  <option>03:00 PM</option><option>03:30 PM</option>
+                  <option>04:00 PM</option><option>04:30 PM</option>
+                  <option>05:00 PM</option><option>05:30 PM</option>
+                  <option>06:00 PM</option><option>06:30 PM</option>
+                  <option>07:00 PM</option><option>07:30 PM</option>
+                  <option>08:00 PM</option><option>08:30 PM</option>
+                  <option>09:00 PM</option><option>09:30 PM</option>
+                  <option>10:00 PM</option><option>10:30 PM</option>
+                </select>
+                <span class="select-arrow">▾</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-footer">
+          <button class="btn-secondary" onclick="goToStep(3)">← Back</button>
+          <div class="footer-right">
+            <span class="fill-hint" id="fillHint4">Fill all fields to continue</span>
+            <button class="btn-submit" onclick="submitForm()">
+              <span class="btn-submit-icon">🚀</span> Submit
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SUCCESS SCREEN ===== -->
+      <div class="step-panel" id="stepSuccess">
+        <div class="success-screen">
+          <div class="success-animation">
+            <div class="success-circle">
+              <span class="success-check">✓</span>
+            </div>
+            <div class="success-sparkles">
+              <span>✨</span><span>⭐</span><span>✨</span>
+            </div>
+          </div>
+          <div class="arabic-blessing success-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+          <h2 class="success-title">JazakAllah Khair!</h2>
+          <p class="success-message">Your registration is complete. We'll send your trial class details shortly. May Allah bless your learning journey.</p>
+          <div class="success-badges">
+            <span class="badge">🕌 Free Trial Booked</span>
+            <span class="badge">📧 Confirmation Sent</span>
+          </div>
+          <button class="btn-primary" onclick="resetForm()">Start New Registration</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
