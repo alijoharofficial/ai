@@ -1949,6 +1949,10 @@
   // ── Sidebar ──
   let editingId = null;
 
+  if (!sessionStorage.getItem('aj_auth')) {
+    window.location.href = 'login.html';
+  }
+
   (function initPage() {
     const params = new URLSearchParams(location.search);
     const editId = params.get('edit');
@@ -2000,7 +2004,7 @@
 
   function openMob()  { document.getElementById('sidebar').classList.add('mob-open');    document.getElementById('overlay').classList.add('on'); }
   function closeMob() { document.getElementById('sidebar').classList.remove('mob-open'); document.getElementById('overlay').classList.remove('on'); }
-  function logout()   { window.location.href = 'login.html'; }
+  function logout()   { sessionStorage.removeItem('aj_auth'); window.location.href = 'login.html'; }
 
   // ── Classification ──
 

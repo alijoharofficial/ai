@@ -44,6 +44,7 @@ var K = "Link2Lord";
 function login(){
   var v = document.getElementById("key").value;
   if(v === K){
+    sessionStorage.setItem('aj_auth','1');
     window.location.href = "all-blogs.html";
   } else {
     var e = document.getElementById("err");
