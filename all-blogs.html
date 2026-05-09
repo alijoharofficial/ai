@@ -657,6 +657,7 @@ let filterStatus = '';
 
 /* ── Init ── */
 function init() {
+  if (!sessionStorage.getItem('aj_auth')) { window.location.href = 'login.html'; return; }
   const raw = localStorage.getItem(KEY);
   posts = raw ? JSON.parse(raw) : SAMPLES;
   if (!raw) localStorage.setItem(KEY, JSON.stringify(posts));
@@ -848,7 +849,7 @@ function toggleSidebar() {
 
 function openMob()  { document.getElementById('sidebar').classList.add('mob-open');    document.getElementById('overlay').classList.add('on'); }
 function closeMob() { document.getElementById('sidebar').classList.remove('mob-open'); document.getElementById('overlay').classList.remove('on'); }
-function logout()   { window.location.href='login.html'; }
+function logout()   { sessionStorage.removeItem('aj_auth'); window.location.href='login.html'; }
 
 init();
 </script>
