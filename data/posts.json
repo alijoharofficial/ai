@@ -1,8 +1,8 @@
 [
   {
     "id": "p1778300848633",
-    "title": "Ali Johar",
-    "slug": "ali-johar",
+    "title": "Ali Joha",
+    "slug": "ali-joha",
     "date": "2026-05-09",
     "summary": "Test",
     "content": "Testing \nTestg\nTesting \nTestg\nTesting \nTestg\nTesting \nTestg",
@@ -11,13 +11,12 @@
     "category": "article",
     "tags": [],
     "featured": false,
-    "meta_title": "Ali Johar",
+    "meta_title": "Ali Joha",
     "meta_description": "Test",
     "og_image": "",
-    "canonical_url": "https://alijoharofficial.github.io/blog/ali-johar",
+    "canonical_url": "https://alijoharofficial.github.io/blog/ali-joha",
     "author_name": "Ali Johar",
     "author_photo": "",
-    "status": "published",
-    "created_at": "2026-05-09T04:27:28.633Z"
+    "status": "published"
   }
 ]
