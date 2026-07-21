@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khurem Qazi — AI Marketing Automation Specialist</title>
+<meta name="description" content="Portfolio of Khurem Qazi, AI Marketing Automation Specialist: performance marketing, GHL CRM architecture, and AI-driven workflow automation.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='13' fill='white'>KQ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090b;--bg2:#111113;--bg3:#18181b;--bg4:#1f1f23;--accent:#2563eb;--ah:#3b82f6;--gold:#f59e0b;--green:#10b981;--text:#fafafa;--t2:#a1a1aa;--t3:#52525b;--br:rgba(255,255,255,0.07);--br2:rgba(255,255,255,0.13);--r:14px;--rs:8px;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Plus Jakarta Sans",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
+a{color:inherit;}
+
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--ah));z-index:300;width:0%;transition:width 0.1s;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:64px;transition:all 0.3s;}
+nav.sc{background:rgba(9,9,11,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--br);}
+.nlogo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nmark{width:34px;height:34px;border-radius:var(--rs);background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.82rem;color:#fff;flex-shrink:0;}
+.ntxt{font-weight:700;font-size:0.95rem;color:var(--text);}
+.nsub{font-size:0.65rem;color:var(--t2);display:block;line-height:1;margin-top:2px;}
+.nlinks{display:flex;align-items:center;gap:2px;list-style:none;}
+.nlinks a{padding:0.42rem 0.82rem;font-size:0.8rem;font-weight:500;color:var(--t2);text-decoration:none;border-radius:var(--rs);transition:all 0.2s;}
+.nlinks a:hover,.nlinks a.on{color:var(--text);background:rgba(255,255,255,0.05);}
+.nburger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;}
+.nburger span{width:20px;height:2px;background:var(--text);border-radius:2px;}
+
+.hero{position:relative;min-height:96vh;display:flex;align-items:center;padding:0 6%;overflow:hidden;}
+.hgrid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);}
+.hglow{position:absolute;top:5%;left:15%;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,0.11) 0%,transparent 65%);pointer-events:none;z-index:0;}
+.hinner{position:relative;z-index:1;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr 400px;gap:4rem;align-items:center;padding-top:64px;}
+.htag{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.09);border:1px solid rgba(37,99,235,0.22);color:#93c5fd;font-size:0.72rem;font-weight:600;padding:0.32rem 0.85rem;border-radius:100px;margin-bottom:1.4rem;letter-spacing:0.03em;}
+.htag .dot{width:5px;height:5px;border-radius:50%;background:#3b82f6;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+h1.hh{font-size:clamp(2.3rem,4vw,3.6rem);font-weight:800;letter-spacing:-0.04em;line-height:1.06;color:var(--text);margin-bottom:1.1rem;}
+h1.hh .it{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;color:#93c5fd;}
+.hdesc{font-size:0.97rem;line-height:1.78;color:var(--t2);max-width:540px;margin-bottom:2rem;}
+.hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.8rem;}
+.hmeta span{display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--t2);background:var(--bg3);border:1px solid var(--br);padding:0.4rem 0.75rem;border-radius:100px;}
+.hstats{display:flex;gap:1.8rem;margin-top:1.6rem;padding-top:1.8rem;border-top:1px solid var(--br);flex-wrap:wrap;}
+.hsv{font-size:1.75rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text);}
+.hsv span{color:var(--ah);}
+.hsl{font-size:0.72rem;color:var(--t2);margin-top:5px;font-weight:500;}
+
+.hpanel{display:flex;flex-direction:column;gap:12px;}
+.pcard{background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);padding:18px;transition:all 0.25s;}
+.pcard:hover{border-color:rgba(37,99,235,0.3);transform:translateY(-2px);}
+.pctop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pclabel{font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--t2);}
+.pcbadge{font-size:0.66rem;font-weight:700;padding:2px 8px;border-radius:100px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);color:#34d399;}
+.pcval{font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;color:var(--text);}
+.pcval .arrow{color:var(--t2);font-weight:500;font-size:1rem;margin:0 4px;}
+.pcbar{height:6px;border-radius:4px;background:var(--bg4);margin-top:12px;overflow:hidden;}
+.pcbarfill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),#60a5fa);width:0%;transition:width 1.2s cubic-bezier(.2,.8,.2,1);}
+.pcnote{font-size:0.72rem;color:var(--t2);margin-top:8px;line-height:1.5;}
+
+.mbar{border-top:1px solid var(--br);border-bottom:1px solid var(--br);background:var(--bg2);padding:13px 0;overflow:hidden;}
+.mtrack{display:flex;gap:2.5rem;width:max-content;animation:ms 30s linear infinite;}
+.mtrack:hover{animation-play-state:paused;}
+@keyframes ms{from{transform:translateX(0);}to{transform:translateX(-50%)}}
+.mi{display:flex;align-items:center;gap:10px;font-size:0.75rem;font-weight:600;color:var(--t3);letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;}
+.mid{width:3px;height:3px;border-radius:50%;background:var(--t3);}
+
+section{position:relative;}
+.si{max-width:1280px;margin:0 auto;padding:6rem 6%;}
+.stag{display:inline-flex;align-items:center;gap:6px;font-size:0.7rem;font-weight:700;color:var(--ah);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem;}
+.stag::before{content:"";display:block;width:14px;height:1.5px;background:var(--ah);}
+h2.st{font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:800;letter-spacing:-0.03em;line-height:1.15;color:var(--text);margin-bottom:0.75rem;}
+h2.st em{font-style:normal;color:var(--ah);}
+.sd{font-size:0.92rem;color:var(--t2);line-height:1.78;max-width:600px;}
+.sbg{background:var(--bg2);}
+
+.compgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:2.6rem;}
+.compc{background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);padding:18px 16px;transition:all 0.25s;cursor:default;}
+.compc:hover{border-color:rgba(37,99,235,0.28);transform:translateY(-3px);}
+.compi{width:36px;height:36px;border-radius:9px;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:12px;}
+.compc h4{font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.35;}
+
+.tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:2.6rem;}
+.tabbtn{background:var(--bg3);border:1px solid var(--br);color:var(--t2);font-size:0.78rem;font-weight:600;padding:0.55rem 1.05rem;border-radius:100px;cursor:pointer;transition:all 0.2s;}
+.tabbtn:hover{border-color:var(--br2);color:var(--text);}
+.tabbtn.on{background:rgba(37,99,235,0.13);border-color:rgba(37,99,235,0.35);color:#93c5fd;}
+.tabpanels{margin-top:1.6rem;background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);padding:24px;min-height:120px;}
+.tabpanel{display:none;flex-wrap:wrap;gap:9px;}
+.tabpanel.on{display:flex;animation:fadein 0.35s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.chip{background:var(--bg4);border:1px solid var(--br);color:var(--t2);font-size:0.78rem;font-weight:500;padding:0.42rem 0.85rem;border-radius:8px;transition:all 0.2s;}
+.chip:hover{border-color:rgba(37,99,235,0.35);color:var(--text);}
+
+.achgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:2.6rem;}
+.achc{padding:22px;background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);transition:all 0.3s;}
+.achc:hover{border-color:var(--br2);transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,0.4);}
+.achtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.7rem;gap:8px;}
+.achloc{font-size:0.65rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--ah);}
+.achmetric{font-size:1.9rem;font-weight:800;letter-spacing:-0.03em;line-height:1;color:var(--text);margin-bottom:0.4rem;}
+.achc h4{font-size:0.85rem;font-weight:700;margin-bottom:0.35rem;color:var(--text);}
+.achc p{font-size:0.8rem;color:var(--t2);line-height:1.6;}
+
+.timeline{margin-top:2.6rem;display:flex;flex-direction:column;gap:10px;}
+.tlitem{background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);overflow:hidden;transition:border-color 0.2s;}
+.tlitem.on{border-color:rgba(37,99,235,0.32);}
+.tlhead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;cursor:pointer;background:none;border:none;width:100%;text-align:left;color:var(--text);}
+.tlleft{display:flex;align-items:center;gap:14px;min-width:0;}
+.tldot{width:10px;height:10px;border-radius:50%;background:var(--bg4);border:2px solid var(--br2);flex-shrink:0;transition:all 0.2s;}
+.tlitem.on .tldot{background:var(--ah);border-color:var(--ah);box-shadow:0 0 0 4px rgba(37,99,235,0.15);}
+.tltxt h3{font-size:0.95rem;font-weight:700;color:var(--text);}
+.tltxt .co{font-size:0.78rem;color:var(--ah);font-weight:600;margin-top:2px;}
+.tlright{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.tldate{font-size:0.72rem;color:var(--t2);background:var(--bg4);padding:4px 10px;border-radius:100px;white-space:nowrap;}
+.tlchevron{font-size:0.8rem;color:var(--t2);transition:transform 0.25s;}
+.tlitem.on .tlchevron{transform:rotate(180deg);color:var(--ah);}
+.tlbody{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+.tlitem.on .tlbody{max-height:900px;}
+.tlbodyin{padding:0 22px 22px 46px;}
+.tlbodyin ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.tlbodyin li{font-size:0.83rem;color:var(--t2);line-height:1.6;padding-left:16px;position:relative;}
+.tlbodyin li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--ah);opacity:0.6;}
+
+.certgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:2.6rem;}
+.certc{display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);transition:all 0.2s;}
+.certc:hover{border-color:rgba(245,158,11,0.3);transform:translateY(-2px);}
+.certi{width:34px;height:34px;border-radius:9px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;color:var(--gold);}
+.certc span{font-size:0.82rem;font-weight:600;color:var(--text);line-height:1.4;}
+
+footer{border-top:1px solid var(--br);background:var(--bg2);padding:3.5rem 6% 2.2rem;}
+.fi{max-width:1280px;margin:0 auto;}
+.ftop{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;padding-bottom:2rem;border-bottom:1px solid var(--br);}
+.flogo{display:flex;align-items:center;gap:10px;}
+.fdesc{font-size:0.82rem;color:var(--t2);max-width:380px;line-height:1.7;margin-top:10px;}
+.fcontact{display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+.fcontact a,.fcontact span{font-size:0.83rem;color:var(--t2);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.fcontact a:hover{color:var(--ah);}
+.fbottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.6rem;font-size:0.75rem;color:var(--t3);flex-wrap:wrap;gap:10px;}
+.totop{background:var(--bg3);border:1px solid var(--br);color:var(--t2);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;text-decoration:none;}
+.totop:hover{border-color:var(--ah);color:var(--ah);transform:translateY(-2px);}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.vi{opacity:1;transform:translateY(0);}
+
+@media(max-width:980px){
+.hinner{grid-template-columns:1fr;gap:2.5rem;}
+.compgrid{grid-template-columns:repeat(2,1fr);}
+.achgrid{grid-template-columns:1fr 1fr;}
+.certgrid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:680px){
+.nlinks{display:none;}
+.nburger{display:flex;}
+.compgrid{grid-template-columns:1fr 1fr;}
+.achgrid{grid-template-columns:1fr;}
+.certgrid{grid-template-columns:1fr;}
+.tlhead{flex-wrap:wrap;}
+.hstats{gap:1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="nav">
+  <a class="nlogo" href="#top">
+    <div class="nmark">KQ</div>
+    <div>
+      <div class="ntxt">Khurem Qazi</div>
+      <span class="nsub">AI Marketing Automation</span>
+    </div>
+  </a>
+  <ul class="nlinks" id="navlinks">
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+  </ul>
+  <button class="nburger" id="burger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hgrid"></div>
+  <div class="hglow"></div>
+  <div class="hinner">
+    <div>
+      <div class="htag"><span class="dot"></span> OPEN TO REMOTE OPPORTUNITIES</div>
+      <h1 class="hh">Khurem Qazi<br><span class="it">AI-driven growth, engineered.</span></h1>
+      <p class="hdesc">AI Marketing Automation Specialist with 10+ years helping global brands across the US, UK, UAE, Denmark, and Canada build smarter systems and run more profitable campaigns — from intelligent automation workflows to CRM ecosystems spanning 1,000+ locations.</p>
+      <div class="hmeta">
+        <span>📍 Lewisville, TX</span>
+        <span>✉️ khuremqazi222@gmail.com</span>
+        <span>📞 +1 812 6665 853</span>
+      </div>
+      <div class="hstats">
+        <div><div class="hsv" data-count="10" data-suffix="+">0</div><div class="hsl">Years Experience</div></div>
+        <div><div class="hsv" data-count="1000" data-suffix="+">0</div><div class="hsl">Clinic Locations Managed</div></div>
+        <div><div class="hsv" data-count="32" data-decimal="1" data-suffix="x">0</div><div class="hsl">Peak ROAS Achieved</div></div>
+        <div><div class="hsv" data-count="35" data-suffix="%">0</div><div class="hsl">CAC Reduction (eCom)</div></div>
+      </div>
+    </div>
+    <div class="hpanel">
+      <div class="pcard">
+        <div class="pctop"><span class="pclabel">Trading &amp; Mutual Fund ROAS</span><span class="pcbadge">▲ 52%</span></div>
+        <div class="pcval">2.1x <span class="arrow">→</span> 3.2x</div>
+        <div class="pcbar"><div class="pcbarfill" data-fill="82"></div></div>
+        <div class="pcnote">Pro Traders Fund (USA) — $14K ad spend, ongoing media-buying optimization</div>
+      </div>
+      <div class="pcard">
+        <div class="pctop"><span class="pclabel">Cost Per Lead</span><span class="pcbadge">▼ 68%</span></div>
+        <div class="pcval">$3.80 <span class="arrow">→</span> $1.23</div>
+        <div class="pcbar"><div class="pcbarfill" data-fill="90"></div></div>
+        <div class="pcnote">TS Orbit / The Joint Chiropractic — multi-channel paid acquisition</div>
+      </div>
+      <div class="pcard">
+        <div class="pctop"><span class="pclabel">Conversion Rate</span><span class="pcbadge">▲ 28%</span></div>
+        <div class="pcval">2.5x revenue lift</div>
+        <div class="pcbar"><div class="pcbarfill" data-fill="70"></div></div>
+        <div class="pcnote">Build-A-Bear (Denmark) — funnel optimization &amp; creative testing</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mbar">
+  <div class="mtrack" id="mtrack"></div>
+</div>
+
+<section id="profile">
+  <div class="si">
+    <div class="stag">Profile</div>
+    <h2 class="st">A decade of turning <em>campaigns into systems</em></h2>
+    <p class="sd">AI Marketing Automation Specialist with 10+ years of experience helping global brands across the US, UK, UAE, Denmark, and Canada build smarter systems and run more profitable campaigns. Specializes in designing intelligent automation workflows, architecting CRM ecosystems in GHL for 1,000+ clinic locations, and integrating multi-channel automation across email, SMS, and WhatsApp. On the performance marketing side, managed large-scale paid media campaigns across Google Ads, Meta Ads, and TikTok, optimizing performance across multiple industries — improving ROAS from 2.1x to 3.2x in trading and mutual fund campaigns, reducing CPL from $3.80 to $1.23, and increasing conversion rates by 28%. In eCommerce, reduced CAC by 35% through funnel optimization and performance-driven creative testing.</p>
+
+    <div class="compgrid reveal" id="compgrid">
+      <div class="compc"><div class="compi">📈</div><h4>Performance Marketing</h4></div>
+      <div class="compc"><div class="compi">⚙️</div><h4>Go High Level (GHL)</h4></div>
+      <div class="compc"><div class="compi">🎯</div><h4>Conversion Rate Optimization</h4></div>
+      <div class="compc"><div class="compi">🧭</div><h4>Lead Gen &amp; Funnel Optimization</h4></div>
+      <div class="compc"><div class="compi">🤖</div><h4>AI Marketing Automation</h4></div>
+    </div>
+  </div>
+</section>
+
+<section class="sbg" id="skills">
+  <div class="si">
+    <div class="stag">Skills &amp; Tools</div>
+    <h2 class="st">A toolkit built for <em>scale</em></h2>
+    <p class="sd">Click a category to explore the platforms and tools used across campaigns, automation systems, and CRM ecosystems.</p>
+
+    <div class="tabbar" id="tabbar" role="tablist"></div>
+    <div class="tabpanels" id="tabpanels"></div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="si">
+    <div class="stag">Key Achievements</div>
+    <h2 class="st">Results across <em>six markets</em></h2>
+    <p class="sd">Selected outcomes from paid acquisition, lead generation, and eCommerce growth engagements.</p>
+
+    <div class="achgrid" id="achgrid"></div>
+  </div>
+</section>
+
+<section class="sbg" id="experience">
+  <div class="si">
+    <div class="stag">Work Experience</div>
+    <h2 class="st">Ten years, <em>one throughline</em></h2>
+    <p class="sd">From campaign execution to architecting automation systems at scale. Click any role to expand the details.</p>
+
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="si">
+    <div class="stag">Certifications</div>
+    <h2 class="st">Verified <em>platform expertise</em></h2>
+
+    <div class="certgrid" id="certgrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="fi">
+    <div class="ftop">
+      <div>
+        <div class="flogo"><div class="nmark">KQ</div><div class="ntxt">Khurem Qazi</div></div>
+        <p class="fdesc">AI Marketing Automation Specialist — designing intelligent automation systems and performance-driven campaigns for brands across the US, UK, UAE, Denmark, and Canada.</p>
+      </div>
+      <div class="fcontact">
+        <a href="mailto:khuremqazi222@gmail.com">✉️ khuremqazi222@gmail.com</a>
+        <span>📞 +1 812 6665 853</span>
+        <span>📍 Vista Ridge Mall Dr, Lewisville, TX 75067</span>
+      </div>
+    </div>
+    <div class="fbottom">
+      <span>© 2026 Khurem Qazi. Built from résumé data.</span>
+      <a class="totop" href="#top" aria-label="Back to top">↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- data ----
+const skillCats = [
+  {name:"Advertising", tools:["Google Ads","Meta Ads Manager","TikTok","LinkedIn"]},
+  {name:"Analytics & Tracking", tools:["GA4","Tag Manager","Looker Studio","Adtool","Superads","SEMrush"]},
+  {name:"Performance Marketing", tools:["SEO","PPC","A/B Testing","Retargeting"]},
+  {name:"Design & Content", tools:["Canva","Adobe Photoshop","CapCut","Letstok"]},
+  {name:"CMS & Web", tools:["WordPress","Shopify","Wix"]},
+  {name:"Automation & CRM", tools:["Notion","Zapier","Appsheet","GHL","HubSpot","Monday","Zoho","ClickUp"]},
+  {name:"Email Marketing", tools:["Mailchimp","Klaviyo","ConvertKit","Brevo"]}
+];
+
+const achievements = [
+  {loc:"Pro Traders Fund · USA", metric:"2.1x → 3.2x", title:"ROAS on trading campaigns", desc:"Scaled ROAS on a $14K ad spend in trading and mutual fund campaigns through ongoing optimization and media buying strategies."},
+  {loc:"HARRY – AI Platform · UAE", metric:"65 leads / 2 days", title:"$2.10 CPL for AI chatbot", desc:"Generated 65 qualified B2B leads using targeted Meta Ads and audience segmentation."},
+  {loc:"Black Silk Studio · UK", metric:"100+ leads / 30 days", title:"$2.62 CPL fitness campaign", desc:"High-intent New Year campaign for a UK fitness club through multi-channel paid campaigns."},
+  {loc:"TS Orbit · USA", metric:"500+ leads / 30 days", title:"$1.70 CPL for The Joint Chiropractic", desc:"Generated leads through combined Meta, Google, and TikTok campaigns."},
+  {loc:"Prime – Amazon Services · UK", metric:"80+ leads / 7 days", title:"~$2 CPL acquisition", desc:"Qualified leads generated through focused paid acquisition campaigns."},
+  {loc:"Build-A-Bear · Denmark", metric:"2.5x revenue", title:"+28% conversion rate", desc:"Improved conversion rate and increased revenue through optimized paid media and funnel strategies."}
+];
+
+const experience = [
+  {role:"AI Marketing Automation Specialist", co:"TS Orbit, United States (Remote)", date:"Oct 2024 – Present", open:true, bullets:[
+    "Design and implement AI-driven marketing automation systems to streamline campaign execution, reporting, and optimization across multiple channels",
+    "Develop intelligent workflows using AI agents to automate repetitive marketing processes, including lead handling, campaign optimization, and reporting",
+    "Build dynamic, real-time reporting dashboards using Looker Studio and AI-powered tools, enabling faster and more accurate decision-making",
+    "Automate large-scale campaign execution using AdTool.io, improving efficiency and scalability across multiple ad accounts",
+    "Implement AI-based reporting automation with Superads.ai to generate insights, summaries, and performance breakdowns",
+    "Integrate multiple platforms and systems using Zapier, ensuring seamless data flow between marketing, CRM, and analytics tools",
+    "Work across CRM and project management systems including HubSpot, Zoho CRM, Monday.com, ClickUp, and Notion to centralize operations",
+    "Automate lifecycle marketing workflows, including email campaigns via Klaviyo, SMS automation through Twilio, and WhatsApp automation using API integrations",
+    "Develop AI-assisted creative workflows, including video generation using Sora, Veo, and platforms like Letstok for AI-driven ad creatives",
+    "Continuously optimize marketing funnels and automation systems to reduce manual effort, improve conversion rates, and maximize campaign ROI"
+  ]},
+  {role:"GHL Automation Expert", co:"TS Orbit, United States (Remote)", date:"Jul 2023 – Oct 2024", bullets:[
+    "Architect and manage a scalable CRM ecosystem using Go High Level (GHL), supporting 1,000+ clinic locations with centralized and location-level automation",
+    "Design and implement end-to-end lead management systems, including capture, qualification, nurturing, and conversion tracking",
+    "Build and optimize high-converting sales funnels within GHL, including landing pages, forms, surveys, and automated follow-up sequences",
+    "Develop advanced automation workflows using triggers, conditions, and multi-step sequences based on user behavior and lifecycle stage",
+    "Implement webhooks and API-based integrations to connect GHL with external platforms, ensuring real-time data synchronization",
+    "Standardize and scale automation frameworks across 1,000+ clinic accounts while maintaining flexibility for local-level customization",
+    "Train internal teams and stakeholders on GHL usage, automation best practices, and system adoption"
+  ]},
+  {role:"Digital Marketing Manager", co:"TS Orbit, United States (Remote)", date:"May 2022 – Jul 2023", bullets:[
+    "Led digital marketing operations for a US-based chiropractic brand (The Joint Chiropractic) as primary point of contact across content, paid media, and reporting",
+    "Managed and scaled marketing efforts across 1,000+ clinic locations, overseeing 1,000+ ad accounts",
+    "Directed and mentored a team of 20+ specialists including media buyers, content creators, designers, and social media managers",
+    "Drove full-funnel campaign strategy across Meta, Google Ads, and TikTok, optimizing for lead generation and ROI",
+    "Implemented advanced tracking and analytics using GA4 and GTM, ensuring accurate conversion measurement",
+    "Managed additional international portfolios across MENA and Europe across industries spanning trading, fitness, legal, hospitality, beauty, and fashion"
+  ]},
+  {role:"Assistant Manager, Digital Marketing", co:"Black Silk Studio, United Kingdom (Remote)", date:"Jan 2020 – May 2022", bullets:[
+    "Led end-to-end digital marketing strategy for 20+ DTC brands as primary point of contact",
+    "Managed multi-region campaigns across the US, UK, and Canada, optimizing by regional audience behavior",
+    "Oversaw and mentored cross-functional teams including media buyers, designers, writers, and SEO specialists",
+    "Owned performance marketing initiatives (SEO &amp; PPC), including budget allocation and ROI maximization",
+    "Developed lifecycle email marketing strategies using Mailchimp, Klaviyo, ConvertKit, and Brevo",
+    "Analyzed campaign performance using GA4 and GTM to drive data-backed decisions"
+  ]},
+  {role:"Senior Digital Marketing Executive", co:"Black Silk Studio, United Kingdom (Remote)", date:"Aug 2018 – Jan 2020", bullets:[
+    "Executed data-driven digital marketing strategies aligned with client KPIs and performance targets",
+    "Managed and optimized SEO and PPC campaigns, including keyword research and bid adjustments",
+    "Planned and executed cross-platform social media campaigns across Meta, TikTok, and LinkedIn",
+    "Supported A/B testing initiatives across ads, landing pages, and creatives"
+  ]},
+  {role:"Digital Marketing Coordinator", co:"Shopistan, United States (Onsite)", date:"Jan 2017 – Aug 2018", bullets:[
+    "Executed and managed multi-channel digital campaigns across Paid Social &amp; Search",
+    "Monitored and optimized campaigns based on CTR, CPA (CAC), and ROAS",
+    "Managed conversion tracking, pixels, and event setup (Meta Pixel, Google Tag)",
+    "Implemented retargeting and funnel optimization strategies"
+  ]},
+  {role:"Digital Marketing Executive", co:"Shopistan, United States (Onsite)", date:"Jan 2016 – Jan 2017", bullets:[
+    "Supported setup and execution of paid digital campaigns (Meta Ads, Google Ads)",
+    "Assisted in writing ad copy and coordinating creative assets",
+    "Monitored basic KPIs including CTR, CPC, and spend pacing",
+    "Helped implement tracking pixels and assisted with event tracking"
+  ]}
+];
+
+const certs = [
+  "Google Ads Search Certification",
+  "Google Ads Display Certification",
+  "Google Ads Video Certification",
+  "Google Shopping Ads Certification",
+  "Fundamentals of Digital Marketing – Google",
+  "Generative AI for Educators – Google"
+];
+
+// ---- render skills tabs ----
+const tabbar = document.getElementById("tabbar");
+const tabpanels = document.getElementById("tabpanels");
+skillCats.forEach((cat,i)=>{
+  const b = document.createElement("button");
+  b.className = "tabbtn" + (i===0 ? " on" : "");
+  b.textContent = cat.name;
+  b.setAttribute("role","tab");
+  b.onclick = ()=>{
+    document.querySelectorAll(".tabbtn").forEach((t,j)=>t.classList.toggle("on", j===i));
+    document.querySelectorAll(".tabpanel").forEach((p,j)=>p.classList.toggle("on", j===i));
+  };
+  tabbar.appendChild(b);
+
+  const p = document.createElement("div");
+  p.className = "tabpanel" + (i===0 ? " on" : "");
+  cat.tools.forEach(t=>{
+    const c = document.createElement("span");
+    c.className = "chip";
+    c.textContent = t;
+    p.appendChild(c);
+  });
+  tabpanels.appendChild(p);
+});
+
+// ---- render achievements ----
+const achgrid = document.getElementById("achgrid");
+achievements.forEach(a=>{
+  const c = document.createElement("div");
+  c.className = "achc reveal";
+  c.innerHTML = `<div class="achtop"><span class="achloc">${a.loc}</span></div><div class="achmetric">${a.metric}</div><h4>${a.title}</h4><p>${a.desc}</p>`;
+  achgrid.appendChild(c);
+});
+
+// ---- render experience accordion ----
+const timeline = document.getElementById("timeline");
+experience.forEach((job,i)=>{
+  const item = document.createElement("div");
+  item.className = "tlitem" + (job.open ? " on" : "");
+  item.innerHTML = `
+    <button class="tlhead" aria-expanded="${job.open ? "true":"false"}">
+      <div class="tlleft">
+        <div class="tldot"></div>
+        <div class="tltxt"><h3>${job.role}</h3><div class="co">${job.co}</div></div>
+      </div>
+      <div class="tlright"><span class="tldate">${job.date}</span><span class="tlchevron">▾</span></div>
+    </button>
+    <div class="tlbody"><div class="tlbodyin"><ul>${job.bullets.map(b=>`<li>${b}</li>`).join("")}</ul></div></div>
+  `;
+  item.querySelector(".tlhead").onclick = ()=>{
+    const wasOn = item.classList.contains("on");
+    item.classList.toggle("on", !wasOn);
+    item.querySelector(".tlhead").setAttribute("aria-expanded", (!wasOn).toString());
+  };
+  timeline.appendChild(item);
+});
+
+// ---- render certifications ----
+const certgrid = document.getElementById("certgrid");
+certs.forEach(c=>{
+  const el = document.createElement("div");
+  el.className = "certc reveal";
+  el.innerHTML = `<div class="certi">✓</div><span>${c}</span>`;
+  certgrid.appendChild(el);
+});
+
+// ---- marquee ----
+const marqueeItems = [...new Set(skillCats.flatMap(c=>c.tools))];
+const mtrack = document.getElementById("mtrack");
+function buildMarquee(){
+  mtrack.innerHTML = "";
+  for(let r=0;r<2;r++){
+    marqueeItems.forEach(t=>{
+      const s = document.createElement("span");
+      s.className = "mi";
+      s.innerHTML = t + '<span class="mid"></span>';
+      mtrack.appendChild(s);
+    });
+  }
+}
+buildMarquee();
+
+// ---- scroll progress + nav bg + active link ----
+const navEl = document.getElementById("nav");
+const navLinks = document.querySelectorAll(".nlinks a");
+const sections = ["profile","skills","achievements","experience","certifications"].map(id=>document.getElementById(id));
+window.addEventListener("scroll", ()=>{
+  const doc = document.documentElement;
+  const pct = (window.scrollY / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById("progress").style.width = pct + "%";
+  navEl.classList.toggle("sc", window.scrollY > 50);
+
+  let current = null;
+  sections.forEach(sec=>{
+    if(sec && window.scrollY >= sec.offsetTop - 140) current = sec.id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle("on", a.getAttribute("href") === "#"+current);
+  });
+});
+
+// ---- mobile menu ----
+document.getElementById("burger").onclick = ()=>{
+  const nl = document.getElementById("navlinks");
+  const showing = nl.style.display === "flex";
+  nl.style.display = showing ? "none" : "flex";
+  nl.style.cssText = showing ? "display:none;" : "display:flex;position:fixed;top:64px;left:0;right:0;background:rgba(9,9,11,0.98);flex-direction:column;padding:10px 6% 20px;border-bottom:1px solid var(--br);";
+};
+
+// ---- counters + bars + reveal on scroll ----
+const counted = new WeakSet();
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.add("vi");
+    if(e.target.classList.contains("hsv") && !counted.has(e.target)){
+      counted.add(e.target);
+      const target = parseFloat(e.target.dataset.count);
+      const decimals = parseInt(e.target.dataset.decimal || "0");
+      const suffix = e.target.dataset.suffix || "";
+      const divisor = decimals ? Math.pow(10, decimals) : 1;
+      let cur = 0;
+      const step = target / 40;
+      const tick = ()=>{
+        cur += step;
+        if(cur >= target){
+          e.target.textContent = (target/divisor).toFixed(decimals) + suffix;
+          return;
+        }
+        e.target.textContent = (cur/divisor).toFixed(decimals) + suffix;
+        requestAnimationFrame(tick);
+      };
+      tick();
+    }
+    if(e.target.classList.contains("pcbarfill")){
+      e.target.style.width = e.target.dataset.fill + "%";
+    }
+    io.unobserve(e.target);
+  });
+}, {threshold:0.3});
+
+document.querySelectorAll(".hsv, .reveal, .pcbarfill").forEach(el=>io.observe(el));
+document.querySelectorAll(".achc, .certc").forEach(el=>{el.classList.add("reveal");io.observe(el);});
+</script>
+</body>
+</html>
