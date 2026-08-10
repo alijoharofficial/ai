@@ -145,6 +145,32 @@ section{position:relative;}
 .stitle em{font-style:normal;background:linear-gradient(90deg,var(--red2),var(--blue2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .sdesc{color:var(--t2);font-size:1.02rem;}
 
+/* brands marquee */
+.brands{padding:2.6rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);}
+.brandslabel{text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--t3);margin-bottom:1.4rem;}
+.bmarquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+.bmtrack{display:flex;gap:2.6rem;width:max-content;animation:bscroll 28s linear infinite;}
+.bmi{font-family:"Rajdhani",sans-serif;font-size:1.15rem;font-weight:700;color:var(--t2);white-space:nowrap;letter-spacing:0.01em;}
+@keyframes bscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* results */
+.results{padding:7rem 0;background:var(--bg2);border-bottom:1px solid var(--line);}
+.rhead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:2.4rem;}
+.rblurb{font-size:0.85rem;color:var(--t2);max-width:260px;text-align:right;}
+.rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;padding:1.8rem 0 2.6rem;border-bottom:1px solid var(--line);margin-bottom:2.6rem;}
+.rstat{text-align:center;}
+.rstat b{display:block;font-family:"Rajdhani",sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(90deg,var(--red2),var(--blue2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.rstat span{font-size:0.8rem;color:var(--t3);font-weight:500;}
+.showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.wcase{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:1.6rem;transition:all .25s;}
+.wcase:hover{transform:translateY(-5px);border-color:var(--line2);box-shadow:0 18px 36px -18px rgba(0,0,0,0.6);}
+.wctop{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.wcname{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--t2);}
+.wcflag{font-size:1.1rem;}
+.wcnum{font-family:"Rajdhani",sans-serif;font-size:2.2rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.wcdesc{font-size:0.85rem;color:var(--t2);margin-bottom:1rem;}
+.wcmetric{font-size:0.78rem;font-weight:600;color:var(--blue2);border-top:1px solid var(--line);padding-top:0.9rem;}
+
 /* services */
 .services{padding:7rem 0;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .slayout{display:grid;grid-template-columns:300px 1fr;gap:2.5rem;align-items:start;}
@@ -265,6 +291,8 @@ section{position:relative;}
 .subbtn:hover:not(:disabled){background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 26px -8px rgba(232,25,44,0.5);}
 .subbtn:disabled{opacity:0.65;cursor:not-allowed;}
 .fnote{text-align:center;font-size:0.76rem;color:var(--t3);margin-top:0.9rem;}
+.fnote a{color:var(--blue2);font-weight:600;}
+.fnote a:hover{text-decoration:underline;}
 .fresult{text-align:center;font-size:0.82rem;margin-top:0.8rem;min-height:1.2em;}
 .fresult.err{color:var(--red2);}
 .fresult a{color:var(--blue2);font-weight:600;}
@@ -300,11 +328,21 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
   .fgrid{grid-template-columns:1fr 1fr;}
   .bklayout{grid-template-columns:1fr;}
   .thighlights{grid-template-columns:1fr 1fr;}
+  .rstats{grid-template-columns:1fr 1fr;}
+  .showcase{grid-template-columns:1fr 1fr;}
+  .rhead{flex-direction:column;align-items:flex-start;}
+  .rblurb{text-align:left;max-width:none;}
 }
 @media(max-width:700px){
   .wrap{padding:0 5.5%;}
   .hero{padding:8rem 0 4rem;}
   .transform{padding:4.5rem 0;}
+  .results{padding:4.5rem 0;}
+  .brands{padding:2rem 0;}
+  .bmi{font-size:0.98rem;}
+  .rstats{grid-template-columns:1fr 1fr;gap:1.2rem 0.8rem;padding:1.4rem 0 2rem;}
+  .rstat b{font-size:1.5rem;}
+  .showcase{grid-template-columns:1fr;}
   .trow.thead{display:none;}
   .trow{grid-template-columns:1fr;}
   .tcell{padding:0.6rem 1.1rem;}
@@ -350,6 +388,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
       </a>
       <ul class="nlinks">
         <li><a href="#services">Services</a></li>
+        <li><a href="#results">Results</a></li>
         <li><a href="#why">Why Us</a></li>
         <li><a href="#process">Process</a></li>
         <li><a href="#transform">Impact</a></li>
@@ -366,6 +405,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
 
 <div class="mnav" id="mnav">
   <a href="#services">Services</a>
+  <a href="#results">Results</a>
   <a href="#why">Why Us</a>
   <a href="#process">Process</a>
   <a href="#transform">Impact</a>
@@ -392,6 +432,88 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
         <div class="hstat"><b>24/7</b><span>Automation Running</span></div>
         <div class="hstat"><b data-count="1">0</b><span>Connected Growth System</span></div>
         <div class="hstat"><b data-count="100" data-suffix="%">0</b><span>Data-Driven Decisions</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="brands" aria-label="Brands TECH24 has worked with">
+    <p class="brandslabel">Brands We've Worked With</p>
+    <div class="bmarquee">
+      <div class="bmtrack">
+        <span class="bmi">Black Silk Studio</span>
+        <span class="bmi">HARRY AI Platform</span>
+        <span class="bmi">Pro Traders Fund</span>
+        <span class="bmi">TS Orbit</span>
+        <span class="bmi">Build-A-Bear</span>
+        <span class="bmi">Prime Amazon Services</span>
+        <span class="bmi">Curl by M</span>
+        <span class="bmi">The Joint</span>
+        <span class="bmi">Black Silk Studio</span>
+        <span class="bmi">HARRY AI Platform</span>
+        <span class="bmi">Pro Traders Fund</span>
+        <span class="bmi">TS Orbit</span>
+        <span class="bmi">Build-A-Bear</span>
+        <span class="bmi">Prime Amazon Services</span>
+        <span class="bmi">Curl by M</span>
+        <span class="bmi">The Joint</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="results" id="results">
+    <div class="wrap">
+      <div class="rhead reveal">
+        <div>
+          <p class="stag">Proven Results</p>
+          <h2 class="stitle">Real Numbers, <em>Real Businesses</em></h2>
+        </div>
+        <p class="rblurb">Live campaign results across the US, UK, UAE and Europe.</p>
+      </div>
+
+      <div class="rstats reveal">
+        <div class="rstat"><b data-count="10" data-suffix="+">0</b><span>Years Experience</span></div>
+        <div class="rstat"><b data-count="20" data-suffix="&times;">0</b><span>Average ROAS</span></div>
+        <div class="rstat"><b class="static">$1.23</b><span>Lowest Cost per Lead</span></div>
+        <div class="rstat"><b data-count="500" data-suffix="+">0</b><span>Leads in 30 Days</span></div>
+      </div>
+
+      <div class="showcase">
+        <div class="wcase reveal">
+          <div class="wctop"><span class="wcname">Black Silk Studio</span><span class="wcflag">&#127468;&#127463;</span></div>
+          <div class="wcnum">500<sup>+</sup></div>
+          <p class="wcdesc">Qualified leads in 30 days through multi-channel AI-optimized campaigns at record cost efficiency.</p>
+          <div class="wcmetric">CPL $1.23 &middot; 30 Days</div>
+        </div>
+        <div class="wcase reveal d1">
+          <div class="wctop"><span class="wcname">HARRY AI Platform</span><span class="wcflag">&#127462;&#127466;</span></div>
+          <div class="wcnum">65</div>
+          <p class="wcdesc">Qualified leads in 2 days using hyper-targeted Meta Ads with AI audience layering and creative testing.</p>
+          <div class="wcmetric">CPL $2.10 &middot; 2 Days</div>
+        </div>
+        <div class="wcase reveal d2">
+          <div class="wctop"><span class="wcname">Pro Traders Fund</span><span class="wcflag">&#127482;&#127480;</span></div>
+          <div class="wcnum">3.2<sup>&times;</sup></div>
+          <p class="wcdesc">Return on $14,000 ad spend through performance-driven campaign architecture and AI optimization.</p>
+          <div class="wcmetric">$14K Budget &middot; ROAS 3.2&times;</div>
+        </div>
+        <div class="wcase reveal">
+          <div class="wctop"><span class="wcname">TS Orbit</span><span class="wcflag">&#127482;&#127480;</span></div>
+          <div class="wcnum">108<sup>+</sup></div>
+          <p class="wcdesc">Leads via unified Google, Meta and TikTok campaigns with full attribution and real-time optimization.</p>
+          <div class="wcmetric">CPL $7.62 &middot; Multi-Channel</div>
+        </div>
+        <div class="wcase reveal d1">
+          <div class="wctop"><span class="wcname">Build-A-Bear</span><span class="wcflag">&#127465;&#127472;</span></div>
+          <div class="wcnum">2.5<sup>&times;</sup></div>
+          <p class="wcdesc">Revenue increase with a 28% conversion rate improvement through AI paid media and funnel redesign.</p>
+          <div class="wcmetric">+28% CVR &middot; 2.5&times; Revenue</div>
+        </div>
+        <div class="wcase reveal d2">
+          <div class="wctop"><span class="wcname">Prime Amazon Services</span><span class="wcflag">&#127468;&#127463;</span></div>
+          <div class="wcnum">65</div>
+          <p class="wcdesc">Leads in 7 days through precision targeting and AI-backed acquisition with near-zero wasted spend.</p>
+          <div class="wcmetric">CPL ~$2.00 &middot; 7 Days</div>
+        </div>
       </div>
     </div>
   </section>
@@ -775,6 +897,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
             <p class="fnote">Completely free &middot; No obligation &middot; No spam</p>
+            <p class="fnote"><a href="https://wa.me/18126665853" target="_blank" rel="noopener">Or message us directly on WhatsApp</a></p>
             <p class="fresult" id="fresult" role="status" aria-live="polite"></p>
           </form>
 
@@ -809,6 +932,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
       </div>
       <div class="fcol">
         <h5>Company</h5>
+        <a href="#results">Results</a>
         <a href="#why">Why TECH24</a>
         <a href="#process">Our Process</a>
         <a href="#faq">FAQ</a>
@@ -941,11 +1065,18 @@ window.addEventListener('resize', function(){
 });
 
 // lead form: same Web3Forms submission mechanism used on alijohar.work
-// NOTE: this access key belongs to alijohar.work's Web3Forms account. Web3Forms
-// keys can be domain-restricted, so once this page is live on its own domain,
-// generate a fresh key at https://web3forms.com and swap it in below if
-// submissions don't arrive. This will also always fail inside a sandboxed
-// preview (e.g. an Artifact), since those block outbound network requests.
+// NOTE: this access key belongs to alijohar.work's Web3Forms account, so
+// submissions here should land in the same alijohar36@gmail.com inbox they
+// already go to on that site. If you also want an automatic confirmation
+// email sent back to the person who submitted the form, that is Web3Forms'
+// "Autoresponder" feature, turned on per access key from the Web3Forms
+// dashboard (web3forms.com), not something set in this file. Since this page
+// reuses the same key as alijohar.work, enabling it there enables it here
+// too. This form will also always fail inside a sandboxed preview (e.g. an
+// Artifact), since those block outbound network requests, and Web3Forms keys
+// can be domain-restricted, so if submissions don't arrive once this page is
+// live on its own domain, generate a fresh key at https://web3forms.com and
+// swap it in below.
 var W3F_KEY = "d3f1e51d-df9e-4937-b5bf-2e99a111f6ec";
 
 var leadForm = document.getElementById('leadForm');
@@ -963,6 +1094,21 @@ function fieldError(id, msg){
   document.getElementById(id).addEventListener('input', function(){ fieldError(id, ''); });
   document.getElementById(id).addEventListener('change', function(){ fieldError(id, ''); });
 });
+
+function buildWhatsAppFallback(fn, em, co, ph, web, bg, gl, msg){
+  var lines = [
+    "New TECH24 lead from the website:",
+    "Name: " + fn,
+    "Email: " + em,
+    "Company: " + co,
+    "Phone: " + (ph || "Not provided"),
+    "Website: " + (web || "Not provided"),
+    "Budget: " + (bg || "Not provided"),
+    "Goal: " + gl,
+    "Details: " + (msg || "Not provided")
+  ];
+  return "https://wa.me/18126665853?text=" + encodeURIComponent(lines.join("\n"));
+}
 
 leadForm.addEventListener('submit', function(e){
   e.preventDefault();
@@ -998,6 +1144,7 @@ leadForm.addEventListener('submit', function(e){
       access_key: W3F_KEY,
       subject: "New TECH24 Lead: " + fn + " (" + co + ")",
       from_name: "TECH24 Website",
+      replyto: em,
       "Name": fn,
       "Email": em,
       "Company": co,
@@ -1023,7 +1170,8 @@ leadForm.addEventListener('submit', function(e){
     subbtn.disabled = false;
     subbtn.textContent = 'Get My Free Growth Plan';
     fresult.className = 'fresult err';
-    fresult.innerHTML = 'Something went wrong. Please try again or call/WhatsApp us at <a href="tel:+18126665853">+1 (812) 666-5853</a>.';
+    var waLink = buildWhatsAppFallback(fn, em, co, ph, web, bg, gl, msg);
+    fresult.innerHTML = 'Your request could not be sent automatically. <a href="' + waLink + '" target="_blank" rel="noopener">Tap here to send it via WhatsApp instead</a>, or call us at <a href="tel:+18126665853">+1 (812) 666-5853</a>.';
   });
 });
 </script>
