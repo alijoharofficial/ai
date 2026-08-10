@@ -296,7 +296,12 @@ section{position:relative;}
 .fresult{text-align:center;font-size:0.82rem;margin-top:0.8rem;min-height:1.2em;}
 .fresult.err{color:var(--red2);}
 .fresult a{color:var(--blue2);font-weight:600;}
-.bksuccess{display:none;text-align:center;padding:2.6rem 1rem;}
+.bksuccess{text-align:center;padding:2.6rem 1rem;}
+.bkstepbar{display:flex;align-items:center;gap:0.9rem;margin-bottom:1.1rem;}
+.bkback{background:var(--bg4);border:1px solid var(--line2);color:var(--t2);font-size:0.8rem;font-weight:600;padding:0.5rem 0.95rem;border-radius:var(--rs);cursor:pointer;transition:all .2s;}
+.bkback:hover{color:var(--text);border-color:var(--line);}
+.bkstepbar p{font-size:0.85rem;color:var(--t2);}
+.bkcal{border-radius:var(--rs);overflow:hidden;border:1px solid var(--line);}
 .bkicon{font-size:2.6rem;margin-bottom:1rem;}
 .bksuccess h4{font-size:1.2rem;font-weight:700;color:var(--blue2);margin-bottom:0.6rem;}
 .bksuccess p{color:var(--t2);font-size:0.9rem;max-width:380px;margin:0 auto;}
@@ -810,101 +815,113 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
         </div>
 
         <div class="bkform reveal">
-          <form id="leadForm" novalidate>
-            <p class="bkft">Request Your Free Growth Plan</p>
-            <div class="frow">
-              <div class="fg">
-                <label for="fn">Full Name *</label>
-                <input type="text" id="fn" name="fn" placeholder="Your full name" autocomplete="name">
-                <span class="ferr"></span>
+          <div id="bkStep1">
+            <form id="leadForm" novalidate>
+              <p class="bkft">Request Your Free Growth Plan</p>
+              <div class="frow">
+                <div class="fg">
+                  <label for="fn">Full Name *</label>
+                  <input type="text" id="fn" name="fn" placeholder="Your full name" autocomplete="name">
+                  <span class="ferr"></span>
+                </div>
+                <div class="fg">
+                  <label for="em">Business Email *</label>
+                  <input type="email" id="em" name="em" placeholder="you@company.com" autocomplete="email">
+                  <span class="ferr"></span>
+                </div>
               </div>
-              <div class="fg">
-                <label for="em">Business Email *</label>
-                <input type="email" id="em" name="em" placeholder="you@company.com" autocomplete="email">
-                <span class="ferr"></span>
+              <div class="frow">
+                <div class="fg">
+                  <label for="co">Company Name *</label>
+                  <input type="text" id="co" name="co" placeholder="Your company" autocomplete="organization">
+                  <span class="ferr"></span>
+                </div>
+                <div class="fg">
+                  <label for="ph">Phone / WhatsApp</label>
+                  <input type="tel" id="ph" name="ph" placeholder="+1 234 567 8900" autocomplete="tel">
+                </div>
               </div>
-            </div>
-            <div class="frow">
-              <div class="fg">
-                <label for="co">Company Name *</label>
-                <input type="text" id="co" name="co" placeholder="Your company" autocomplete="organization">
-                <span class="ferr"></span>
+              <div class="frow">
+                <div class="fg">
+                  <label for="web">Website URL</label>
+                  <input type="url" id="web" name="web" placeholder="https://yourbusiness.com" autocomplete="url">
+                </div>
+                <div class="fg">
+                  <label for="bg">Monthly Marketing Budget</label>
+                  <select id="bg" name="bg">
+                    <option value="">Select a range</option>
+                    <option>Under $1,000</option>
+                    <option>$1,000 &ndash; $5,000</option>
+                    <option>$5,000 &ndash; $15,000</option>
+                    <option>$15,000+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
               </div>
-              <div class="fg">
-                <label for="ph">Phone / WhatsApp</label>
-                <input type="tel" id="ph" name="ph" placeholder="+1 234 567 8900" autocomplete="tel">
+              <div class="frow">
+                <div class="fg full">
+                  <label for="gl">I Need Help With *</label>
+                  <select id="gl" name="gl">
+                    <option value="">Select your primary goal</option>
+                    <optgroup label="AI Paid Media">
+                      <option>Generate more qualified leads with AI ads</option>
+                      <option>Reduce cost per lead / acquisition</option>
+                      <option>Scale paid ads profitably (Google / Meta / TikTok / LinkedIn)</option>
+                    </optgroup>
+                    <optgroup label="Analytics &amp; Attribution">
+                      <option>Set up GA4 and conversion tracking properly</option>
+                      <option>Understand which channels actually drive revenue</option>
+                      <option>Build live reporting dashboards</option>
+                    </optgroup>
+                    <optgroup label="GHL Automation">
+                      <option>Build a GHL CRM and sales pipeline from scratch</option>
+                      <option>Automate lead follow-up, nurture &amp; missed-call text-back</option>
+                      <option>Set up review &amp; reputation automation</option>
+                    </optgroup>
+                    <optgroup label="Business Automation">
+                      <option>Automate internal workflows and reporting</option>
+                      <option>Connect my tools/CRM together (Zapier / Make)</option>
+                      <option>Reduce manual admin work across my team</option>
+                    </optgroup>
+                    <optgroup label="AI Growth Strategy">
+                      <option>Get a 90-day AI growth roadmap</option>
+                      <option>Full funnel audit and growth plan</option>
+                      <option>Not sure, help me figure out where to start</option>
+                    </optgroup>
+                    <optgroup label="Full Package">
+                      <option>Combine multiple services into one system</option>
+                    </optgroup>
+                  </select>
+                  <span class="ferr"></span>
+                </div>
               </div>
-            </div>
-            <div class="frow">
-              <div class="fg">
-                <label for="web">Website URL</label>
-                <input type="url" id="web" name="web" placeholder="https://yourbusiness.com" autocomplete="url">
+              <div class="fg full" style="margin-bottom:1.1rem;">
+                <label for="msg">Tell Us About Your Business (optional)</label>
+                <textarea id="msg" name="msg" placeholder="Brief description of your business, current challenges, and what you hope to achieve..."></textarea>
               </div>
-              <div class="fg">
-                <label for="bg">Monthly Marketing Budget</label>
-                <select id="bg" name="bg">
-                  <option value="">Select a range</option>
-                  <option>Under $1,000</option>
-                  <option>$1,000 &ndash; $5,000</option>
-                  <option>$5,000 &ndash; $15,000</option>
-                  <option>$15,000+</option>
-                  <option>Not sure yet</option>
-                </select>
-              </div>
-            </div>
-            <div class="frow">
-              <div class="fg full">
-                <label for="gl">I Need Help With *</label>
-                <select id="gl" name="gl">
-                  <option value="">Select your primary goal</option>
-                  <optgroup label="AI Paid Media">
-                    <option>Generate more qualified leads with AI ads</option>
-                    <option>Reduce cost per lead / acquisition</option>
-                    <option>Scale paid ads profitably (Google / Meta / TikTok / LinkedIn)</option>
-                  </optgroup>
-                  <optgroup label="Analytics &amp; Attribution">
-                    <option>Set up GA4 and conversion tracking properly</option>
-                    <option>Understand which channels actually drive revenue</option>
-                    <option>Build live reporting dashboards</option>
-                  </optgroup>
-                  <optgroup label="GHL Automation">
-                    <option>Build a GHL CRM and sales pipeline from scratch</option>
-                    <option>Automate lead follow-up, nurture &amp; missed-call text-back</option>
-                    <option>Set up review &amp; reputation automation</option>
-                  </optgroup>
-                  <optgroup label="Business Automation">
-                    <option>Automate internal workflows and reporting</option>
-                    <option>Connect my tools/CRM together (Zapier / Make)</option>
-                    <option>Reduce manual admin work across my team</option>
-                  </optgroup>
-                  <optgroup label="AI Growth Strategy">
-                    <option>Get a 90-day AI growth roadmap</option>
-                    <option>Full funnel audit and growth plan</option>
-                    <option>Not sure, help me figure out where to start</option>
-                  </optgroup>
-                  <optgroup label="Full Package">
-                    <option>Combine multiple services into one system</option>
-                  </optgroup>
-                </select>
-                <span class="ferr"></span>
-              </div>
-            </div>
-            <div class="fg full" style="margin-bottom:1.1rem;">
-              <label for="msg">Tell Us About Your Business (optional)</label>
-              <textarea id="msg" name="msg" placeholder="Brief description of your business, current challenges, and what you hope to achieve..."></textarea>
-            </div>
-            <button type="submit" class="subbtn" id="subbtn">Get My Free Growth Plan
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-            <p class="fnote">Completely free &middot; No obligation &middot; No spam</p>
-            <p class="fnote"><a href="https://wa.me/18126665853" target="_blank" rel="noopener">Or message us directly on WhatsApp</a></p>
-            <p class="fresult" id="fresult" role="status" aria-live="polite"></p>
-          </form>
+              <button type="submit" class="subbtn" id="subbtn">Next: Pick Your Time Slot
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+              <p class="fnote">Completely free &middot; No obligation &middot; No spam</p>
+              <p class="fnote"><a href="https://wa.me/18126665853" target="_blank" rel="noopener">Or message us directly on WhatsApp</a></p>
+            </form>
+          </div>
 
-          <div class="bksuccess" id="bkSuccess">
+          <div id="bkStep2" style="display:none;">
+            <div class="bkstepbar">
+              <button type="button" class="bkback" id="bkBack">&larr; Back</button>
+              <p>Pick a date and time for your free call</p>
+            </div>
+            <div class="bkcal">
+              <div class="calendly-inline-widget" id="cal-widget" data-url="https://calendly.com/rockingprince92/30min?hide_landing_page_details=1&amp;hide_gdpr_banner=1&amp;background_color=141419&amp;text_color=f7f7f9&amp;primary_color=e8192c" style="min-width:100%;height:680px;"></div>
+            </div>
+            <p class="fnote">Your details are pre-filled &middot; A confirmation is sent to your email instantly</p>
+          </div>
+
+          <div id="bkStep3" class="bksuccess" style="display:none;">
             <div class="bkicon">&#127881;</div>
-            <h4>Request Sent!</h4>
-            <p>Thanks. Your details are on their way to our team. We'll get back to you within 24 hours with next steps.</p>
+            <h4>Call Booked!</h4>
+            <p>A confirmation has been sent to your inbox and the meeting is on our calendar. We'll see you on the call.</p>
           </div>
         </div>
       </div>
@@ -956,6 +973,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
   </div>
 </footer>
 
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1064,25 +1082,23 @@ window.addEventListener('resize', function(){
   });
 });
 
-// lead form: same Web3Forms submission mechanism used on alijohar.work
-// NOTE: this access key belongs to alijohar.work's Web3Forms account, so
-// submissions here should land in the same alijohar36@gmail.com inbox they
-// already go to on that site. If you also want an automatic confirmation
-// email sent back to the person who submitted the form, that is Web3Forms'
-// "Autoresponder" feature, turned on per access key from the Web3Forms
-// dashboard (web3forms.com), not something set in this file. Since this page
-// reuses the same key as alijohar.work, enabling it there enables it here
-// too. This form will also always fail inside a sandboxed preview (e.g. an
-// Artifact), since those block outbound network requests, and Web3Forms keys
-// can be domain-restricted, so if submissions don't arrive once this page is
-// live on its own domain, generate a fresh key at https://web3forms.com and
-// swap it in below.
-var W3F_KEY = "d3f1e51d-df9e-4937-b5bf-2e99a111f6ec";
+// lead form: same two-step "form then Calendly" flow and Web3Forms
+// submission mechanism used on alijohar.work. Step 1 validates and fires a
+// fire-and-forget Web3Forms notification with the lead's details, then
+// immediately advances to the Calendly step (booking is not blocked on that
+// email succeeding). When Calendly reports the call as scheduled, a second
+// fire-and-forget Web3Forms notification is sent with the booked slot.
+var W3F_KEY = "98debce6-61e3-47ac-90db-fa58788eccd9";
+var CALENDLY_URL = "https://calendly.com/rockingprince92/30min";
 
 var leadForm = document.getElementById('leadForm');
 var subbtn = document.getElementById('subbtn');
-var fresult = document.getElementById('fresult');
-var bkSuccess = document.getElementById('bkSuccess');
+var bkStep1 = document.getElementById('bkStep1');
+var bkStep2 = document.getElementById('bkStep2');
+var bkStep3 = document.getElementById('bkStep3');
+var bkBack = document.getElementById('bkBack');
+var bookingSection = document.getElementById('contact');
+var leadData = {};
 
 function fieldError(id, msg){
   var input = document.getElementById(id);
@@ -1095,19 +1111,29 @@ function fieldError(id, msg){
   document.getElementById(id).addEventListener('change', function(){ fieldError(id, ''); });
 });
 
-function buildWhatsAppFallback(fn, em, co, ph, web, bg, gl, msg){
-  var lines = [
-    "New TECH24 lead from the website:",
-    "Name: " + fn,
-    "Email: " + em,
-    "Company: " + co,
-    "Phone: " + (ph || "Not provided"),
-    "Website: " + (web || "Not provided"),
-    "Budget: " + (bg || "Not provided"),
-    "Goal: " + gl,
-    "Details: " + (msg || "Not provided")
-  ];
-  return "https://wa.me/18126665853?text=" + encodeURIComponent(lines.join("\n"));
+function sendWeb3Form(extraFields){
+  var formData = new FormData();
+  formData.append("access_key", W3F_KEY);
+  formData.append("from_name", "TECH24 Website");
+  formData.append("replyto", leadData.em);
+  formData.append("name", leadData.fn);
+  formData.append("email", leadData.em);
+  formData.append("Company", leadData.co);
+  formData.append("Phone", leadData.ph || "Not provided");
+  formData.append("Website", leadData.web || "Not provided");
+  formData.append("Monthly Budget", leadData.bg || "Not provided");
+  formData.append("Goal", leadData.gl);
+  formData.append("message", leadData.msg || "No additional details provided.");
+  Object.keys(extraFields).forEach(function(key){ formData.append(key, extraFields[key]); });
+
+  fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {"Accept":"application/json"},
+    body: formData
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){ console.log('Web3Forms sent:', d); })
+  .catch(function(err){ console.error('Web3Forms failed:', err); });
 }
 
 leadForm.addEventListener('submit', function(e){
@@ -1132,51 +1158,60 @@ leadForm.addEventListener('submit', function(e){
     return;
   }
 
-  subbtn.disabled = true;
-  subbtn.textContent = 'Sending...';
-  fresult.className = 'fresult';
-  fresult.textContent = '';
+  leadData = {fn:fn, em:em, co:co, ph:ph, web:web, bg:bg, gl:gl, msg:msg};
 
-  // FormData, matching Web3Forms' own verified integration snippet for this
-  // access key exactly (do not set a Content-Type header here: the browser
-  // must set its own multipart boundary for FormData to parse correctly).
-  var formData = new FormData();
-  formData.append("access_key", W3F_KEY);
-  formData.append("subject", "New TECH24 Lead: " + fn + " (" + co + ")");
-  formData.append("from_name", "TECH24 Website");
-  formData.append("replyto", em);
-  formData.append("name", fn);
-  formData.append("email", em);
-  formData.append("Company", co);
-  formData.append("Phone", ph || "Not provided");
-  formData.append("Website", web || "Not provided");
-  formData.append("Monthly Budget", bg || "Not provided");
-  formData.append("Goal", gl);
-  formData.append("message", msg || "No additional details provided.");
-
-  fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: {"Accept":"application/json"},
-    body: formData
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(d){
-    if(d.success){
-      leadForm.style.display = 'none';
-      bkSuccess.style.display = 'block';
-      bkSuccess.scrollIntoView({behavior:'smooth', block:'center'});
-    } else {
-      throw new Error(d.message || 'Submission failed');
-    }
-  })
-  .catch(function(err){
-    console.error('Web3Forms failed:', err);
-    subbtn.disabled = false;
-    subbtn.textContent = 'Get My Free Growth Plan';
-    fresult.className = 'fresult err';
-    var waLink = buildWhatsAppFallback(fn, em, co, ph, web, bg, gl, msg);
-    fresult.innerHTML = 'Your request could not be sent automatically. <a href="' + waLink + '" target="_blank" rel="noopener">Tap here to send it via WhatsApp instead</a>, or call us at <a href="tel:+18126665853">+1 (812) 666-5853</a>.';
+  // Web3Forms: notify the team the moment they click through, same as
+  // alijohar.work's goToCalendly(). Fire-and-forget: does not block booking.
+  sendWeb3Form({
+    subject: "New Lead - Picking Time: " + fn + " (" + co + ")",
+    "Status": "Viewing time slots"
   });
+
+  // Re-init the Calendly widget with prefill, same as alijohar.work.
+  var widget = document.getElementById('cal-widget');
+  widget.innerHTML = '';
+  if(window.Calendly){
+    window.Calendly.initInlineWidget({
+      url: CALENDLY_URL,
+      parentElement: widget,
+      prefill: {name: fn, email: em},
+      pageSettings: {backgroundColor:'141419', textColor:'f7f7f9', primaryColor:'e8192c', hideLandingPageDetails:true, hideGdprBanner:true}
+    });
+  } else {
+    widget.setAttribute('data-url', CALENDLY_URL + '?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=141419&text_color=f7f7f9&primary_color=e8192c&name=' + encodeURIComponent(fn) + '&email=' + encodeURIComponent(em));
+  }
+
+  bkStep1.style.display = 'none';
+  bkStep2.style.display = 'block';
+  bookingSection.scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+bkBack.addEventListener('click', function(){
+  bkStep2.style.display = 'none';
+  bkStep1.style.display = 'block';
+});
+
+// When Calendly confirms the booking, send a follow-up Web3Forms email with
+// the booked slot, then show the confirmation step. Same pattern as
+// alijohar.work's calendly.event_scheduled listener.
+window.addEventListener('message', function(e){
+  if(e.origin !== 'https://calendly.com') return;
+  if(e.data && e.data.event === 'calendly.event_scheduled'){
+    var payload = e.data.payload || {};
+    var startTime = (payload.event && payload.event.start_time) || 'See Calendly';
+    var evtUri = (payload.event && payload.event.uri) || 'See Calendly dashboard';
+
+    sendWeb3Form({
+      subject: 'BOOKED: ' + leadData.fn + ' (' + leadData.co + ')',
+      'Booked Slot': startTime,
+      'Calendly Link': evtUri,
+      'Status': 'BOOKED'
+    });
+
+    bkStep2.style.display = 'none';
+    bkStep3.style.display = 'block';
+    bookingSection.scrollIntoView({behavior:'smooth', block:'start'});
+  }
 });
 </script>
 </body>
