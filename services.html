@@ -208,6 +208,45 @@ section{position:relative;}
 .fcta p{color:var(--t2);max-width:520px;margin:0 auto 2rem;position:relative;z-index:2;}
 .fcta .hctas{margin-bottom:0;position:relative;z-index:2;}
 
+/* booking / lead form */
+.booking{padding:7rem 0;background:var(--bg2);border-top:1px solid var(--line);}
+.bklayout{display:grid;grid-template-columns:0.85fr 1.15fr;gap:2.5rem;align-items:start;}
+.bkinfo{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.2rem;}
+.bkinfo h3{font-size:1.2rem;font-weight:700;margin-bottom:0.7rem;}
+.bkinfo>p{color:var(--t2);font-size:0.9rem;margin-bottom:1.6rem;}
+.bkpts{display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1.6rem;}
+.bkp{display:flex;gap:0.7rem;align-items:flex-start;font-size:0.86rem;color:var(--t2);}
+.bkpc{flex:none;width:20px;height:20px;border-radius:50%;background:rgba(47,107,255,0.15);color:var(--blue2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;margin-top:0.1rem;}
+.bknote{padding:1.05rem;background:rgba(232,25,44,0.06);border:1px solid rgba(232,25,44,0.18);border-radius:var(--rs);font-size:0.8rem;color:var(--t2);line-height:1.7;}
+.bknote strong{color:var(--red2);display:block;margin-bottom:0.2rem;}
+.bknote a{color:var(--blue2);font-weight:600;}
+.bknote a:hover{text-decoration:underline;}
+
+.bkform{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.2rem;}
+.bkft{font-size:1.15rem;font-weight:700;margin-bottom:1.3rem;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem;}
+.fg{display:flex;flex-direction:column;gap:0.4rem;}
+.fg.full{grid-column:1/-1;}
+.fg label{font-size:0.74rem;font-weight:600;color:var(--t2);letter-spacing:0.02em;}
+.fg input,.fg select,.fg textarea{background:var(--bg4);border:1px solid var(--line2);color:var(--text);font-family:inherit;font-size:0.9rem;padding:0.72rem 0.9rem;border-radius:var(--rs);outline:none;transition:all .2s;width:100%;}
+.fg select{cursor:pointer;}
+.fg textarea{min-height:96px;resize:vertical;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 3px rgba(47,107,255,0.15);}
+.fg input.invalid,.fg select.invalid{border-color:var(--red2);box-shadow:0 0 0 3px rgba(232,25,44,0.13);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--t3);}
+.ferr{font-size:0.74rem;color:var(--red2);min-height:1.1em;}
+.subbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-weight:700;font-size:0.95rem;padding:0.95rem;border:none;border-radius:var(--rs);cursor:pointer;transition:all .2s;margin-top:0.3rem;}
+.subbtn:hover:not(:disabled){background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 26px -8px rgba(232,25,44,0.5);}
+.subbtn:disabled{opacity:0.65;cursor:not-allowed;}
+.fnote{text-align:center;font-size:0.76rem;color:var(--t3);margin-top:0.9rem;}
+.fresult{text-align:center;font-size:0.82rem;margin-top:0.8rem;min-height:1.2em;}
+.fresult.err{color:var(--red2);}
+.fresult a{color:var(--blue2);font-weight:600;}
+.bksuccess{display:none;text-align:center;padding:2.6rem 1rem;}
+.bkicon{font-size:2.6rem;margin-bottom:1rem;}
+.bksuccess h4{font-size:1.2rem;font-weight:700;color:var(--blue2);margin-bottom:0.6rem;}
+.bksuccess p{color:var(--t2);font-size:0.9rem;max-width:380px;margin:0 auto;}
+
 /* footer */
 footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg2);}
 .finner{max-width:1180px;margin:0 auto;}
@@ -222,7 +261,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
 .fsocial a:hover{border-color:var(--red);color:var(--red2);transform:translateY(-2px);}
 
 @media(max-width:900px){
-  .nlinks,.nbtn{display:none;}
+  header .nlinks,header .nbtn{display:none;}
   .mbtn{display:flex;}
   .hstats{grid-template-columns:repeat(2,1fr);row-gap:1.6rem;}
   .slayout{grid-template-columns:1fr;}
@@ -233,10 +272,30 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
   .ptrack{grid-template-columns:1fr 1fr;row-gap:2.4rem;}
   .ptrack::before{display:none;}
   .fgrid{grid-template-columns:1fr 1fr;}
+  .bklayout{grid-template-columns:1fr;}
+}
+@media(max-width:700px){
+  .wrap{padding:0 5.5%;}
+  .hero{padding:8rem 0 4rem;}
+  .services,.why,.process,.faq,.booking{padding:4.5rem 0;}
+  .fcta{padding:4.5rem 0;}
+  .shead{margin-bottom:2.4rem;}
+  .spanel{padding:1.6rem;}
+  .bkinfo,.bkform{padding:1.6rem;}
+  .frow{grid-template-columns:1fr;gap:0.9rem;}
+  .htag{font-size:0.72rem;padding:0.45rem 0.9rem;}
 }
 @media(max-width:560px){
   .wgrid,.ptrack,.fgrid{grid-template-columns:1fr;}
   .stab{flex:1 1 100%;}
+  .hstats{grid-template-columns:repeat(2,1fr);gap:1.2rem 1rem;}
+  .hstat b{font-size:1.5rem;}
+  .hctas{flex-direction:column;align-items:stretch;}
+  .hctas a{justify-content:center;}
+  .logo-mark{font-size:1.25rem;}
+  .logo-24{font-size:1.35rem;}
+  .logo-tag{font-size:0.44rem;letter-spacing:0.16em;}
+  .fbottom{flex-direction:column;align-items:flex-start;gap:0.5rem;}
 }
 </style>
 </head>
@@ -493,16 +552,141 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
     </div>
   </section>
 
-  <section class="fcta" id="contact">
+  <section class="fcta">
     <div class="fcta-glow" aria-hidden="true"></div>
     <div class="fcta-glow2" aria-hidden="true"></div>
     <div class="wrap">
       <h2>Ready to Connect Your Business to Smarter Growth?</h2>
-      <p>Book a free strategy call and we'll show you exactly where AI paid media, automation and analytics can move the needle first.</p>
+      <p>Fill out the form below and we'll show you exactly where AI paid media, automation and analytics can move the needle first.</p>
       <div class="hctas">
-        <a href="mailto:hello@tech24.example" class="bp">Book a Free Strategy Call
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <a href="#contact" class="bp">Get My Free Growth Plan
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking" id="contact">
+    <div class="wrap">
+      <div class="shead reveal">
+        <p class="stag">Free Strategy Call</p>
+        <h2 class="stitle">Get Your Free <em>Growth Plan</em></h2>
+        <p class="sdesc">Tell us about your business and we'll show you exactly which service to start with — no obligation.</p>
+      </div>
+      <div class="bklayout">
+        <div class="bkinfo reveal">
+          <h3>What We'll Cover</h3>
+          <p>This isn't a sales call. We'll come prepared with specific opportunities for your business whether we work together or not.</p>
+          <div class="bkpts">
+            <div class="bkp"><span class="bkpc">&#10003;</span><span>Review your current marketing and identify the biggest leaks</span></div>
+            <div class="bkp"><span class="bkpc">&#10003;</span><span>Map your internal processes ready for automation</span></div>
+            <div class="bkp"><span class="bkpc">&#10003;</span><span>Show exactly what's possible within your budget and timeline</span></div>
+            <div class="bkp"><span class="bkpc">&#10003;</span><span>Give you a prioritized list of quick wins to start immediately</span></div>
+            <div class="bkp"><span class="bkpc">&#10003;</span><span>No obligation — you walk away with real value either way</span></div>
+          </div>
+          <div class="bknote">
+            <strong>Prefer to reach out directly?</strong>
+            Email <a href="mailto:alijohar36@gmail.com">alijohar36@gmail.com</a> and we'll reply within 24 hours.
+          </div>
+        </div>
+
+        <div class="bkform reveal">
+          <form id="leadForm" novalidate>
+            <p class="bkft">Request Your Free Growth Plan</p>
+            <div class="frow">
+              <div class="fg">
+                <label for="fn">Full Name *</label>
+                <input type="text" id="fn" name="fn" placeholder="Your full name" autocomplete="name">
+                <span class="ferr"></span>
+              </div>
+              <div class="fg">
+                <label for="em">Business Email *</label>
+                <input type="email" id="em" name="em" placeholder="you@company.com" autocomplete="email">
+                <span class="ferr"></span>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fg">
+                <label for="co">Company Name *</label>
+                <input type="text" id="co" name="co" placeholder="Your company" autocomplete="organization">
+                <span class="ferr"></span>
+              </div>
+              <div class="fg">
+                <label for="ph">Phone / WhatsApp</label>
+                <input type="tel" id="ph" name="ph" placeholder="+1 234 567 8900" autocomplete="tel">
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fg">
+                <label for="web">Website URL</label>
+                <input type="url" id="web" name="web" placeholder="https://yourbusiness.com" autocomplete="url">
+              </div>
+              <div class="fg">
+                <label for="bg">Monthly Marketing Budget</label>
+                <select id="bg" name="bg">
+                  <option value="">Select a range</option>
+                  <option>Under $1,000</option>
+                  <option>$1,000 &ndash; $5,000</option>
+                  <option>$5,000 &ndash; $15,000</option>
+                  <option>$15,000+</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fg full">
+                <label for="gl">I Need Help With *</label>
+                <select id="gl" name="gl">
+                  <option value="">Select your primary goal</option>
+                  <optgroup label="AI Paid Media">
+                    <option>Generate more qualified leads with AI ads</option>
+                    <option>Reduce cost per lead / acquisition</option>
+                    <option>Scale paid ads profitably (Google / Meta / TikTok / LinkedIn)</option>
+                  </optgroup>
+                  <optgroup label="Analytics &amp; Attribution">
+                    <option>Set up GA4 and conversion tracking properly</option>
+                    <option>Understand which channels actually drive revenue</option>
+                    <option>Build live reporting dashboards</option>
+                  </optgroup>
+                  <optgroup label="GHL Automation">
+                    <option>Build a GHL CRM and sales pipeline from scratch</option>
+                    <option>Automate lead follow-up, nurture &amp; missed-call text-back</option>
+                    <option>Set up review &amp; reputation automation</option>
+                  </optgroup>
+                  <optgroup label="Business Automation">
+                    <option>Automate internal workflows and reporting</option>
+                    <option>Connect my tools/CRM together (Zapier / Make)</option>
+                    <option>Reduce manual admin work across my team</option>
+                  </optgroup>
+                  <optgroup label="AI Growth Strategy">
+                    <option>Get a 90-day AI growth roadmap</option>
+                    <option>Full funnel audit and growth plan</option>
+                    <option>Not sure &mdash; help me figure out where to start</option>
+                  </optgroup>
+                  <optgroup label="Full Package">
+                    <option>Combine multiple services into one system</option>
+                  </optgroup>
+                </select>
+                <span class="ferr"></span>
+              </div>
+            </div>
+            <div class="fg full" style="margin-bottom:1.1rem;">
+              <label for="msg">Tell Us About Your Business (optional)</label>
+              <textarea id="msg" name="msg" placeholder="Brief description of your business, current challenges, and what you hope to achieve..."></textarea>
+            </div>
+            <button type="submit" class="subbtn" id="subbtn">Get My Free Growth Plan
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <p class="fnote">Completely free &middot; No obligation &middot; No spam</p>
+            <p class="fresult" id="fresult" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="bksuccess" id="bkSuccess">
+            <div class="bkicon">&#127881;</div>
+            <h4>Request Sent!</h4>
+            <p>Thanks &mdash; your details are on their way to our team. We'll email you back within 24 hours with next steps.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -535,7 +719,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
       </div>
       <div class="fcol">
         <h5>Contact</h5>
-        <a href="mailto:hello@tech24.example">hello@tech24.example</a>
+        <a href="mailto:alijohar36@gmail.com">alijohar36@gmail.com</a>
         <a href="tel:+10000000000">+1 (000) 000-0000</a>
         <div class="fsocial" style="margin-top:0.8rem;">
           <a href="#" aria-label="LinkedIn">in</a>
@@ -656,6 +840,91 @@ document.querySelectorAll('.fitem').forEach(function(item){
 window.addEventListener('resize', function(){
   document.querySelectorAll('.fitem.open .fa').forEach(function(fa){
     fa.style.maxHeight = fa.scrollHeight + 'px';
+  });
+});
+
+// lead form — same Web3Forms submission mechanism used on alijohar.work
+// NOTE: this access key must be registered on web3forms.com to deliver to
+// alijohar36@gmail.com. If it currently delivers elsewhere, generate a new
+// key at https://web3forms.com using alijohar36@gmail.com and paste it here.
+var W3F_KEY = "d3f1e51d-df9e-4937-b5bf-2e99a111f6ec";
+
+var leadForm = document.getElementById('leadForm');
+var subbtn = document.getElementById('subbtn');
+var fresult = document.getElementById('fresult');
+var bkSuccess = document.getElementById('bkSuccess');
+
+function fieldError(id, msg){
+  var input = document.getElementById(id);
+  var err = input.closest('.fg').querySelector('.ferr');
+  input.classList.toggle('invalid', !!msg);
+  if(err) err.textContent = msg || '';
+}
+['fn','em','co','gl'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', function(){ fieldError(id, ''); });
+  document.getElementById(id).addEventListener('change', function(){ fieldError(id, ''); });
+});
+
+leadForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  var fn = document.getElementById('fn').value.trim();
+  var em = document.getElementById('em').value.trim();
+  var co = document.getElementById('co').value.trim();
+  var ph = document.getElementById('ph').value.trim();
+  var web = document.getElementById('web').value.trim();
+  var bg = document.getElementById('bg').value;
+  var gl = document.getElementById('gl').value;
+  var msg = document.getElementById('msg').value.trim();
+
+  var valid = true;
+  if(!fn){ fieldError('fn','Please enter your full name.'); valid = false; }
+  if(!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ fieldError('em','Please enter a valid email address.'); valid = false; }
+  if(!co){ fieldError('co','Please enter your company name.'); valid = false; }
+  if(!gl){ fieldError('gl','Please select what you need help with.'); valid = false; }
+  if(!valid){
+    var firstInvalid = leadForm.querySelector('.invalid');
+    if(firstInvalid) firstInvalid.focus();
+    return;
+  }
+
+  subbtn.disabled = true;
+  subbtn.textContent = 'Sending...';
+  fresult.className = 'fresult';
+  fresult.textContent = '';
+
+  fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {"Content-Type":"application/json","Accept":"application/json"},
+    body: JSON.stringify({
+      access_key: W3F_KEY,
+      subject: "New TECH24 Lead: " + fn + " (" + co + ")",
+      from_name: "TECH24 Website",
+      "Name": fn,
+      "Email": em,
+      "Company": co,
+      "Phone": ph || "Not provided",
+      "Website": web || "Not provided",
+      "Monthly Budget": bg || "Not provided",
+      "Goal": gl,
+      "Business Details": msg || "Not provided"
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    if(d.success){
+      leadForm.style.display = 'none';
+      bkSuccess.style.display = 'block';
+      bkSuccess.scrollIntoView({behavior:'smooth', block:'center'});
+    } else {
+      throw new Error(d.message || 'Submission failed');
+    }
+  })
+  .catch(function(err){
+    console.error('Web3Forms failed:', err);
+    subbtn.disabled = false;
+    subbtn.textContent = 'Get My Free Growth Plan';
+    fresult.className = 'fresult err';
+    fresult.innerHTML = 'Something went wrong. Please email us directly at <a href="mailto:alijohar36@gmail.com">alijohar36@gmail.com</a>.';
   });
 });
 </script>
