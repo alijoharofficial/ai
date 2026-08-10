@@ -301,7 +301,7 @@ section{position:relative;}
 .bkback{background:var(--bg4);border:1px solid var(--line2);color:var(--t2);font-size:0.8rem;font-weight:600;padding:0.5rem 0.95rem;border-radius:var(--rs);cursor:pointer;transition:all .2s;}
 .bkback:hover{color:var(--text);border-color:var(--line);}
 .bkstepbar p{font-size:0.85rem;color:var(--t2);}
-.bkcal{border-radius:var(--rs);overflow:hidden;border:1px solid var(--line);}
+.bkcal{border-radius:var(--rs);overflow:hidden;border:1px solid var(--line);background:var(--bg4);padding:4px;}
 .bkicon{font-size:2.6rem;margin-bottom:1rem;}
 .bksuccess h4{font-size:1.2rem;font-weight:700;color:var(--blue2);margin-bottom:0.6rem;}
 .bksuccess p{color:var(--t2);font-size:0.9rem;max-width:380px;margin:0 auto;}
@@ -1089,7 +1089,11 @@ window.addEventListener('resize', function(){
 // email succeeding). When Calendly reports the call as scheduled, a second
 // fire-and-forget Web3Forms notification is sent with the booked slot.
 var W3F_KEY = "98debce6-61e3-47ac-90db-fa58788eccd9";
-var CALENDLY_URL = "https://calendly.com/rockingprince92/30min";
+// Calendly only reliably themes the embed via these URL query params (hex,
+// no "#"); the pageSettings object below is kept as a harmless belt-and-
+// suspenders but the colors baked into the URL itself are what actually
+// takes effect.
+var CALENDLY_URL = "https://calendly.com/rockingprince92/30min?background_color=141419&text_color=f7f7f9&primary_color=e8192c&hide_landing_page_details=1&hide_gdpr_banner=1";
 
 var leadForm = document.getElementById('leadForm');
 var subbtn = document.getElementById('subbtn');
@@ -1178,7 +1182,7 @@ leadForm.addEventListener('submit', function(e){
       pageSettings: {backgroundColor:'141419', textColor:'f7f7f9', primaryColor:'e8192c', hideLandingPageDetails:true, hideGdprBanner:true}
     });
   } else {
-    widget.setAttribute('data-url', CALENDLY_URL + '?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=141419&text_color=f7f7f9&primary_color=e8192c&name=' + encodeURIComponent(fn) + '&email=' + encodeURIComponent(em));
+    widget.setAttribute('data-url', CALENDLY_URL + '&name=' + encodeURIComponent(fn) + '&email=' + encodeURIComponent(em));
   }
 
   bkStep1.style.display = 'none';
