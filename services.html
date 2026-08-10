@@ -1137,23 +1137,27 @@ leadForm.addEventListener('submit', function(e){
   fresult.className = 'fresult';
   fresult.textContent = '';
 
+  // FormData, matching Web3Forms' own verified integration snippet for this
+  // access key exactly (do not set a Content-Type header here: the browser
+  // must set its own multipart boundary for FormData to parse correctly).
+  var formData = new FormData();
+  formData.append("access_key", W3F_KEY);
+  formData.append("subject", "New TECH24 Lead: " + fn + " (" + co + ")");
+  formData.append("from_name", "TECH24 Website");
+  formData.append("replyto", em);
+  formData.append("name", fn);
+  formData.append("email", em);
+  formData.append("Company", co);
+  formData.append("Phone", ph || "Not provided");
+  formData.append("Website", web || "Not provided");
+  formData.append("Monthly Budget", bg || "Not provided");
+  formData.append("Goal", gl);
+  formData.append("message", msg || "No additional details provided.");
+
   fetch("https://api.web3forms.com/submit", {
     method: "POST",
-    headers: {"Content-Type":"application/json","Accept":"application/json"},
-    body: JSON.stringify({
-      access_key: W3F_KEY,
-      subject: "New TECH24 Lead: " + fn + " (" + co + ")",
-      from_name: "TECH24 Website",
-      replyto: em,
-      "Name": fn,
-      "Email": em,
-      "Company": co,
-      "Phone": ph || "Not provided",
-      "Website": web || "Not provided",
-      "Monthly Budget": bg || "Not provided",
-      "Goal": gl,
-      "Business Details": msg || "Not provided"
-    })
+    headers: {"Accept":"application/json"},
+    body: formData
   })
   .then(function(r){ return r.json(); })
   .then(function(d){
