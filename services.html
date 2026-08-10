@@ -225,7 +225,7 @@ section{position:relative;}
 .trow{display:grid;grid-template-columns:1.1fr 1fr 1fr;}
 .trow+.trow{border-top:1px solid var(--line);}
 .trow.thead{background:var(--bg3);}
-.tcell{padding:1.05rem 1.3rem;font-size:0.88rem;color:var(--t2);display:flex;align-items:center;}
+.tcell{padding:1.05rem 1.3rem;font-size:0.88rem;color:var(--t2);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0.3rem;}
 .tcell.label{font-weight:600;color:var(--text);}
 .tcell.before{background:rgba(232,25,44,0.05);}
 .tcell.after{background:rgba(47,107,255,0.07);color:var(--text);font-weight:500;}
@@ -233,9 +233,12 @@ section{position:relative;}
 .thead .tcell.before{color:var(--red2);background:transparent;}
 .thead .tcell.after{color:var(--blue2);background:transparent;}
 .tlabel{display:none;}
+.tstat{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:0.01em;}
+.tcell.before .tstat{color:var(--red2);}
+.tcell.after .tstat{color:var(--blue2);}
 .thighlights{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
-.thi{text-align:center;padding:1.4rem 1rem;background:var(--bg3);border:1px solid var(--line);border-radius:var(--rs);}
-.thi b{display:block;font-family:"Rajdhani",sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;}
+.thi{text-align:center;padding:1.6rem 1rem;background:var(--bg3);border:1px solid var(--line);border-radius:var(--rs);}
+.thi b{display:block;font-family:"Rajdhani",sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(90deg,var(--red2),var(--blue2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.45rem;}
 .thi span{font-size:0.78rem;color:var(--t3);}
 
 /* faq */
@@ -699,41 +702,41 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
         </div>
         <div class="trow">
           <div class="tcell label">Lead Generation</div>
-          <div class="tcell before"><span class="tlabel before">Before</span>Manual outreach and referrals only</div>
-          <div class="tcell after"><span class="tlabel after">After</span>AI-managed paid media generating leads daily</div>
+          <div class="tcell before"><span class="tlabel before">Before</span><b class="tstat">10&ndash;30 leads/mo</b>Manual outreach and referrals only</div>
+          <div class="tcell after"><span class="tlabel after">After</span><b class="tstat">150&ndash;500+ leads/mo</b>AI-managed paid media generating leads daily</div>
         </div>
         <div class="trow">
           <div class="tcell label">Ad Spend</div>
-          <div class="tcell before"><span class="tlabel before">Before</span>Set-and-forget budgets, mostly guesswork</div>
-          <div class="tcell after"><span class="tlabel after">After</span>Real-time AI bidding and budget reallocation</div>
+          <div class="tcell before"><span class="tlabel before">Before</span><b class="tstat">$40&ndash;$120 CPL &middot; 0.8&ndash;1.2&times; ROAS</b>Set-and-forget budgets, mostly guesswork</div>
+          <div class="tcell after"><span class="tlabel after">After</span><b class="tstat">$1.23&ndash;$7.62 CPL &middot; 2.5&ndash;20&times; ROAS</b>Real-time AI bidding and budget reallocation</div>
         </div>
         <div class="trow">
           <div class="tcell label">Marketing Data</div>
-          <div class="tcell before"><span class="tlabel before">Before</span>Scattered across platforms, no clear picture</div>
-          <div class="tcell after"><span class="tlabel after">After</span>One dashboard, full multi-touch attribution</div>
+          <div class="tcell before"><span class="tlabel before">Before</span><b class="tstat">0% attributed</b>Scattered across platforms, no clear picture</div>
+          <div class="tcell after"><span class="tlabel after">After</span><b class="tstat">100% attributed</b>One dashboard, full multi-touch attribution</div>
         </div>
         <div class="trow">
           <div class="tcell label">Lead Response</div>
-          <div class="tcell before"><span class="tlabel before">Before</span>Missed calls, replies take hours or days</div>
-          <div class="tcell after"><span class="tlabel after">After</span>Instant automated text-back and follow-up</div>
+          <div class="tcell before"><span class="tlabel before">Before</span><b class="tstat">4&ndash;24 hours</b>Missed calls, replies take hours or days</div>
+          <div class="tcell after"><span class="tlabel after">After</span><b class="tstat">Under 60 seconds</b>Instant automated text-back and follow-up</div>
         </div>
         <div class="trow">
           <div class="tcell label">Reporting</div>
-          <div class="tcell before"><span class="tlabel before">Before</span>Manual spreadsheets, hours every week</div>
-          <div class="tcell after"><span class="tlabel after">After</span>Live dashboards, zero manual pulling</div>
+          <div class="tcell before"><span class="tlabel before">Before</span><b class="tstat">4&ndash;6 hrs/week</b>Manual spreadsheets, hours every week</div>
+          <div class="tcell after"><span class="tlabel after">After</span><b class="tstat">0 hrs, fully automated</b>Live dashboards, zero manual pulling</div>
         </div>
         <div class="trow">
           <div class="tcell label">Growth Plan</div>
-          <div class="tcell before"><span class="tlabel before">Before</span>Reactive, no clear roadmap</div>
-          <div class="tcell after"><span class="tlabel after">After</span>Prioritized 90-day AI growth roadmap</div>
+          <div class="tcell before"><span class="tlabel before">Before</span><b class="tstat">No fixed plan</b>Reactive, no clear roadmap</div>
+          <div class="tcell after"><span class="tlabel after">After</span><b class="tstat">90-day roadmap</b>Prioritized 90-day AI growth roadmap</div>
         </div>
       </div>
 
       <div class="thighlights">
-        <div class="thi reveal"><b>Hours &rarr; Minutes</b><span>Lead response time</span></div>
-        <div class="thi reveal d1"><b>Manual &rarr; Live</b><span>Reporting and dashboards</span></div>
-        <div class="thi reveal d2"><b>Scattered &rarr; Unified</b><span>Marketing and ops data</span></div>
-        <div class="thi reveal d3"><b>Reactive &rarr; Planned</b><span>Growth strategy</span></div>
+        <div class="thi reveal"><b>10&times;</b><span>Lead volume increase within 90 days</span></div>
+        <div class="thi reveal d1"><b>&minus;85%</b><span>Reduction in cost per lead</span></div>
+        <div class="thi reveal d2"><b>15+</b><span>Hours saved per week via automation</span></div>
+        <div class="thi reveal d3"><b>2.5&times;</b><span>Average revenue growth at 6 months</span></div>
       </div>
     </div>
   </section>
