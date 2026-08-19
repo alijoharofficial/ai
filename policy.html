@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECH24 Policies: Employee, Remote Work &amp; Benefits Policy</title>
+<meta name="description" content="TECH24's company policies: general conduct, remote work expectations, employee benefits, workplace protections, and our approach to work-life balance.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.tech24.com/policy">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e8192c'/><text x='50%25' y='54%25' dominant-baseline='central' text-anchor='middle' font-family='Rajdhani,sans-serif' font-weight='800' font-size='14' fill='white'>T24</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070a;--bg2:#0d0d12;--bg3:#141419;--bg4:#1b1b21;
+  --red:#e8192c;--red2:#ff4d5e;
+  --blue:#2f6bff;--blue2:#6a93ff;
+  --text:#f7f7f9;--t2:#9d9da8;--t3:#5c5c66;
+  --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+  --r:16px;--rs:10px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4,.logo{font-family:"Rajdhani",sans-serif;letter-spacing:0.01em;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 6%;}
+::selection{background:var(--red);color:#fff;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(.2,.7,.2,1),transform 0.6s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+.logo{display:flex;flex-direction:column;line-height:1;}
+.logo-mark{display:flex;align-items:baseline;gap:1px;font-weight:700;font-size:1.5rem;letter-spacing:0.02em;}
+.logo-tech{color:var(--red);}
+.logo-24{color:var(--blue);font-size:1.6rem;}
+.logo-tag{margin-top:4px;padding-top:4px;border-top:1px solid var(--line2);font-family:"Inter",sans-serif;font-size:0.5rem;letter-spacing:0.22em;color:var(--t2);font-weight:600;}
+
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s,padding .3s;padding:1.1rem 0;border-bottom:1px solid transparent;}
+header.scrolled{background:rgba(7,7,10,0.85);backdrop-filter:blur(14px);border-color:var(--line);padding:0.75rem 0;}
+nav{display:flex;align-items:center;justify-content:space-between;}
+.nlinks{display:flex;gap:2.1rem;align-items:center;}
+.nlinks a{font-size:0.88rem;font-weight:500;color:var(--t2);transition:color .2s;}
+.nlinks a:hover,.nlinks a.on{color:var(--text);}
+.nbtn{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;font-weight:600;font-size:0.82rem;padding:0.62rem 1.3rem;border-radius:var(--rs);transition:all .2s;white-space:nowrap;}
+.nbtn:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 8px 20px -6px rgba(232,25,44,0.55);}
+.mbtn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.mbtn span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.25s;}
+.mnav{display:none;position:fixed;inset:0 0 0 0;top:64px;background:var(--bg);z-index:99;padding:2rem 6%;flex-direction:column;gap:1.6rem;}
+.mnav.open{display:flex;}
+.mnav a{font-size:1.15rem;font-weight:600;}
+
+.phero{position:relative;padding:10.5rem 0 4rem;overflow:hidden;text-align:center;}
+.pgrid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 10%,#000 40%,transparent 90%);mask-image:radial-gradient(ellipse 60% 50% at 50% 10%,#000 40%,transparent 90%);opacity:0.5;}
+.phero-in{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+.ptag{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--line2);padding:0.5rem 1.05rem;border-radius:50px;font-size:0.8rem;color:var(--t2);font-weight:500;margin-bottom:1.4rem;}
+.ptag .dot{width:7px;height:7px;border-radius:50%;background:var(--red);}
+.ph1{font-size:clamp(2.1rem,4.6vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1.1rem;}
+.ph1 em{font-style:normal;background:linear-gradient(90deg,var(--red2),var(--blue2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.pdesc{color:var(--t2);font-size:1.02rem;max-width:560px;margin:0 auto;}
+.pmeta{margin-top:1.6rem;font-size:0.78rem;color:var(--t3);}
+
+.policies{padding:2rem 0 7rem;}
+.playout{display:grid;grid-template-columns:290px 1fr;gap:2.5rem;align-items:start;}
+.ptabs{display:flex;flex-direction:column;gap:0.4rem;position:sticky;top:100px;}
+.ptab{display:flex;align-items:center;gap:0.9rem;padding:0.95rem 1.1rem;border-radius:var(--rs);cursor:pointer;border:1px solid transparent;transition:all .2s;text-align:left;background:none;width:100%;font-family:inherit;color:inherit;}
+.ptab:hover{background:var(--bg3);}
+.ptab.on{background:var(--bg3);border-color:var(--line2);}
+.pti{width:38px;height:38px;flex:none;border-radius:9px;background:var(--bg4);display:flex;align-items:center;justify-content:center;color:var(--t2);transition:all .2s;}
+.ptab.on .pti{background:var(--red);color:#fff;}
+.ptn{font-weight:600;font-size:0.94rem;}
+.pts{font-size:0.76rem;color:var(--t3);}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--red);margin-left:auto;flex:none;opacity:0;transition:opacity .2s;}
+.ptab.on .pdot{opacity:1;}
+
+.ppanels{position:relative;}
+.ppanel{display:none;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.6rem;}
+.ppanel.on{display:block;animation:fadein .4s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.pph h3{font-size:1.5rem;font-weight:700;margin-bottom:0.6rem;}
+.pph p{color:var(--t2);margin-bottom:2rem;max-width:640px;}
+.psec{margin-bottom:1.8rem;padding-bottom:1.8rem;border-bottom:1px solid var(--line);}
+.psec:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.psec h4{font-size:1.02rem;font-weight:700;margin-bottom:0.7rem;display:flex;align-items:center;gap:0.6rem;}
+.psec h4::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue2);flex:none;}
+.psec ul{display:flex;flex-direction:column;gap:0.6rem;}
+.psec li{font-size:0.9rem;color:var(--t2);padding-left:1.2rem;position:relative;}
+.psec li::before{content:"\2713";position:absolute;left:0;top:0.05em;color:var(--red2);font-size:0.78rem;font-weight:700;}
+.psec li strong{color:var(--text);font-weight:600;}
+
+footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg2);}
+.finner{max-width:1180px;margin:0 auto;}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;gap:2.5rem;padding-bottom:3rem;}
+.fabout p{color:var(--t3);font-size:0.86rem;margin-top:1rem;max-width:280px;}
+.fcol h5{font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--t2);margin-bottom:1rem;}
+.fcol a{display:block;font-size:0.87rem;color:var(--t3);margin-bottom:0.7rem;transition:color .2s;}
+.fcol a:hover{color:var(--text);}
+.fbottom{border-top:1px solid var(--line);padding-top:1.6rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.8rem;color:var(--t3);}
+.fsocial{display:flex;gap:0.7rem;}
+.fsocial a{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--t2);}
+.fsocial a:hover{border-color:var(--red);color:var(--red2);transform:translateY(-2px);}
+
+@media(max-width:900px){
+  header .nlinks,header .nbtn{display:none;}
+  .mbtn{display:flex;}
+  .playout{grid-template-columns:1fr;}
+  .ptabs{position:static;flex-direction:row;flex-wrap:wrap;}
+  .ptab{flex:1 1 45%;}
+  .fgrid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:700px){
+  .wrap{padding:0 5.5%;}
+  .phero{padding:8rem 0 3rem;}
+  .policies{padding:1.5rem 0 4.5rem;}
+  .ppanel{padding:1.6rem;}
+}
+@media(max-width:560px){
+  .ptab{flex:1 1 100%;}
+  .fgrid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="services.html" class="logo" aria-label="TECH24 home">
+        <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+        <div class="logo-tag">CONNECTING TO THE WORLD</div>
+      </a>
+      <ul class="nlinks">
+        <li><a href="services.html">Home</a></li>
+        <li><a href="services.html#services">Services</a></li>
+        <li><a href="policy.html" class="on">Policies</a></li>
+        <li><a href="services.html#contact">Contact</a></li>
+      </ul>
+      <a href="services.html#contact" class="nbtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a Free Call
+      </a>
+      <button class="mbtn" id="mbtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="mnav" id="mnav">
+  <a href="services.html">Home</a>
+  <a href="services.html#services">Services</a>
+  <a href="policy.html">Policies</a>
+  <a href="services.html#contact">Contact</a>
+  <a href="services.html#contact" class="nbtn" style="width:fit-content;">Book a Free Call</a>
+</div>
+
+<main>
+  <section class="phero">
+    <div class="pgrid" aria-hidden="true"></div>
+    <div class="wrap phero-in">
+      <div class="ptag"><span class="dot"></span>Company Policies</div>
+      <h1 class="ph1">How TECH24 <em>Works, Protects &amp; Supports</em> Its People</h1>
+      <p class="pdesc">Our full set of company policies: general conduct, remote work, benefits, employee protections, and how we protect work-life balance. Applies to every employee and contractor.</p>
+      <p class="pmeta">Last updated: August 2026 &middot; Questions? <a href="services.html#contact" style="color:var(--blue2);font-weight:600;">Contact us</a></p>
+    </div>
+  </section>
+
+  <section class="policies" id="policy-tabs">
+    <div class="wrap">
+      <div class="playout">
+        <div class="ptabs reveal" id="ptabs" role="tablist" aria-label="Policy categories">
+          <button type="button" class="ptab on" data-panel="0" role="tab" aria-selected="true">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z"/></svg></div>
+            <div><div class="ptn">General Policy</div><div class="pts">Conduct, ethics, confidentiality</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="1" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+            <div><div class="ptn">Remote Work</div><div class="pts">Hours, equipment, security</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="2" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <div><div class="ptn">Benefits</div><div class="pts">Health, PTO, bonuses, learning</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="3" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <div><div class="ptn">Employee Protection</div><div class="pts">Safety, reporting, non-retaliation</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="4" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div><div class="ptn">Work-Life Balance</div><div class="pts">Flexibility, right to disconnect</div></div>
+            <span class="pdot"></span>
+          </button>
+        </div>
+
+        <div class="ppanels reveal">
+          <!-- GENERAL POLICY -->
+          <div class="ppanel on" data-panel="0">
+            <div class="pph">
+              <h3>General Company Policy</h3>
+              <p>These policies apply to every TECH24 team member, whether you work from our Lewisville office, remotely, or as a contractor. They exist to keep our team safe, fair, and aligned as we grow.</p>
+            </div>
+            <div class="psec">
+              <h4>Equal Employment Opportunity</h4>
+              <ul>
+                <li>TECH24 hires, promotes, and compensates based on merit, skill, and performance, full stop.</li>
+                <li>We do not discriminate on the basis of race, color, religion, sex, national origin, age, disability, sexual orientation, gender identity, marital status, or veteran status.</li>
+                <li>Hiring panels include more than one interviewer for every role above entry level.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Code of Conduct</h4>
+              <ul>
+                <li><strong>Honesty in client work:</strong> campaign numbers, timelines, and reporting are never inflated or misrepresented.</li>
+                <li><strong>Respectful communication</strong> on every call, in every channel, with clients, vendors, and teammates alike.</li>
+                <li><strong>Reliability:</strong> deadlines and scheduled calls are treated as commitments, not suggestions.</li>
+                <li>Company resources, tools, and ad accounts are used for TECH24 work only, not personal or side projects.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Confidentiality &amp; Data Handling</h4>
+              <ul>
+                <li>Client campaign data, ad account access, and business details are confidential and never shared outside authorized channels.</li>
+                <li>Login credentials are stored only in the company password manager, never in chat messages or personal notes.</li>
+                <li>System and account access is revoked within 24 hours of an employee's last day.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Conflict of Interest</h4>
+              <ul>
+                <li>Any outside freelance work, side business, or financial interest that could conflict with a TECH24 client must be disclosed to your manager before you take it on.</li>
+                <li>Employees may not directly solicit TECH24 clients for personal or third-party work.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Disciplinary Process</h4>
+              <ul>
+                <li>Standard process: verbal warning, written warning, a formal performance improvement plan, then separation if the issue isn't resolved.</li>
+                <li>Serious misconduct, harassment, data breaches, or fraud, can result in immediate termination without going through the standard steps.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- REMOTE WORK -->
+          <div class="ppanel" data-panel="1">
+            <div class="pph">
+              <h3>Remote Employee Policy</h3>
+              <p>TECH24 operates as a remote-first team spread across time zones. This policy sets clear expectations so remote work stays productive and fair for everyone.</p>
+            </div>
+            <div class="psec">
+              <h4>Eligibility &amp; Setup</h4>
+              <ul>
+                <li>Most roles are remote-eligible after a 30-day onboarding period spent ramping up with your team.</li>
+                <li>Some client-facing or leadership roles may require occasional travel or in-person availability; this is called out at the offer stage, never sprung on you later.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Core Hours &amp; Availability</h4>
+              <ul>
+                <li>A shared 4-hour core overlap window (10 AM&ndash;2 PM Central Time) is kept free for standups, client calls, and urgent issues.</li>
+                <li>Outside core hours, you set your own schedule around your output and deadlines.</li>
+                <li>Planned time away from your desk during work hours just needs a heads-up in your team channel.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Equipment &amp; Tools</h4>
+              <ul>
+                <li>TECH24 provides a laptop (or equivalent stipend), and access to every tool your role needs: Go High Level, GA4, ad platform seats, Slack, and Notion.</li>
+                <li>A one-time home office setup allowance is included in your benefits (see the Benefits tab).</li>
+                <li>Reliable, private internet and a workspace suitable for confidential client calls are required.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Communication Expectations</h4>
+              <ul>
+                <li>A daily async check-in in Slack: what you're working on, what's blocked.</li>
+                <li>Cameras on for internal team meetings and client calls.</li>
+                <li>Messages get a response within 4 business hours on a working day, faster for anything flagged urgent.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Security for Remote Work</h4>
+              <ul>
+                <li>Company devices run full-disk encryption and a company-managed password manager.</li>
+                <li>VPN is required whenever you're on public or shared Wi-Fi.</li>
+                <li>Client credentials are never downloaded, screenshotted, or stored locally outside approved tools.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>How Performance Is Measured</h4>
+              <ul>
+                <li>Remote work is judged on output and deadlines met, not hours logged or activity trackers.</li>
+                <li>Managers review deliverables and results weekly in 1:1s, not screen time.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- BENEFITS -->
+          <div class="ppanel" data-panel="2">
+            <div class="pph">
+              <h3>Benefits &amp; Compensation</h3>
+              <p>We back our team the same way we back our clients: with real investment, not perks that just look good on paper.</p>
+            </div>
+            <div class="psec">
+              <h4>Health &amp; Financial</h4>
+              <ul>
+                <li>Group health insurance contribution for full-time employees, covering medical and basic dental, eligible after 60 days.</li>
+                <li>Quarterly performance bonus pool tied to client retention and campaign results, shared with the team that delivered the work.</li>
+                <li>$1,000 referral bonus for a successful client referral that converts to a signed contract.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Time Off</h4>
+              <ul>
+                <li>20 days of paid time off per year, plus your local public holidays, PTO accrual increases with tenure.</li>
+                <li>12 weeks paid parental leave for the primary caregiver, 4 weeks for the secondary caregiver, regardless of gender.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Growth &amp; Wellness</h4>
+              <ul>
+                <li>$1,000 annual learning budget for certifications (Google Ads, HubSpot, GHL, and similar), courses, and conferences.</li>
+                <li>$50/month wellness stipend toward a gym membership, therapy, or a wellness app of your choice.</li>
+                <li>$500 one-time home office setup budget, plus a device refresh every 3 years.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- EMPLOYEE PROTECTION -->
+          <div class="ppanel" data-panel="3">
+            <div class="pph">
+              <h3>Employee Protection</h3>
+              <p>Every person on this team deserves to feel safe, heard, and treated fairly. These protections aren't optional, they're how we operate.</p>
+            </div>
+            <div class="psec">
+              <h4>Anti-Discrimination &amp; Anti-Harassment</h4>
+              <ul>
+                <li>Zero tolerance for harassment, bullying, or discriminatory behavior, whether in person, on a call, or in writing.</li>
+                <li>Every report is investigated within 5 business days by someone outside the reporting employee's direct chain of command.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Reporting &amp; Grievances</h4>
+              <ul>
+                <li>Multiple reporting channels are available, including an anonymous option, so no one is forced to report directly to the person involved.</li>
+                <li>Formal grievances receive a written response within 10 business days, with a clear appeals path if you disagree with the outcome.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Whistleblower &amp; Non-Retaliation</h4>
+              <ul>
+                <li>Employees who report policy violations, safety concerns, or unethical client requests in good faith are protected from retaliation, demotion, or termination.</li>
+                <li>Retaliation against a good-faith report is treated as serious misconduct on its own.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Safety &amp; Data Privacy</h4>
+              <ul>
+                <li>Applies to physical safety (office standards) and digital safety, no one is required to use a personal account or device for company work without their consent.</li>
+                <li>Employee personal data is stored securely and accessed only by HR and direct managers for legitimate business purposes.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Mental Health Support</h4>
+              <ul>
+                <li>Confidential counseling access is included in the monthly wellness stipend.</li>
+                <li>Managers are trained to recognize burnout and workload strain, and to act on it before it becomes a crisis.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- WORK LIFE BALANCE -->
+          <div class="ppanel" data-panel="4">
+            <div class="pph">
+              <h3>Work-Life Balance Policy</h3>
+              <p>Growth marketing moves fast, but burnout isn't a badge of honor here. These policies protect the boundary between work and everything else.</p>
+            </div>
+            <div class="psec">
+              <h4>Flexibility &amp; Boundaries</h4>
+              <ul>
+                <li>Outside core overlap hours and scheduled client meetings, you choose your own working hours.</li>
+                <li><strong>Right to disconnect:</strong> no expectation to answer Slack or email outside working hours, except for a pre-agreed on-call rotation.</li>
+                <li>No-meeting Wednesdays are kept clear across the whole company for uninterrupted, focused work.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Rest Is Required, Not Optional</h4>
+              <ul>
+                <li>Employees are required to take at least 10 of their 20 annual PTO days, taking zero time off is treated as a manager problem to fix, not a badge of dedication.</li>
+                <li>2 additional "no questions asked" wellness days per year, separate from standard PTO.</li>
+              </ul>
+            </div>
+            <div class="psec">
+              <h4>Workload &amp; Overtime</h4>
+              <ul>
+                <li>Managers review team capacity monthly and are responsible for reassigning work before someone is overloaded, not after.</li>
+                <li>Any work beyond standard hours needed to hit a client deadline is compensated with equivalent time off within 30 days.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="finner">
+    <div class="fgrid">
+      <div class="fabout">
+        <div class="logo">
+          <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+          <div class="logo-tag">CONNECTING TO THE WORLD</div>
+        </div>
+        <p>An AI-driven growth agency connecting paid media, analytics, automation and strategy into one system.</p>
+      </div>
+      <div class="fcol">
+        <h5>Services</h5>
+        <a href="services.html#services">AI Paid Media</a>
+        <a href="services.html#services">Analytics &amp; Attribution</a>
+        <a href="services.html#services">GHL Automation</a>
+        <a href="services.html#services">Business Automation</a>
+        <a href="services.html#services">AI Growth Strategy</a>
+      </div>
+      <div class="fcol">
+        <h5>Company</h5>
+        <a href="services.html#results">Results</a>
+        <a href="services.html#why">Why TECH24</a>
+        <a href="services.html#faq">FAQ</a>
+        <a href="policy.html">Policies</a>
+        <a href="services.html#contact">Contact</a>
+      </div>
+      <div class="fcol">
+        <h5>Contact</h5>
+        <a href="tel:+18126665853">+1 (812) 666-5853</a>
+        <a style="cursor:default;">Vista Ridge Mall Dr, Lewisville, TX 75067</a>
+        <div class="fsocial" style="margin-top:0.8rem;">
+          <a href="https://www.facebook.com/marketing.agency.24" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/marketing.agency.24/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.linkedin.com/company/marketing-agency24" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="fbottom">
+      <span>&copy; <span id="year"></span> TECH24. All rights reserved.</span>
+      <span>Connecting to the World</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+var header = document.getElementById('siteHeader');
+window.addEventListener('scroll', function(){
+  header.classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+
+var mbtn = document.getElementById('mbtn');
+var mnav = document.getElementById('mnav');
+mbtn.addEventListener('click', function(){
+  mnav.classList.toggle('open');
+});
+mnav.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click', function(){ mnav.classList.remove('open'); });
+});
+
+var revealEls = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.1});
+revealEls.forEach(function(el){ io.observe(el); });
+
+var ptabs = document.querySelectorAll('.ptab');
+var ppanels = document.querySelectorAll('.ppanel');
+function showPolicyPanel(i){
+  ptabs.forEach(function(t){
+    var on = t.getAttribute('data-panel') === String(i);
+    t.classList.toggle('on', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  ppanels.forEach(function(p){
+    p.classList.toggle('on', p.getAttribute('data-panel') === String(i));
+  });
+}
+ptabs.forEach(function(tab){
+  tab.addEventListener('click', function(){
+    showPolicyPanel(tab.getAttribute('data-panel'));
+    document.getElementById('policy-tabs').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+// deep-link support: policy.html#remote-work, #benefits, #protection, #balance
+var hashMap = {'general':0,'remote-work':1,'benefits':2,'protection':3,'balance':4};
+var initial = hashMap[location.hash.replace('#','')];
+if(initial !== undefined) showPolicyPanel(initial);
+</script>
+</body>
+</html>
