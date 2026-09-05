@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quran Academy — Islamic Books, Qurans &amp; Learning</title>
+<meta name="description" content="Quran Academy — a boutique store for Qurans, Islamic books, kids' learning resources, courses, prayer essentials and gifts." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230B6E4F'/><path d='M16 6c-4 2-6 5.5-6 10s2 8 6 10c4-2 6-5.5 6-10s-2-8-6-10Z' fill='none' stroke='%23D4AF37' stroke-width='1.6'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          emerald: { 50:'#EAF4EF', 100:'#D2E8DC', 400:'#1C8A63', 500:'#0F5132', 600:'#0B6E4F', 700:'#0A5E43', 800:'#0A3D2A', 900:'#082E20' },
+          gold: { 50:'#FBF3DD', 100:'#F3E3B0', 400:'#D4AF37', 500:'#C9A227', 600:'#AD8A1E' },
+          ivory: { 50:'#FBF8F1', 100:'#FAF6EE', 200:'#F3ECDA' },
+          charcoal: { DEFAULT:'#14342B', 600:'#3A5147' }
+        },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          sans: ['"Inter"', 'system-ui', 'sans-serif']
+        },
+        keyframes: {
+          'badge-pop': { '0%': { transform: 'scale(1)' }, '35%': { transform: 'scale(1.4)' }, '100%': { transform: 'scale(1)' } },
+          'toast-in': { '0%': { opacity: 0, transform: 'translateY(10px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+          'fade-in': { '0%': { opacity: 0 }, '100%': { opacity: 1 } }
+        },
+        animation: {
+          'badge-pop': 'badge-pop 0.4s ease-out',
+          'toast-in': 'toast-in 0.35s ease-out',
+          'fade-in': 'fade-in 0.3s ease-out'
+        }
+      }
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.25.6/babel.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #FBF8F1; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #FAF6EE; }
+  ::-webkit-scrollbar-thumb { background: #D9CBA0; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #C9A227; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="font-sans text-charcoal antialiased">
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+/* ---------------------------------- Icons --------------------------------- */
+
+const Icon = ({ children, size = 20, className = '', strokeWidth = 1.75, ...rest }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} {...rest}>
+    {children}
+  </svg>
+);
+
+const SearchIcon = (p) => <Icon {...p}><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></Icon>;
+const XIcon = (p) => <Icon {...p}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></Icon>;
+const MenuIcon = (p) => <Icon {...p}><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></Icon>;
+const BagIcon = (p) => <Icon {...p}><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></Icon>;
+const ChevronLeft = (p) => <Icon {...p}><path d="M15 18l-6-6 6-6" /></Icon>;
+const ChevronRight = (p) => <Icon {...p}><path d="M9 18l6-6-6-6" /></Icon>;
+const ChevronDown = (p) => <Icon {...p}><path d="M6 9l6 6 6-6" /></Icon>;
+const PlusIcon = (p) => <Icon {...p}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></Icon>;
+const MinusIcon = (p) => <Icon {...p}><line x1="5" y1="12" x2="19" y2="12" /></Icon>;
+const TrashIcon = (p) => <Icon {...p}><path d="M4 7h16" /><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" /><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" /></Icon>;
+const MailIcon = (p) => <Icon {...p}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></Icon>;
+const PhoneIcon = (p) => <Icon {...p}><path d="M4.5 4h3.7l1.8 4.3-2.2 1.6a11.5 11.5 0 0 0 5.3 5.3l1.6-2.2 4.3 1.8v3.7a1.7 1.7 0 0 1-1.9 1.7A15.7 15.7 0 0 1 3 5.9 1.7 1.7 0 0 1 4.5 4Z" /></Icon>;
+const MapPinIcon = (p) => <Icon {...p}><path d="M12 21s7-7.4 7-12a7 7 0 1 0-14 0c0 4.6 7 12 7 12Z" /><circle cx="12" cy="9" r="2.4" /></Icon>;
+const TruckIcon = (p) => <Icon {...p}><path d="M3 7h11v8H3z" /><path d="M14 11h4l3 3v1h-7z" /><circle cx="7.2" cy="18.2" r="1.5" /><circle cx="17.2" cy="18.2" r="1.5" /></Icon>;
+const ShieldIcon = (p) => <Icon {...p}><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3Z" /><path d="M9 12l2 2 4-4" /></Icon>;
+const HeadsetIcon = (p) => <Icon {...p}><path d="M4 13v-1a8 8 0 0 1 16 0v1" /><rect x="3" y="13" width="4" height="6" rx="1.4" /><rect x="17" y="13" width="4" height="6" rx="1.4" /></Icon>;
+const AwardIcon = (p) => <Icon {...p}><circle cx="12" cy="8" r="5" /><path d="M8.6 12.6L7 21l5-2.6L17 21l-1.6-8.4" /></Icon>;
+const FacebookIcon = (p) => <Icon {...p}><path d="M14.5 8.5H17V5.5h-2.5A4 4 0 0 0 10.5 9.5v2H8v3h2.5v6h3v-6H16l.6-3h-3.1v-1.6a1 1 0 0 1 1-1Z" /></Icon>;
+const InstagramIcon = (p) => <Icon {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none" /></Icon>;
+const YoutubeIcon = (p) => <Icon {...p}><rect x="2.5" y="6" width="19" height="12" rx="4" /><path d="M10.2 9.6l5.4 2.4-5.4 2.4v-4.8Z" fill="currentColor" stroke="none" /></Icon>;
+const XSocialIcon = (p) => <Icon {...p}><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></Icon>;
+const HeartIcon = (p) => <Icon {...p}><path d="M12 20s-7-4.4-9.4-8.6C.9 8 2 4.6 5.5 4.6c2 0 3.5 1.2 4.5 2.7 1-1.5 2.5-2.7 4.5-2.7 3.5 0 4.6 3.4 2.9 6.8C19 15.6 12 20 12 20Z" /></Icon>;
+const EyeIcon = (p) => <Icon {...p}><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></Icon>;
+const ArrowRightIcon = (p) => <Icon {...p}><line x1="5" y1="12" x2="19" y2="12" /><path d="M13 6l6 6-6 6" /></Icon>;
+const CheckIcon = (p) => <Icon {...p}><path d="M5 13l4 4L19 7" /></Icon>;
+const BookIcon = (p) => <Icon {...p}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" /><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /></Icon>;
+const BookOpenIcon = (p) => <Icon {...p}><path d="M12 6.2c-2-1.5-5-2-8-1v13c3-1 6-.5 8 1 2-1.5 5-2 8-1v-13c-3-1-6-.5-8 1Z" /><line x1="12" y1="6.2" x2="12" y2="19.2" /></Icon>;
+const GraduationCapIcon = (p) => <Icon {...p}><path d="M12 3 2 8l10 5 10-5-10-5Z" /><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" /></Icon>;
+const GiftIcon = (p) => <Icon {...p}><rect x="4" y="9" width="16" height="11" rx="1" /><path d="M4 9h16v3.4H4z" /><path d="M12 9v11" /><path d="M12 9c-1-3-4-4.6-5.6-3.2S7 9 12 9Z" /><path d="M12 9c1-3 4-4.6 5.6-3.2S17 9 12 9Z" /></Icon>;
+const CompassIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d="M15.3 8.7l-2 5-5 2 2-5 5-2Z" /></Icon>;
+const SmileIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d="M8 14s1.6 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></Icon>;
+const SparklesIcon = (p) => <Icon {...p}><path d="M12 3l1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3L12 3Z" /><path d="M19 15l.6 1.7 1.7.7-1.7.7-.6 1.7-.6-1.7-1.7-.7 1.7-.7L19 15Z" /></Icon>;
+const StarIcon = ({ filled, size = 16, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" className={className}
+    fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+    <path d="M12 2.7l2.9 6 6.5.8-4.8 4.6 1.2 6.5L12 17.4 6.2 20.6l1.2-6.5-4.8-4.6 6.5-.8L12 2.7Z" />
+  </svg>
+);
+
+/* -------------------------------- Constants -------------------------------- */
+
+const formatPKR = (n) => `₨${n.toLocaleString('en-PK')}`;
+
+const CATEGORIES = [
+  { name: 'All', Icon: SparklesIcon },
+  { name: 'Qurans & Mushafs', Icon: BookIcon },
+  { name: 'Islamic Books & Ebooks', Icon: BookOpenIcon },
+  { name: 'Kids & Learning', Icon: SmileIcon },
+  { name: 'Courses', Icon: GraduationCapIcon },
+  { name: 'Prayer Essentials', Icon: CompassIcon },
+  { name: 'Gifts & Decor', Icon: GiftIcon },
+];
+
+const CAT_ICON = CATEGORIES.reduce((m, c) => (m[c.name] = c.Icon, m), {});
+
+const PRODUCTS = [
+  { id: 1, name: 'Al-Mushaf Al-Madinah — Deluxe Edition', category: 'Qurans & Mushafs', price: 4500, originalPrice: 5200, rating: 4.9, reviews: 212, popularity: 98, badge: 'Bestseller', desc: 'Large-print Mushaf with gilded page edges and a durable leather-style binding.' },
+  { id: 2, name: 'Pocket Quran — Travel Size', category: 'Qurans & Mushafs', price: 1800, rating: 4.7, reviews: 96, popularity: 70, desc: 'Compact and lightweight, perfect for travel and daily carry.' },
+  { id: 3, name: 'Quran with Urdu Translation & Tafsir', category: 'Qurans & Mushafs', price: 3200, rating: 4.8, reviews: 154, popularity: 80, badge: 'New', desc: 'Clear Urdu translation alongside concise tafsir notes in every juz.' },
+  { id: 4, name: 'The Sealed Nectar (Ar-Raheeq Al-Makhtum)', category: 'Islamic Books & Ebooks', price: 1650, rating: 4.9, reviews: 340, popularity: 95, badge: 'Bestseller', desc: 'An award-winning biography of the Prophet ﷺ, elegantly bound.' },
+  { id: 5, name: 'Riyad as-Saliheen — Hardbound', category: 'Islamic Books & Ebooks', price: 2100, rating: 4.8, reviews: 187, popularity: 88, desc: 'A timeless compilation of hadith on manners and good conduct.' },
+  { id: 6, name: 'Fortress of the Muslim — eBook', category: 'Islamic Books & Ebooks', price: 450, rating: 4.6, reviews: 210, popularity: 74, desc: 'Everyday supplications in a portable digital edition.' },
+  { id: 7, name: 'My First Quran Stories — Kids Set', category: 'Kids & Learning', price: 2600, rating: 4.8, reviews: 132, popularity: 82, badge: 'New', desc: 'Illustrated stories that introduce young readers to the Quran gently.' },
+  { id: 8, name: 'Noorani Qaida — Learn to Read Arabic', category: 'Kids & Learning', price: 650, rating: 4.7, reviews: 265, popularity: 90, desc: 'A trusted first step for children learning Arabic letters and sounds.' },
+  { id: 9, name: 'Islamic Manners for Little Hearts', category: 'Kids & Learning', price: 1200, rating: 4.5, reviews: 58, popularity: 60, desc: 'Gentle lessons on kindness, honesty and good character for kids.' },
+  { id: 10, name: 'Tajweed Mastery — Online Course Access', category: 'Courses', price: 5900, rating: 4.9, reviews: 120, popularity: 92, badge: 'Bestseller', desc: 'Self-paced video course covering the rules of tajweed from basics onward.' },
+  { id: 11, name: 'Arabic for Beginners — 8-Week Course', category: 'Courses', price: 7500, rating: 4.8, reviews: 76, popularity: 77, desc: 'Structured lessons to build reading, writing and comprehension skills.' },
+  { id: 12, name: 'Premium Prayer Mat — Woven Emerald', category: 'Prayer Essentials', price: 2800, rating: 4.7, reviews: 143, popularity: 85, desc: 'Plush, non-slip prayer mat woven in a rich emerald pattern.' },
+  { id: 13, name: 'Tasbeeh Set — Sandalwood 99 Beads', category: 'Prayer Essentials', price: 950, rating: 4.6, reviews: 88, popularity: 65, desc: 'Fragrant sandalwood beads, smooth to the touch, strung by hand.' },
+  { id: 14, name: 'Islamic Wall Art — Geometric Star Print', category: 'Gifts & Decor', price: 1750, rating: 4.7, reviews: 64, popularity: 68, badge: 'New', desc: 'A framed geometric star print to bring calm, intentional beauty to any room.' },
+];
+
+const PATTERN_SVG = `
+<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'>
+  <g fill='none' stroke='#C9A227' stroke-width='1'>
+    <path d='M60 8 L86 34 L112 60 L86 86 L60 112 L34 86 L8 60 L34 34 Z'/>
+    <path d='M60 28 L80 42 L94 60 L80 78 L60 92 L40 78 L26 60 L40 42 Z'/>
+    <circle cx='60' cy='60' r='6'/>
+  </g>
+</svg>`;
+const PATTERN_URL = `url("data:image/svg+xml,${encodeURIComponent(PATTERN_SVG)}")`;
+
+/* --------------------------------- Reveal ---------------------------------- */
+
+function Reveal({ children, className = '', delay = 0 }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
+    }, { threshold: 0.12 });
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+/* ------------------------------- Rating stars ------------------------------- */
+
+function Rating({ rating, reviews, size = 14 }) {
+  const rounded = Math.round(rating);
+  return (
+    <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-0.5 text-gold-500">
+        {[1, 2, 3, 4, 5].map((i) => <StarIcon key={i} filled={i <= rounded} size={size} />)}
+      </div>
+      <span className="text-xs text-charcoal-600">{rating.toFixed(1)}{reviews ? ` (${reviews})` : ''}</span>
+    </div>
+  );
+}
+
+/* -------------------------------- ArchVisual -------------------------------- */
+
+function ArchVisual({ Icon: PIcon, tone = 'emerald', size = 'md' }) {
+  const tones = {
+    emerald: 'from-emerald-600 to-emerald-800 text-ivory-50',
+    gold: 'from-gold-400 to-gold-600 text-emerald-900',
+    ivory: 'from-ivory-100 to-ivory-200 text-emerald-700',
+  };
+  const dims = size === 'lg' ? 'w-full h-full' : 'w-full h-full';
+  return (
+    <div className={`relative ${dims} rounded-t-[999px] rounded-b-2xl bg-gradient-to-b ${tones[tone]} flex items-center justify-center overflow-hidden border border-gold-400/40`}>
+      <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: PATTERN_URL, backgroundSize: '70px 70px' }} />
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border border-current opacity-60" />
+      <PIcon size={44} strokeWidth={1.3} className="relative opacity-90" />
+    </div>
+  );
+}
+
+/* ---------------------------------- Header ---------------------------------- */
+
+function Header({ cartCount, bump, onCartClick, search, setSearch, activeCategory, setActiveCategory }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const links = ['Home', 'Shop', 'Courses', 'About', 'Contact'];
+
+  return (
+    <header className="sticky top-0 z-40 bg-ivory-50/95 backdrop-blur border-b border-gold-400/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 gap-4">
+          <a href="#top" className="flex items-center gap-2.5 shrink-0 focus:outline-none focus:ring-2 focus:ring-gold-500 rounded-md">
+            <span className="w-9 h-9 rounded-full bg-emerald-700 flex items-center justify-center border border-gold-400/60">
+              <BookIcon size={17} className="text-ivory-50" strokeWidth={1.6} />
+            </span>
+            <span className="leading-tight">
+              <span className="block font-serif font-bold text-lg sm:text-xl text-emerald-900 tracking-tight">Quran Academy</span>
+              <span className="hidden sm:block text-[10px] uppercase tracking-[0.18em] text-charcoal-600">quranacademy.live</span>
+            </span>
+          </a>
+
+          <nav className="hidden lg:flex items-center gap-1">
+            {links.map((l) => (
+              <a key={l} href="#" className="px-3.5 py-2 text-sm font-medium text-charcoal-600 hover:text-emerald-700 rounded-md hover:bg-emerald-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500">{l}</a>
+            ))}
+          </nav>
+
+          <div className="hidden md:flex flex-1 max-w-sm">
+            <div className="relative w-full">
+              <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-600/60" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search Qurans, books, courses..."
+                aria-label="Search products"
+                className="w-full bg-white border border-emerald-800/15 rounded-full pl-9 pr-4 py-2 text-sm placeholder:text-charcoal-600/50 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              onClick={() => setMobileSearchOpen((s) => !s)}
+              aria-label="Toggle search"
+              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full text-charcoal-600 hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-gold-500">
+              <SearchIcon size={19} />
+            </button>
+            <button
+              onClick={onCartClick}
+              aria-label={`Open cart, ${cartCount} items`}
+              className="relative w-9 h-9 flex items-center justify-center rounded-full text-charcoal-600 hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-gold-500">
+              <BagIcon size={20} />
+              {cartCount > 0 && (
+                <span className={`absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-gold-500 text-emerald-900 text-[10px] font-bold flex items-center justify-center ${bump ? 'animate-badge-pop' : ''}`}>
+                  {cartCount}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen((s) => !s)}
+              aria-label="Toggle menu"
+              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-full text-charcoal-600 hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-gold-500">
+              {mobileMenuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
+            </button>
+          </div>
+        </div>
+
+        {mobileSearchOpen && (
+          <div className="md:hidden pb-3">
+            <div className="relative">
+              <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-600/60" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search Qurans, books, courses..."
+                aria-label="Search products"
+                autoFocus
+                className="w-full bg-white border border-emerald-800/15 rounded-full pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-gold-400/30 bg-ivory-50 px-4 py-3 space-y-3">
+          <nav className="flex flex-col">
+            {links.map((l) => (
+              <a key={l} href="#" className="px-2 py-2.5 text-sm font-medium text-charcoal-600 hover:text-emerald-700 border-b border-emerald-900/5 last:border-0">{l}</a>
+            ))}
+          </nav>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-charcoal-600/70 mb-2 px-2">Categories</p>
+            <div className="flex flex-wrap gap-2 px-2">
+              {CATEGORIES.map((c) => (
+                <button key={c.name} onClick={() => { setActiveCategory(c.name); setMobileMenuOpen(false); }}
+                  className={`text-xs px-3 py-1.5 rounded-full border ${activeCategory === c.name ? 'bg-emerald-700 text-white border-emerald-700' : 'bg-white text-charcoal-600 border-emerald-900/10'}`}>
+                  {c.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
+
+/* ----------------------------------- Hero ----------------------------------- */
+
+const SLIDES = [
+  { tone: 'emerald', tag: 'Boutique Islamic Store', title: 'Timeless Words,\nBeautifully Presented', text: 'Premium Mushafs and Islamic literature, crafted with care for every home.', cta: 'Shop Qurans', icon: BookIcon },
+  { tone: 'gold', tag: 'For Every Young Heart', title: 'Raise Them\non Faith', text: 'Joyful, authentic Islamic learning resources for children of all ages.', cta: 'Explore Kids Collection', icon: SmileIcon },
+  { tone: 'ivory', tag: 'Limited-Time Collection', title: 'Ramadan Collection\nis Here', text: 'Curated essentials to elevate your worship this blessed season.', cta: 'View Ramadan Picks', icon: MoonIconAlias },
+];
+
+function MoonIconAlias(p) { return <CompassIcon {...p} />; }
+
+function Hero({ onShopClick }) {
+  const [index, setIndex] = useState(0);
+  const timerRef = useRef(null);
+  const hoverRef = useRef(false);
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      if (!hoverRef.current) setIndex((i) => (i + 1) % SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  const slide = SLIDES[index];
+  const panelTone = {
+    emerald: 'bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 text-ivory-50',
+    gold: 'bg-gradient-to-br from-gold-100 via-ivory-100 to-gold-50 text-emerald-900',
+    ivory: 'bg-gradient-to-br from-emerald-900 via-charcoal to-emerald-800 text-ivory-50',
+  };
+
+  return (
+    <section
+      onMouseEnter={() => (hoverRef.current = true)}
+      onMouseLeave={() => (hoverRef.current = false)}
+      className={`relative overflow-hidden transition-colors duration-700 ${panelTone[slide.tone]}`}>
+      <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: PATTERN_URL, backgroundSize: '110px 110px' }} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 relative">
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
+          <div key={index} className="animate-fade-in">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] px-3 py-1.5 rounded-full border border-current/25 mb-5 opacity-90">
+              <SparklesIcon size={13} /> {slide.tag}
+            </span>
+            <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl leading-[1.1] mb-5 whitespace-pre-line">{slide.title}</h1>
+            <p className="text-sm sm:text-base opacity-85 max-w-md mb-8 leading-relaxed">{slide.text}</p>
+            <button onClick={onShopClick} className="group inline-flex items-center gap-2 bg-gold-500 text-emerald-900 font-semibold text-sm sm:text-base px-6 py-3 rounded-full hover:bg-gold-400 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500">
+              {slide.cta} <ArrowRightIcon size={17} className="transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
+          <div className="hidden lg:flex justify-center">
+            <div key={`v-${index}`} className="w-64 h-80 animate-fade-in">
+              <ArchVisual Icon={slide.icon} tone={slide.tone === 'gold' ? 'ivory' : 'gold'} />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 mt-10 sm:mt-14">
+          <button aria-label="Previous slide" onClick={() => setIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length)}
+            className="w-9 h-9 rounded-full border border-current/25 flex items-center justify-center hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500">
+            <ChevronLeft size={17} />
+          </button>
+          <div className="flex items-center gap-2">
+            {SLIDES.map((_, i) => (
+              <button key={i} aria-label={`Go to slide ${i + 1}`} onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all ${i === index ? 'w-7 bg-gold-500' : 'w-1.5 bg-current/30'}`} />
+            ))}
+          </div>
+          <button aria-label="Next slide" onClick={() => setIndex((i) => (i + 1) % SLIDES.length)}
+            className="w-9 h-9 rounded-full border border-current/25 flex items-center justify-center hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500">
+            <ChevronRight size={17} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------- CategoryStrip ------------------------------- */
+
+function CategoryStrip({ activeCategory, setActiveCategory }) {
+  return (
+    <Reveal>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="font-serif font-bold text-xl sm:text-2xl text-emerald-900">Browse Categories</h2>
+        </div>
+        <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-1 px-1">
+          {CATEGORIES.map((c) => {
+            const active = activeCategory === c.name;
+            return (
+              <button key={c.name} onClick={() => setActiveCategory(c.name)}
+                className={`shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500
+                  ${active ? 'bg-emerald-700 border-emerald-700 text-white shadow-sm' : 'bg-white border-emerald-900/10 text-charcoal-600 hover:border-gold-400 hover:text-emerald-800'}`}>
+                <c.Icon size={16} strokeWidth={1.6} className={active ? 'text-gold-300' : 'text-emerald-700'} />
+                {c.name}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+    </Reveal>
+  );
+}
+
+/* -------------------------------- PromoBanners -------------------------------- */
+
+function PromoBanners({ onCategorySelect }) {
+  const items = [
+    { title: 'New Arrivals', sub: 'Fresh titles and hand-picked gifts, added weekly.', cta: 'Discover New Arrivals', tone: 'emerald', Icon: SparklesIcon, category: 'All' },
+    { title: 'Ramadan Special', sub: 'Save on Mushafs, duas and prayer essentials.', cta: 'Shop the Collection', tone: 'gold', Icon: MoonIconAlias, category: 'Prayer Essentials' },
+  ];
+  return (
+    <Reveal>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <div className="grid sm:grid-cols-2 gap-5">
+          {items.map((it) => (
+            <div key={it.title}
+              className={`relative overflow-hidden rounded-2xl p-7 sm:p-8 flex items-center justify-between gap-6 border
+                ${it.tone === 'emerald' ? 'bg-gradient-to-br from-emerald-800 to-emerald-900 text-ivory-50 border-emerald-900' : 'bg-gradient-to-br from-gold-50 to-ivory-100 text-emerald-900 border-gold-400/40'}`}>
+              <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: PATTERN_URL, backgroundSize: '90px 90px' }} />
+              <div className="relative">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] opacity-75 mb-2">Limited Time</p>
+                <h3 className="font-serif font-bold text-2xl sm:text-3xl mb-2">{it.title}</h3>
+                <p className="text-sm opacity-85 max-w-xs mb-5">{it.sub}</p>
+                <button onClick={() => onCategorySelect(it.category)}
+                  className={`inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500
+                    ${it.tone === 'emerald' ? 'bg-gold-500 text-emerald-900 hover:bg-gold-400' : 'bg-emerald-700 text-white hover:bg-emerald-800'}`}>
+                  {it.cta} <ArrowRightIcon size={15} />
+                </button>
+              </div>
+              <div className="relative hidden sm:block w-24 h-32 shrink-0">
+                <ArchVisual Icon={it.Icon} tone={it.tone === 'emerald' ? 'gold' : 'emerald'} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </Reveal>
+  );
+}
+
+/* --------------------------------- ProductCard -------------------------------- */
+
+function ProductCard({ product, onAdd, onQuickView }) {
+  const CatIcon = CAT_ICON[product.category] || BookIcon;
+  return (
+    <div className="group bg-white rounded-2xl border border-emerald-900/8 hover:border-gold-400/50 hover:shadow-lg hover:shadow-emerald-900/5 transition-all duration-300 overflow-hidden flex flex-col">
+      <div className="relative aspect-[4/5] p-5">
+        <ArchVisual Icon={CatIcon} tone="emerald" />
+        {product.badge && (
+          <span className="absolute top-3 left-3 bg-gold-500 text-emerald-900 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full">
+            {product.badge}
+          </span>
+        )}
+        <div className="absolute inset-x-5 bottom-5 flex items-center justify-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          <button onClick={() => onQuickView(product)} aria-label={`Quick view ${product.name}`}
+            className="w-10 h-10 rounded-full bg-white/95 text-emerald-800 flex items-center justify-center shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-gold-500">
+            <EyeIcon size={17} />
+          </button>
+          <button onClick={() => onAdd(product)} aria-label={`Quick add ${product.name} to cart`}
+            className="w-10 h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center shadow-md hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-gold-500">
+            <BagIcon size={16} />
+          </button>
+        </div>
+      </div>
+      <div className="p-4 sm:p-5 pt-0 flex flex-col flex-1">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-emerald-700/80 mb-1">{product.category}</span>
+        <h3 className="font-semibold text-sm sm:text-[15px] text-charcoal leading-snug mb-2 line-clamp-2 min-h-[2.5em]">{product.name}</h3>
+        <Rating rating={product.rating} reviews={product.reviews} />
+        <div className="flex items-center justify-between mt-4">
+          <div>
+            <span className="font-serif font-bold text-lg text-emerald-900">{formatPKR(product.price)}</span>
+            {product.originalPrice && <span className="ml-2 text-xs text-charcoal-600/60 line-through">{formatPKR(product.originalPrice)}</span>}
+          </div>
+          <button onClick={() => onAdd(product)}
+            className="text-xs font-semibold px-3.5 py-2 rounded-full bg-emerald-50 text-emerald-800 hover:bg-emerald-700 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------- ProductsSection ------------------------------ */
+
+function ProductsSection({ products, search, setSearch, activeCategory, setActiveCategory, sortBy, setSortBy, onAdd, onQuickView }) {
+  return (
+    <section id="shop" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <Reveal>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7">
+          <div>
+            <h2 className="font-serif font-bold text-2xl sm:text-3xl text-emerald-900 mb-1">Our Collection</h2>
+            <p className="text-sm text-charcoal-600">{products.length} product{products.length !== 1 ? 's' : ''} {activeCategory !== 'All' ? `in ${activeCategory}` : ''}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="sm:hidden relative flex-1">
+              <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-600/60" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..." aria-label="Search products"
+                className="w-full bg-white border border-emerald-900/10 rounded-full pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500" />
+            </div>
+            <div className="relative">
+              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} aria-label="Sort products"
+                className="appearance-none bg-white border border-emerald-900/10 rounded-full pl-4 pr-9 py-2.5 text-sm text-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-gold-500 cursor-pointer">
+                <option value="popularity">Most Popular</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+              <ChevronDown size={15} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-charcoal-600/60" />
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {products.length === 0 ? (
+        <Reveal>
+          <div className="text-center py-20">
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-4">
+              <SearchIcon size={26} className="text-emerald-700/60" />
+            </div>
+            <p className="font-serif font-semibold text-lg text-emerald-900 mb-1">No products found</p>
+            <p className="text-sm text-charcoal-600 mb-5">Try a different search term or category.</p>
+            <button onClick={() => { setSearch(''); setActiveCategory('All'); }}
+              className="text-sm font-semibold px-5 py-2.5 rounded-full bg-emerald-700 text-white hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-gold-500">
+              Reset Filters
+            </button>
+          </div>
+        </Reveal>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+          {products.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 8) * 40}>
+              <ProductCard product={p} onAdd={onAdd} onQuickView={onQuickView} />
+            </Reveal>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ---------------------------------- TrustRow ---------------------------------- */
+
+function TrustRow() {
+  const items = [
+    { Icon: ShieldIcon, title: 'Authentic Products', text: 'Verified, quality-checked items' },
+    { Icon: TruckIcon, title: 'Fast Delivery', text: 'Nationwide shipping' },
+    { Icon: AwardIcon, title: 'Secure Checkout', text: 'Your payments, protected' },
+    { Icon: HeadsetIcon, title: 'Customer Support', text: 'Here when you need us' },
+  ];
+  return (
+    <Reveal>
+      <section className="border-y border-gold-400/25 bg-emerald-50/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {items.map((it) => (
+            <div key={it.title} className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full bg-white border border-gold-400/40 flex items-center justify-center text-emerald-700 shrink-0">
+                <it.Icon size={19} strokeWidth={1.6} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-emerald-900 leading-tight">{it.title}</p>
+                <p className="text-xs text-charcoal-600">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </Reveal>
+  );
+}
+
+/* --------------------------------- Newsletter --------------------------------- */
+
+function Newsletter({ onSubscribe }) {
+  const [email, setEmail] = useState('');
+  const submit = () => {
+    if (!email.trim() || !email.includes('@')) return;
+    onSubscribe(email);
+    setEmail('');
+  };
+  return (
+    <Reveal>
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+        <div className="w-12 h-12 mx-auto rounded-full bg-gold-100 flex items-center justify-center mb-5">
+          <MailIcon size={20} className="text-emerald-700" />
+        </div>
+        <h2 className="font-serif font-bold text-2xl sm:text-3xl text-emerald-900 mb-2">Stay Connected</h2>
+        <p className="text-sm text-charcoal-600 mb-7 max-w-md mx-auto">Subscribe for new arrivals, seasonal collections and gentle reminders — no spam, ever.</p>
+        <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submit()}
+            type="email"
+            placeholder="you@example.com"
+            aria-label="Email address"
+            className="flex-1 bg-white border border-emerald-900/15 rounded-full px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500"
+          />
+          <button onClick={submit}
+            className="bg-emerald-700 text-white font-semibold text-sm px-6 py-3 rounded-full hover:bg-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500">
+            Subscribe
+          </button>
+        </div>
+      </section>
+    </Reveal>
+  );
+}
+
+/* ----------------------------------- Footer ----------------------------------- */
+
+function Footer() {
+  return (
+    <footer className="bg-emerald-900 text-ivory-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10">
+          <div>
+            <div className="flex items-center gap-2.5 mb-4">
+              <span className="w-9 h-9 rounded-full bg-gold-500 flex items-center justify-center">
+                <BookIcon size={16} className="text-emerald-900" strokeWidth={1.8} />
+              </span>
+              <span className="font-serif font-bold text-lg">Quran Academy</span>
+            </div>
+            <p className="text-sm text-ivory-100/70 leading-relaxed mb-4">A boutique home for Qurans, Islamic books, and learning resources — chosen with care, delivered with trust.</p>
+            <div className="flex items-center gap-2">
+              {[FacebookIcon, InstagramIcon, XSocialIcon, YoutubeIcon].map((I, i) => (
+                <a key={i} href="#" aria-label="Social link" className="w-9 h-9 rounded-full bg-white/10 hover:bg-gold-500 hover:text-emerald-900 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <I size={15} />
+                </a>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-gold-400">Categories</h4>
+            <ul className="space-y-2.5 text-sm text-ivory-100/75">
+              {CATEGORIES.filter((c) => c.name !== 'All').map((c) => <li key={c.name}><a href="#shop" className="hover:text-gold-300 transition-colors">{c.name}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-gold-400">Help</h4>
+            <ul className="space-y-2.5 text-sm text-ivory-100/75">
+              {['Shipping Policy', 'Returns & Refunds', 'Order Tracking', 'FAQs', 'Terms & Conditions'].map((l) => <li key={l}><a href="#" className="hover:text-gold-300 transition-colors">{l}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-gold-400">Contact</h4>
+            <ul className="space-y-3 text-sm text-ivory-100/75">
+              <li className="flex items-center gap-2.5"><PhoneIcon size={15} className="text-gold-400 shrink-0" /> 0316 1111 144</li>
+              <li className="flex items-center gap-2.5"><MailIcon size={15} className="text-gold-400 shrink-0" /> support@quranacademy.live</li>
+              <li className="flex items-start gap-2.5"><MapPinIcon size={15} className="text-gold-400 shrink-0 mt-0.5" /> Lahore, Pakistan</li>
+            </ul>
+          </div>
+        </div>
+        <div className="h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent mb-6" />
+        <p className="text-center text-xs text-ivory-100/60">© 2025 Quran Academy. All rights reserved.</p>
+      </div>
+    </footer>
+  );
+}
+
+/* --------------------------------- CartDrawer --------------------------------- */
+
+function CartDrawer({ open, onClose, cart, onInc, onDec, onRemove, subtotal, onCheckout }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    if (open) document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  return (
+    <div className={`fixed inset-0 z-50 ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
+      <div onClick={onClose}
+        className={`absolute inset-0 bg-emerald-950/40 backdrop-blur-[2px] transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`} />
+      <aside role="dialog" aria-label="Shopping cart" aria-modal="true"
+        className={`absolute top-0 right-0 h-full w-full max-w-sm bg-ivory-50 shadow-2xl flex flex-col transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gold-400/25">
+          <h2 className="font-serif font-bold text-lg text-emerald-900 flex items-center gap-2"><BagIcon size={19} /> Your Cart</h2>
+          <button onClick={onClose} aria-label="Close cart" className="w-8 h-8 rounded-full hover:bg-emerald-50 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gold-500">
+            <XIcon size={18} />
+          </button>
+        </div>
+
+        {cart.length === 0 ? (
+          <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
+              <BagIcon size={26} className="text-emerald-700/50" />
+            </div>
+            <p className="font-serif font-semibold text-emerald-900 mb-1">Your cart is empty</p>
+            <p className="text-sm text-charcoal-600 mb-5">Browse our collection to find something meaningful.</p>
+            <button onClick={onClose} className="text-sm font-semibold px-5 py-2.5 rounded-full bg-emerald-700 text-white hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-gold-500">
+              Continue Shopping
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+              {cart.map(({ product, qty }) => {
+                const CatIcon = CAT_ICON[product.category] || BookIcon;
+                return (
+                  <div key={product.id} className="flex gap-3 pb-4 border-b border-emerald-900/8 last:border-0">
+                    <div className="w-16 h-20 shrink-0">
+                      <ArchVisual Icon={CatIcon} tone="emerald" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-charcoal leading-snug line-clamp-2">{product.name}</p>
+                      <p className="text-xs text-charcoal-600 mb-2">{formatPKR(product.price)}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 border border-emerald-900/12 rounded-full">
+                          <button onClick={() => onDec(product.id)} aria-label="Decrease quantity" className="w-7 h-7 flex items-center justify-center hover:bg-emerald-50 rounded-full focus:outline-none focus:ring-2 focus:ring-gold-500"><MinusIcon size={13} /></button>
+                          <span className="text-xs font-semibold w-5 text-center">{qty}</span>
+                          <button onClick={() => onInc(product.id)} aria-label="Increase quantity" className="w-7 h-7 flex items-center justify-center hover:bg-emerald-50 rounded-full focus:outline-none focus:ring-2 focus:ring-gold-500"><PlusIcon size={13} /></button>
+                        </div>
+                        <button onClick={() => onRemove(product.id)} aria-label={`Remove ${product.name}`} className="text-charcoal-600/50 hover:text-red-600 p-1 focus:outline-none focus:ring-2 focus:ring-gold-500 rounded">
+                          <TrashIcon size={15} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="px-5 py-5 border-t border-gold-400/25 bg-white">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm font-medium text-charcoal-600">Subtotal</span>
+                <span className="font-serif font-bold text-xl text-emerald-900">{formatPKR(subtotal)}</span>
+              </div>
+              <button onClick={onCheckout}
+                className="w-full bg-emerald-700 text-white font-semibold text-sm py-3.5 rounded-full hover:bg-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500">
+                Proceed to Checkout
+              </button>
+              <p className="text-[11px] text-center text-charcoal-600/60 mt-3">Shipping & taxes calculated at checkout</p>
+            </div>
+          </>
+        )}
+      </aside>
+    </div>
+  );
+}
+
+/* --------------------------------- QuickView --------------------------------- */
+
+function QuickViewModal({ product, onClose, onAdd }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  if (!product) return null;
+  const CatIcon = CAT_ICON[product.category] || BookIcon;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div onClick={onClose} className="absolute inset-0 bg-emerald-950/50 backdrop-blur-[2px] animate-fade-in" />
+      <div role="dialog" aria-modal="true" aria-label={product.name}
+        className="relative bg-ivory-50 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-fade-in">
+        <button onClick={onClose} aria-label="Close quick view"
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center hover:bg-white focus:outline-none focus:ring-2 focus:ring-gold-500">
+          <XIcon size={17} />
+        </button>
+        <div className="grid sm:grid-cols-2">
+          <div className="p-6 sm:p-7">
+            <div className="w-full aspect-square"><ArchVisual Icon={CatIcon} tone="emerald" /></div>
+          </div>
+          <div className="p-6 sm:p-7 sm:pl-0 flex flex-col">
+            {product.badge && <span className="self-start bg-gold-500 text-emerald-900 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-3">{product.badge}</span>}
+            <span className="text-[11px] font-semibold uppercase tracking-wide text-emerald-700/80 mb-1">{product.category}</span>
+            <h3 className="font-serif font-bold text-xl text-charcoal leading-snug mb-2">{product.name}</h3>
+            <Rating rating={product.rating} reviews={product.reviews} />
+            <p className="text-sm text-charcoal-600 leading-relaxed my-4">{product.desc}</p>
+            <div className="mt-auto">
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="font-serif font-bold text-2xl text-emerald-900">{formatPKR(product.price)}</span>
+                {product.originalPrice && <span className="text-sm text-charcoal-600/60 line-through">{formatPKR(product.originalPrice)}</span>}
+              </div>
+              <button onClick={() => { onAdd(product); onClose(); }}
+                className="w-full bg-emerald-700 text-white font-semibold text-sm py-3 rounded-full hover:bg-emerald-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500">
+                <BagIcon size={16} /> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ----------------------------------- Toast ----------------------------------- */
+
+function Toast({ toast }) {
+  if (!toast) return null;
+  return (
+    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 sm:left-auto sm:right-6 sm:translate-x-0 z-[60] animate-toast-in">
+      <div className="flex items-center gap-3 bg-emerald-900 text-ivory-50 pl-3 pr-5 py-3 rounded-full shadow-xl border border-gold-400/40">
+        <span className="w-7 h-7 rounded-full bg-gold-500 flex items-center justify-center shrink-0">
+          <CheckIcon size={14} className="text-emerald-900" />
+        </span>
+        <span className="text-sm font-medium whitespace-nowrap">{toast}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------ App ------------------------------------ */
+
+function App() {
+  const [cart, setCart] = useState([]);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [bump, setBump] = useState(false);
+  const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [sortBy, setSortBy] = useState('popularity');
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [toast, setToast] = useState(null);
+  const toastTimer = useRef(null);
+  const bumpTimer = useRef(null);
+
+  const showToast = useCallback((msg) => {
+    setToast(msg);
+    clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2400);
+  }, []);
+
+  const triggerBump = useCallback(() => {
+    setBump(false);
+    requestAnimationFrame(() => {
+      setBump(true);
+      clearTimeout(bumpTimer.current);
+      bumpTimer.current = setTimeout(() => setBump(false), 420);
+    });
+  }, []);
+
+  const addToCart = useCallback((product) => {
+    setCart((prev) => {
+      const existing = prev.find((it) => it.product.id === product.id);
+      if (existing) return prev.map((it) => it.product.id === product.id ? { ...it, qty: it.qty + 1 } : it);
+      return [...prev, { product, qty: 1 }];
+    });
+    showToast(`${product.name.length > 34 ? product.name.slice(0, 34) + '…' : product.name} added to cart`);
+    triggerBump();
+  }, [showToast, triggerBump]);
+
+  const incQty = useCallback((id) => setCart((prev) => prev.map((it) => it.product.id === id ? { ...it, qty: it.qty + 1 } : it)), []);
+  const decQty = useCallback((id) => setCart((prev) => prev.flatMap((it) => {
+    if (it.product.id !== id) return [it];
+    return it.qty <= 1 ? [] : [{ ...it, qty: it.qty - 1 }];
+  })), []);
+  const removeItem = useCallback((id) => setCart((prev) => prev.filter((it) => it.product.id !== id)), []);
+
+  const cartCount = useMemo(() => cart.reduce((sum, it) => sum + it.qty, 0), [cart]);
+  const subtotal = useMemo(() => cart.reduce((sum, it) => sum + it.qty * it.product.price, 0), [cart]);
+
+  const filteredProducts = useMemo(() => {
+    let list = PRODUCTS.filter((p) => {
+      const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
+      const q = search.trim().toLowerCase();
+      const matchesSearch = !q || p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    });
+    if (sortBy === 'price-asc') list = [...list].sort((a, b) => a.price - b.price);
+    else if (sortBy === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
+    else list = [...list].sort((a, b) => b.popularity - a.popularity);
+    return list;
+  }, [search, activeCategory, sortBy]);
+
+  const handleCheckout = useCallback(() => {
+    showToast('Checkout is coming soon — Jazak Allah Khair for your patience!');
+  }, [showToast]);
+
+  const handleSubscribe = useCallback((email) => {
+    showToast('Subscribed! Thank you for joining us.');
+  }, [showToast]);
+
+  const scrollToShop = useCallback(() => {
+    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  return (
+    <div id="top" className="min-h-screen bg-ivory-50 text-charcoal relative">
+      <div className="pointer-events-none fixed inset-0 opacity-[0.035] z-0" style={{ backgroundImage: PATTERN_URL, backgroundSize: '140px 140px' }} />
+      <div className="relative z-[1]">
+        <Header
+          cartCount={cartCount}
+          bump={bump}
+          onCartClick={() => setCartOpen(true)}
+          search={search}
+          setSearch={setSearch}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+        />
+        <Hero onShopClick={scrollToShop} />
+        <CategoryStrip activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+        <PromoBanners onCategorySelect={setActiveCategory} />
+        <ProductsSection
+          products={filteredProducts}
+          search={search}
+          setSearch={setSearch}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          onAdd={addToCart}
+          onQuickView={setQuickViewProduct}
+        />
+        <TrustRow />
+        <Newsletter onSubscribe={handleSubscribe} />
+        <Footer />
+      </div>
+
+      <CartDrawer
+        open={cartOpen}
+        onClose={() => setCartOpen(false)}
+        cart={cart}
+        onInc={incQty}
+        onDec={decQty}
+        onRemove={removeItem}
+        subtotal={subtotal}
+        onCheckout={handleCheckout}
+      />
+      {quickViewProduct && (
+        <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} onAdd={addToCart} />
+      )}
+      <Toast toast={toast} />
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
