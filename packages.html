@@ -79,7 +79,7 @@ nav{display:flex;align-items:center;justify-content:space-between;}
 .pdot{width:7px;height:7px;border-radius:50%;background:var(--red);margin-left:auto;flex:none;opacity:0;transition:opacity .2s;}
 .ptab.on .pdot{opacity:1;}
 
-.ppanels{position:relative;}
+.ppanels{position:relative;min-width:0;}
 .ppanel{display:none;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.6rem;}
 .ppanel.on{display:block;animation:fadein .4s ease;}
 @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
@@ -87,9 +87,8 @@ nav{display:flex;align-items:center;justify-content:space-between;}
 .pph p{color:var(--t2);margin-bottom:2rem;max-width:680px;}
 
 /* pricing cards */
-.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
-.pkg-grid.pkg-grid-4{grid-template-columns:repeat(4,1fr);}
-.pkg-card{background:var(--bg4);border:1px solid var(--line);border-radius:var(--r);padding:1.7rem 1.5rem;display:flex;flex-direction:column;position:relative;}
+.pkg-grid{display:flex;flex-direction:column;gap:1.3rem;max-width:640px;}
+.pkg-card{background:var(--bg4);border:1px solid var(--line);border-radius:var(--r);padding:1.7rem 1.5rem;display:flex;flex-direction:column;position:relative;width:100%;}
 .pkg-card.featured{border-color:var(--red);}
 .pkg-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.66rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:50px;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;}
 .pkg-tier{font-size:1.08rem;font-weight:700;margin-bottom:0.3rem;}
@@ -134,10 +133,6 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
 .fsocial a{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--t2);}
 .fsocial a:hover{border-color:var(--red);color:var(--red2);transform:translateY(-2px);}
 
-@media(max-width:1000px){
-  .pkg-grid{grid-template-columns:1fr 1fr;}
-  .pkg-grid.pkg-grid-4{grid-template-columns:1fr 1fr;}
-}
 @media(max-width:900px){
   header .nlinks,header .nbtn{display:none;}
   .mbtn{display:flex;}
@@ -151,7 +146,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
   .phero{padding:8rem 0 3rem;}
   .policies{padding:1.5rem 0 4.5rem;}
   .ppanel{padding:1.6rem;}
-  .pkg-grid,.pkg-grid.pkg-grid-4{grid-template-columns:1fr;}
+  .pkg-grid{max-width:none;}
 }
 @media(max-width:560px){
   .ptab{flex:1 1 100%;}
@@ -199,7 +194,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
     <div class="wrap phero-in">
       <div class="ptag"><span class="dot"></span>Pricing &amp; Packages</div>
       <h1 class="ph1">Packages Built for <em>Every Stage of Growth</em></h1>
-      <p class="pdesc">Branding, website development, e-commerce stores, social media and performance marketing &mdash; clear tiers, transparent pricing, no surprises. Pick a package below or talk to us about a custom scope.</p>
+      <p class="pdesc">Branding, website development, e-commerce stores, social media and performance marketing: clear tiers, transparent pricing, no surprises. Pick a package below or talk to us about a custom scope.</p>
       <p class="pmeta">All prices shown in Malaysian Ringgit (MYR) &middot; Don't see what you need? <a href="services.html#contact" style="color:var(--blue2);font-weight:600;">Get a custom quote</a></p>
     </div>
   </section>
@@ -245,9 +240,9 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
           <div class="ppanel on" data-panel="0">
             <div class="pph">
               <h3>Branding &amp; Identity</h3>
-              <p>Crafting visual identities that amplify your brand. From a single logo refresh to a full identity system with a brand guide, letterhead and social templates &mdash; every package includes full ownership of the final files.</p>
+              <p>Crafting visual identities that amplify your brand. From a single logo refresh to a full identity system with a brand guide, letterhead and social templates, every package includes full ownership of the final files.</p>
             </div>
-            <div class="pkg-grid pkg-grid-4">
+            <div class="pkg-grid">
               <div class="pkg-card">
                 <div class="pkg-tier">Logo Package</div>
                 <div class="pkg-tag">Enhance your brand's image while keeping your current colours, fonts and style intact.</div>
@@ -257,7 +252,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
                   <li>2 initial concept ideas to choose from</li>
                   <li>1 final logo design with 3 edits included</li>
                   <li>Style guide with logo usage &amp; colour specs</li>
-                  <li>Full ownership &mdash; EPS, PDF, JPG &amp; PNG files</li>
+                  <li>Full ownership: EPS, PDF, JPG &amp; PNG files</li>
                 </ul>
                 <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
               </div>
@@ -268,7 +263,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
                 <div class="pkg-price"><span class="cur">RM</span><span class="amt">400</span><span class="per">one-time</span></div>
                 <ul class="pkg-feat">
                   <li>Brand finder session</li>
-                  <li>Logo design &mdash; 3 concepts with 3 edits</li>
+                  <li>Logo design: 3 concepts with 3 edits</li>
                   <li>Typography &amp; font selection</li>
                   <li>Colour palette + coordinating secondary palette</li>
                   <li>Letterhead &amp; business card design</li>
@@ -283,7 +278,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
                 <div class="pkg-price"><span class="cur">RM</span><span class="amt">700</span><span class="per">one-time</span></div>
                 <ul class="pkg-feat">
                   <li>Brand finder session</li>
-                  <li>Logo design &mdash; 3 concepts with 3 edits</li>
+                  <li>Logo design: 3 concepts with 3 edits</li>
                   <li>Typography &amp; font selection</li>
                   <li>Colour palette + coordinating secondary palette</li>
                   <li>Letterhead &amp; business card design</li>
@@ -295,7 +290,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
               </div>
               <div class="pkg-card pkg-custom">
                 <div class="pkg-tier">Custom Package</div>
-                <p>Business cards, brochures, signage, packaging, presentation templates and branded swag &mdash; tailored to your business.</p>
+                <p>Business cards, brochures, signage, packaging, presentation templates and branded swag, tailored to your business.</p>
                 <a href="services.html#contact" class="pkg-cta ghost">Get a Quote</a>
               </div>
             </div>
@@ -307,7 +302,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
               <h3>Website Development</h3>
               <p>Custom-designed, mobile-responsive business websites built around your content and goals. Every plan includes a theme of your choice, WhatsApp integration and contact-form setup as standard.</p>
             </div>
-            <div class="pkg-grid pkg-grid-4">
+            <div class="pkg-grid">
               <div class="pkg-card">
                 <div class="pkg-tier">Basic</div>
                 <div class="pkg-tag">4&ndash;6 pages</div>
@@ -379,9 +374,9 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
           <div class="ppanel" data-panel="2">
             <div class="pph">
               <h3>E-Commerce Development</h3>
-              <p>Shopify store builds with a paid theme, payment integration and everything you need to start selling &mdash; plus an optional monthly management plan to keep the store growing after launch.</p>
+              <p>Shopify store builds with a paid theme, payment integration and everything you need to start selling, plus an optional monthly management plan to keep the store growing after launch.</p>
             </div>
-            <div class="pkg-grid pkg-grid-4">
+            <div class="pkg-grid">
               <div class="pkg-card">
                 <div class="pkg-tier">Basic</div>
                 <div class="pkg-tag">Up to 20 products</div>
@@ -440,7 +435,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
             <div class="pkg-sub">
               <h4>Shopify Store Management</h4>
               <p>An ongoing monthly plan to keep your store fresh once it's live.</p>
-              <div class="pkg-grid" style="grid-template-columns:1fr;max-width:420px;">
+              <div class="pkg-grid">
                 <div class="pkg-card">
                   <div class="pkg-tier">Store Management</div>
                   <div class="pkg-price"><span class="cur">RM</span><span class="amt">400</span><span class="per">/ month</span></div>
@@ -448,7 +443,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
                     <li>Up to 15 product listings updated</li>
                     <li>5 new product categories created</li>
                     <li>3 new banners designed</li>
-                    <li>Performance monitoring &mdash; load speed, image optimization, content updates</li>
+                    <li>Performance monitoring: load speed, image optimization, content updates</li>
                     <li>Store layout updates</li>
                   </ul>
                   <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
@@ -476,9 +471,9 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
           <div class="ppanel" data-panel="3">
             <div class="pph">
               <h3>Social Media Marketing</h3>
-              <p>Let us craft your social media success story &mdash; consistent posting, creative content and community management across the platforms that matter to your audience.</p>
+              <p>Let us craft your social media success story: consistent posting, creative content and community management across the platforms that matter to your audience.</p>
             </div>
-            <div class="pkg-grid pkg-grid-4">
+            <div class="pkg-grid">
               <div class="pkg-card">
                 <div class="pkg-tier">Basic</div>
                 <div class="pkg-tag">Facebook &amp; Instagram</div>
@@ -531,7 +526,7 @@ footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg
               <h3>Performance Marketing</h3>
               <p>Paid advertising strategy, creative and campaign management across the platforms that drive results, backed by monthly reporting and goal evaluation.</p>
             </div>
-            <div class="pkg-grid pkg-grid-4">
+            <div class="pkg-grid">
               <div class="pkg-card">
                 <div class="pkg-tier">Basic</div>
                 <div class="pkg-tag">2 ad platforms</div>

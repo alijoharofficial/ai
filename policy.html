@@ -79,7 +79,7 @@ nav{display:flex;align-items:center;justify-content:space-between;}
 .pdot{width:7px;height:7px;border-radius:50%;background:var(--red);margin-left:auto;flex:none;opacity:0;transition:opacity .2s;}
 .ptab.on .pdot{opacity:1;}
 
-.ppanels{position:relative;}
+.ppanels{position:relative;min-width:0;}
 .ppanel{display:none;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.6rem;}
 .ppanel.on{display:block;animation:fadein .4s ease;}
 @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
