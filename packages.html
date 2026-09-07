@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECH24 Packages: Branding, Website, E-Commerce &amp; Marketing Pricing</title>
+<meta name="description" content="TECH24 packages and pricing for branding, website development, Shopify e-commerce, social media marketing and performance marketing, shown in Malaysian Ringgit (MYR).">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.tech24.cc/packages">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e8192c'/><text x='50%25' y='54%25' dominant-baseline='central' text-anchor='middle' font-family='Rajdhani,sans-serif' font-weight='800' font-size='14' fill='white'>T24</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070a;--bg2:#0d0d12;--bg3:#141419;--bg4:#1b1b21;
+  --red:#e8192c;--red2:#ff4d5e;
+  --blue:#2f6bff;--blue2:#6a93ff;
+  --text:#f7f7f9;--t2:#9d9da8;--t3:#5c5c66;
+  --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+  --r:16px;--rs:10px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4,.logo{font-family:"Rajdhani",sans-serif;letter-spacing:0.01em;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 6%;}
+::selection{background:var(--red);color:#fff;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(.2,.7,.2,1),transform 0.6s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+.logo{display:flex;flex-direction:column;line-height:1;}
+.logo-mark{display:flex;align-items:baseline;gap:1px;font-weight:700;font-size:1.5rem;letter-spacing:0.02em;}
+.logo-tech{color:var(--red);}
+.logo-24{color:var(--blue);font-size:1.6rem;}
+.logo-tag{margin-top:4px;padding-top:4px;border-top:1px solid var(--line2);font-family:"Inter",sans-serif;font-size:0.5rem;letter-spacing:0.22em;color:var(--t2);font-weight:600;}
+
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s,padding .3s;padding:1.1rem 0;border-bottom:1px solid transparent;}
+header.scrolled{background:rgba(7,7,10,0.85);backdrop-filter:blur(14px);border-color:var(--line);padding:0.75rem 0;}
+nav{display:flex;align-items:center;justify-content:space-between;}
+.nlinks{display:flex;gap:2.1rem;align-items:center;}
+.nlinks a{font-size:0.88rem;font-weight:500;color:var(--t2);transition:color .2s;}
+.nlinks a:hover,.nlinks a.on{color:var(--text);}
+.nbtn{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;font-weight:600;font-size:0.82rem;padding:0.62rem 1.3rem;border-radius:var(--rs);transition:all .2s;white-space:nowrap;}
+.nbtn:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 8px 20px -6px rgba(232,25,44,0.55);}
+.mbtn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.mbtn span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.25s;}
+.mnav{display:none;position:fixed;inset:0 0 0 0;top:64px;background:var(--bg);z-index:99;padding:2rem 6%;flex-direction:column;gap:1.6rem;overflow-y:auto;}
+.mnav.open{display:flex;}
+.mnav a{font-size:1.15rem;font-weight:600;}
+
+.phero{position:relative;padding:10.5rem 0 4rem;overflow:hidden;text-align:center;}
+.pgrid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 10%,#000 40%,transparent 90%);mask-image:radial-gradient(ellipse 60% 50% at 50% 10%,#000 40%,transparent 90%);opacity:0.5;}
+.phero-in{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+.ptag{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--line2);padding:0.5rem 1.05rem;border-radius:50px;font-size:0.8rem;color:var(--t2);font-weight:500;margin-bottom:1.4rem;}
+.ptag .dot{width:7px;height:7px;border-radius:50%;background:var(--red);}
+.ph1{font-size:clamp(2.1rem,4.6vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1.1rem;}
+.ph1 em{font-style:normal;background:linear-gradient(90deg,var(--red2),var(--blue2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.pdesc{color:var(--t2);font-size:1.02rem;max-width:600px;margin:0 auto;}
+.pmeta{margin-top:1.6rem;font-size:0.78rem;color:var(--t3);}
+
+.policies{padding:2rem 0 7rem;}
+.playout{display:grid;grid-template-columns:290px 1fr;gap:2.5rem;align-items:start;}
+.ptabs{display:flex;flex-direction:column;gap:0.4rem;position:sticky;top:100px;}
+.ptab{display:flex;align-items:center;gap:0.9rem;padding:0.95rem 1.1rem;border-radius:var(--rs);cursor:pointer;border:1px solid transparent;transition:all .2s;text-align:left;background:none;width:100%;font-family:inherit;color:inherit;}
+.ptab:hover{background:var(--bg3);}
+.ptab.on{background:var(--bg3);border-color:var(--line2);}
+.pti{width:38px;height:38px;flex:none;border-radius:9px;background:var(--bg4);display:flex;align-items:center;justify-content:center;color:var(--t2);transition:all .2s;}
+.ptab.on .pti{background:var(--red);color:#fff;}
+.ptn{font-weight:600;font-size:0.94rem;}
+.pts{font-size:0.76rem;color:var(--t3);}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--red);margin-left:auto;flex:none;opacity:0;transition:opacity .2s;}
+.ptab.on .pdot{opacity:1;}
+
+.ppanels{position:relative;}
+.ppanel{display:none;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.6rem;}
+.ppanel.on{display:block;animation:fadein .4s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.pph h3{font-size:1.5rem;font-weight:700;margin-bottom:0.6rem;}
+.pph p{color:var(--t2);margin-bottom:2rem;max-width:680px;}
+
+/* pricing cards */
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.pkg-grid.pkg-grid-4{grid-template-columns:repeat(4,1fr);}
+.pkg-card{background:var(--bg4);border:1px solid var(--line);border-radius:var(--r);padding:1.7rem 1.5rem;display:flex;flex-direction:column;position:relative;}
+.pkg-card.featured{border-color:var(--red);}
+.pkg-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.66rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:50px;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;}
+.pkg-tier{font-size:1.08rem;font-weight:700;margin-bottom:0.3rem;}
+.pkg-tag{font-size:0.78rem;color:var(--t3);margin-bottom:1.1rem;min-height:2.4em;}
+.pkg-price{display:flex;align-items:baseline;gap:0.3rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.pkg-price .cur{font-size:0.95rem;font-weight:700;color:var(--blue2);}
+.pkg-price .amt{font-size:2rem;font-weight:800;font-family:"Rajdhani",sans-serif;line-height:1;}
+.pkg-price .per{font-size:0.8rem;color:var(--t3);}
+.pkg-feat{display:flex;flex-direction:column;gap:0.55rem;margin-bottom:1.4rem;flex:1;}
+.pkg-feat li{font-size:0.83rem;color:var(--t2);padding-left:1.2rem;position:relative;}
+.pkg-feat li::before{content:"\2713";position:absolute;left:0;top:0.05em;color:var(--red2);font-size:0.74rem;font-weight:700;}
+.pkg-cta{display:inline-flex;justify-content:center;align-items:center;gap:6px;background:var(--red);color:#fff;font-weight:600;font-size:0.85rem;padding:0.72rem 1rem;border-radius:var(--rs);transition:all .2s;text-align:center;}
+.pkg-cta:hover{background:var(--red2);transform:translateY(-1px);}
+.pkg-cta.ghost{background:none;border:1px solid var(--line2);color:var(--text);}
+.pkg-cta.ghost:hover{border-color:var(--red);color:var(--red2);}
+.pkg-card.pkg-custom{align-items:center;justify-content:center;text-align:center;border-style:dashed;border-color:var(--line2);}
+.pkg-card.pkg-custom .pkg-tier{margin-bottom:0.5rem;}
+.pkg-card.pkg-custom p{font-size:0.83rem;color:var(--t2);margin-bottom:1.3rem;}
+
+.pkg-note{font-size:0.82rem;color:var(--t3);margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--line);}
+
+.pkg-sub{margin-top:2.6rem;padding-top:2.2rem;border-top:1px solid var(--line);}
+.pkg-sub h4{font-size:1rem;font-weight:700;margin-bottom:0.3rem;display:flex;align-items:center;gap:0.6rem;}
+.pkg-sub h4::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue2);flex:none;}
+.pkg-sub > p{font-size:0.85rem;color:var(--t2);margin-bottom:1.2rem;max-width:640px;}
+
+.ptable-wrap{overflow-x:auto;margin-top:0.8rem;}
+.ptable{width:100%;border-collapse:collapse;font-size:0.85rem;min-width:480px;}
+.ptable th{text-align:left;color:var(--red2);font-weight:700;padding:0.6rem 0.9rem;border-bottom:2px solid var(--line2);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap;}
+.ptable td{padding:0.65rem 0.9rem;border-bottom:1px solid var(--line);color:var(--t2);}
+.ptable tr:last-child td{border-bottom:none;}
+
+footer{border-top:1px solid var(--line);padding:4rem 6% 2rem;background:var(--bg2);}
+.finner{max-width:1180px;margin:0 auto;}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;gap:2.5rem;padding-bottom:3rem;}
+.fabout p{color:var(--t3);font-size:0.86rem;margin-top:1rem;max-width:280px;}
+.fcol h5{font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--t2);margin-bottom:1rem;}
+.fcol a{display:block;font-size:0.87rem;color:var(--t3);margin-bottom:0.7rem;transition:color .2s;}
+.fcol a:hover{color:var(--text);}
+.fbottom{border-top:1px solid var(--line);padding-top:1.6rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.8rem;color:var(--t3);}
+.fsocial{display:flex;gap:0.7rem;}
+.fsocial a{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--t2);}
+.fsocial a:hover{border-color:var(--red);color:var(--red2);transform:translateY(-2px);}
+
+@media(max-width:1000px){
+  .pkg-grid{grid-template-columns:1fr 1fr;}
+  .pkg-grid.pkg-grid-4{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:900px){
+  header .nlinks,header .nbtn{display:none;}
+  .mbtn{display:flex;}
+  .playout{grid-template-columns:1fr;}
+  .ptabs{position:static;flex-direction:row;flex-wrap:wrap;}
+  .ptab{flex:1 1 45%;}
+  .fgrid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:700px){
+  .wrap{padding:0 5.5%;}
+  .phero{padding:8rem 0 3rem;}
+  .policies{padding:1.5rem 0 4.5rem;}
+  .ppanel{padding:1.6rem;}
+  .pkg-grid,.pkg-grid.pkg-grid-4{grid-template-columns:1fr;}
+}
+@media(max-width:560px){
+  .ptab{flex:1 1 100%;}
+  .fgrid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="services.html" class="logo" aria-label="TECH24 home">
+        <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+        <div class="logo-tag">CONNECTING TO THE WORLD</div>
+      </a>
+      <ul class="nlinks">
+        <li><a href="services.html">Home</a></li>
+        <li><a href="services.html#services">Services</a></li>
+        <li><a href="packages.html" class="on">Packages</a></li>
+        <li><a href="policy.html">Policies</a></li>
+        <li><a href="services.html#contact">Contact</a></li>
+      </ul>
+      <a href="services.html#contact" class="nbtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a Free Call
+      </a>
+      <button class="mbtn" id="mbtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="mnav" id="mnav">
+  <a href="services.html">Home</a>
+  <a href="services.html#services">Services</a>
+  <a href="packages.html">Packages</a>
+  <a href="policy.html">Policies</a>
+  <a href="services.html#contact">Contact</a>
+  <a href="services.html#contact" class="nbtn" style="width:fit-content;">Book a Free Call</a>
+</div>
+
+<main>
+  <section class="phero">
+    <div class="pgrid" aria-hidden="true"></div>
+    <div class="wrap phero-in">
+      <div class="ptag"><span class="dot"></span>Pricing &amp; Packages</div>
+      <h1 class="ph1">Packages Built for <em>Every Stage of Growth</em></h1>
+      <p class="pdesc">Branding, website development, e-commerce stores, social media and performance marketing &mdash; clear tiers, transparent pricing, no surprises. Pick a package below or talk to us about a custom scope.</p>
+      <p class="pmeta">All prices shown in Malaysian Ringgit (MYR) &middot; Don't see what you need? <a href="services.html#contact" style="color:var(--blue2);font-weight:600;">Get a custom quote</a></p>
+    </div>
+  </section>
+
+  <section class="policies" id="package-tabs">
+    <div class="wrap">
+      <div class="playout">
+        <div class="ptabs reveal" id="ptabs" role="tablist" aria-label="Package categories">
+          <button type="button" class="ptab on" data-panel="0" role="tab" aria-selected="true">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17.5 10.5c2.5 0 4.5 2 4.5 4.5 0 3.5-3.5 6-9 6s-9-2.5-9-6c0-3 2-5 4.5-6"/><path d="M8.5 10.5A2.5 2.5 0 1 1 6 8"/></svg></div>
+            <div><div class="ptn">Branding &amp; Identity</div><div class="pts">Logo, brand systems, guides</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="1" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <div><div class="ptn">Website Development</div><div class="pts">Custom-built business sites</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="2" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg></div>
+            <div><div class="ptn">E-Commerce Development</div><div class="pts">Shopify stores &amp; management</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="3" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+            <div><div class="ptn">Social Media Marketing</div><div class="pts">Content, posting, community</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="4" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div><div class="ptn">Performance Marketing</div><div class="pts">Paid ads &amp; campaign management</div></div>
+            <span class="pdot"></span>
+          </button>
+          <button type="button" class="ptab" data-panel="5" role="tab" aria-selected="false">
+            <div class="pti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+            <div><div class="ptn">Social + Performance Bundle</div><div class="pts">Combined marketing retainer</div></div>
+            <span class="pdot"></span>
+          </button>
+        </div>
+
+        <div class="ppanels reveal">
+          <!-- BRANDING & IDENTITY -->
+          <div class="ppanel on" data-panel="0">
+            <div class="pph">
+              <h3>Branding &amp; Identity</h3>
+              <p>Crafting visual identities that amplify your brand. From a single logo refresh to a full identity system with a brand guide, letterhead and social templates &mdash; every package includes full ownership of the final files.</p>
+            </div>
+            <div class="pkg-grid pkg-grid-4">
+              <div class="pkg-card">
+                <div class="pkg-tier">Logo Package</div>
+                <div class="pkg-tag">Enhance your brand's image while keeping your current colours, fonts and style intact.</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">200</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Brand finder session to find the heart of your brand</li>
+                  <li>2 initial concept ideas to choose from</li>
+                  <li>1 final logo design with 3 edits included</li>
+                  <li>Style guide with logo usage &amp; colour specs</li>
+                  <li>Full ownership &mdash; EPS, PDF, JPG &amp; PNG files</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card featured">
+                <span class="pkg-badge">Most Popular</span>
+                <div class="pkg-tier">Essential Package</div>
+                <div class="pkg-tag">A complete visual identity system for brands starting fresh or ready for a revamp.</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">400</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Brand finder session</li>
+                  <li>Logo design &mdash; 3 concepts with 3 edits</li>
+                  <li>Typography &amp; font selection</li>
+                  <li>Colour palette + coordinating secondary palette</li>
+                  <li>Letterhead &amp; business card design</li>
+                  <li>Full branding guide (logo, colours, type, usage)</li>
+                  <li>Full ownership of final files</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta">Get Started</a>
+              </div>
+              <div class="pkg-card">
+                <div class="pkg-tier">Executive Package</div>
+                <div class="pkg-tag">Everything needed to establish a cohesive, memorable brand identity.</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">700</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Brand finder session</li>
+                  <li>Logo design &mdash; 3 concepts with 3 edits</li>
+                  <li>Typography &amp; font selection</li>
+                  <li>Colour palette + coordinating secondary palette</li>
+                  <li>Letterhead &amp; business card design</li>
+                  <li>Social media templates for 2 channels</li>
+                  <li>Full branding guide</li>
+                  <li>Full ownership of final files</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card pkg-custom">
+                <div class="pkg-tier">Custom Package</div>
+                <p>Business cards, brochures, signage, packaging, presentation templates and branded swag &mdash; tailored to your business.</p>
+                <a href="services.html#contact" class="pkg-cta ghost">Get a Quote</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEBSITE DEVELOPMENT -->
+          <div class="ppanel" data-panel="1">
+            <div class="pph">
+              <h3>Website Development</h3>
+              <p>Custom-designed, mobile-responsive business websites built around your content and goals. Every plan includes a theme of your choice, WhatsApp integration and contact-form setup as standard.</p>
+            </div>
+            <div class="pkg-grid pkg-grid-4">
+              <div class="pkg-card">
+                <div class="pkg-tier">Basic</div>
+                <div class="pkg-tag">4&ndash;6 pages</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">900</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Mobile responsive layout</li>
+                  <li>Contact form</li>
+                  <li>Google Map integration</li>
+                  <li>SEO-friendly structure</li>
+                  <li>Social media integration</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card featured">
+                <span class="pkg-badge">Most Popular</span>
+                <div class="pkg-tier">Standard</div>
+                <div class="pkg-tag">7&ndash;10 pages</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,300</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Mobile responsive layout</li>
+                  <li>Image slider &amp; image gallery</li>
+                  <li>Contact form</li>
+                  <li>Newsletter subscription</li>
+                  <li>Google Map integration</li>
+                  <li>SEO-friendly structure</li>
+                  <li>Social media integration</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta">Get Started</a>
+              </div>
+              <div class="pkg-card">
+                <div class="pkg-tier">Business</div>
+                <div class="pkg-tag">11&ndash;15 pages</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,900</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Mobile responsive layout</li>
+                  <li>Image slider &amp; image gallery</li>
+                  <li>Testimonials &amp; blog</li>
+                  <li>Newsletter subscription</li>
+                  <li>Google Map integration</li>
+                  <li>SEO-friendly structure</li>
+                  <li>Social media integration</li>
+                  <li>Theme of your choice</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card pkg-custom">
+                <div class="pkg-tier">Custom Package</div>
+                <p>Larger site, app integration or something outside the boxes above? Let's scope it together.</p>
+                <a href="services.html#contact" class="pkg-cta ghost">Get a Quote</a>
+              </div>
+            </div>
+            <div class="pkg-sub">
+              <h4>How It Works</h4>
+              <p>A typical Website Development project runs on a 25-day timeline. It can vary depending on scope.</p>
+              <div class="ptable-wrap">
+                <table class="ptable">
+                  <tr><th>Objective</th><th>Timeline</th></tr>
+                  <tr><td>Project goals &amp; access</td><td>Day 1 &ndash; 3</td></tr>
+                  <tr><td>Theme finalization</td><td>Day 4 &ndash; 7</td></tr>
+                  <tr><td>Development</td><td>Day 8 &ndash; 18</td></tr>
+                  <tr><td>Final design, testing &amp; approval</td><td>Day 20 &ndash; 23</td></tr>
+                  <tr><td>Website launch</td><td>Day 24 &ndash; 25</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-COMMERCE DEVELOPMENT -->
+          <div class="ppanel" data-panel="2">
+            <div class="pph">
+              <h3>E-Commerce Development</h3>
+              <p>Shopify store builds with a paid theme, payment integration and everything you need to start selling &mdash; plus an optional monthly management plan to keep the store growing after launch.</p>
+            </div>
+            <div class="pkg-grid pkg-grid-4">
+              <div class="pkg-card">
+                <div class="pkg-tier">Basic</div>
+                <div class="pkg-tag">Up to 20 products</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">700</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Paid Shopify theme</li>
+                  <li>Mobile responsive layout</li>
+                  <li>2 homepage banners</li>
+                  <li>5 product categories</li>
+                  <li>Social media integration</li>
+                  <li>Payment method integration</li>
+                  <li>Contact form integration</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card featured">
+                <span class="pkg-badge">Most Popular</span>
+                <div class="pkg-tier">Standard</div>
+                <div class="pkg-tag">Up to 30 products</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,000</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Paid Shopify theme</li>
+                  <li>Mobile responsive layout</li>
+                  <li>3 homepage banners</li>
+                  <li>10 product categories</li>
+                  <li>Newsletter subscription</li>
+                  <li>Payment method integration</li>
+                  <li>Social media integration</li>
+                  <li>Contact form integration</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta">Get Started</a>
+              </div>
+              <div class="pkg-card">
+                <div class="pkg-tier">Business</div>
+                <div class="pkg-tag">Up to 40 products</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,600</span><span class="per">one-time</span></div>
+                <ul class="pkg-feat">
+                  <li>Paid Shopify theme of your choice</li>
+                  <li>Mobile responsive layout</li>
+                  <li>3 homepage banners</li>
+                  <li>Unlimited product categories</li>
+                  <li>Newsletter subscription</li>
+                  <li>Payment &amp; WhatsApp integration</li>
+                  <li>Social media integration</li>
+                  <li>"How to manage your store" training</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card pkg-custom">
+                <div class="pkg-tier">Custom Package</div>
+                <p>Larger catalogue, custom Shopify apps or migration from another platform? Let's talk scope.</p>
+                <a href="services.html#contact" class="pkg-cta ghost">Get a Quote</a>
+              </div>
+            </div>
+
+            <div class="pkg-sub">
+              <h4>Shopify Store Management</h4>
+              <p>An ongoing monthly plan to keep your store fresh once it's live.</p>
+              <div class="pkg-grid" style="grid-template-columns:1fr;max-width:420px;">
+                <div class="pkg-card">
+                  <div class="pkg-tier">Store Management</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">400</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>Up to 15 product listings updated</li>
+                    <li>5 new product categories created</li>
+                    <li>3 new banners designed</li>
+                    <li>Performance monitoring &mdash; load speed, image optimization, content updates</li>
+                    <li>Store layout updates</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="pkg-sub">
+              <h4>How It Works</h4>
+              <p>A typical E-Commerce build runs on an 18-day timeline. It can vary depending on scope.</p>
+              <div class="ptable-wrap">
+                <table class="ptable">
+                  <tr><th>Objective</th><th>Timeline</th></tr>
+                  <tr><td>Project goals &amp; access</td><td>Day 1 &ndash; 2</td></tr>
+                  <tr><td>Theme finalization</td><td>Day 3 &ndash; 4</td></tr>
+                  <tr><td>Development</td><td>Day 5 &ndash; 12</td></tr>
+                  <tr><td>Final design, testing &amp; approval</td><td>Day 13 &ndash; 15</td></tr>
+                  <tr><td>Website launch</td><td>Day 16 &ndash; 18</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SOCIAL MEDIA MARKETING -->
+          <div class="ppanel" data-panel="3">
+            <div class="pph">
+              <h3>Social Media Marketing</h3>
+              <p>Let us craft your social media success story &mdash; consistent posting, creative content and community management across the platforms that matter to your audience.</p>
+            </div>
+            <div class="pkg-grid pkg-grid-4">
+              <div class="pkg-card">
+                <div class="pkg-tier">Basic</div>
+                <div class="pkg-tag">Facebook &amp; Instagram</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">900</span><span class="per">/ month</span></div>
+                <ul class="pkg-feat">
+                  <li>3 posts per week</li>
+                  <li>2 GIFs / animations per month</li>
+                  <li>2 ad campaigns</li>
+                  <li>4&ndash;6 creatives per month</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card featured">
+                <span class="pkg-badge">Most Popular</span>
+                <div class="pkg-tier">Standard</div>
+                <div class="pkg-tag">Facebook, Instagram &amp; TikTok</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,200</span><span class="per">/ month</span></div>
+                <ul class="pkg-feat">
+                  <li>4 posts per week</li>
+                  <li>3 GIFs / animations per month</li>
+                  <li>3 ad campaigns</li>
+                  <li>6&ndash;8 creatives per month</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta">Get Started</a>
+              </div>
+              <div class="pkg-card">
+                <div class="pkg-tier">Business</div>
+                <div class="pkg-tag">Facebook, Instagram, TikTok &amp; Google Ads</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,500</span><span class="per">/ month</span></div>
+                <ul class="pkg-feat">
+                  <li>4 posts per week</li>
+                  <li>4 GIFs / animations per month</li>
+                  <li>Community management</li>
+                  <li>4&ndash;5 ad campaigns</li>
+                  <li>8&ndash;12 creatives per month</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card pkg-custom">
+                <div class="pkg-tier">Custom Package</div>
+                <p>Need a bespoke platform mix or posting cadence? Get in touch for a tailored package.</p>
+                <a href="services.html#contact" class="pkg-cta ghost">Get a Quote</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- PERFORMANCE MARKETING -->
+          <div class="ppanel" data-panel="4">
+            <div class="pph">
+              <h3>Performance Marketing</h3>
+              <p>Paid advertising strategy, creative and campaign management across the platforms that drive results, backed by monthly reporting and goal evaluation.</p>
+            </div>
+            <div class="pkg-grid pkg-grid-4">
+              <div class="pkg-card">
+                <div class="pkg-tier">Basic</div>
+                <div class="pkg-tag">2 ad platforms</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">400</span><span class="per">/ month</span></div>
+                <ul class="pkg-feat">
+                  <li>4&ndash;6 ad creatives</li>
+                  <li>1 campaign set up</li>
+                  <li>2 ads live</li>
+                  <li>Analytical reports &amp; goal evaluation</li>
+                  <li>Monthly reporting</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card featured">
+                <span class="pkg-badge">Most Popular</span>
+                <div class="pkg-tier">Standard</div>
+                <div class="pkg-tag">3 ad platforms</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">700</span><span class="per">/ month</span></div>
+                <ul class="pkg-feat">
+                  <li>12&ndash;14 ad creatives</li>
+                  <li>3 campaigns set up</li>
+                  <li>6 ads live</li>
+                  <li>Analytical reports &amp; goal evaluation</li>
+                  <li>Monthly reporting</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta">Get Started</a>
+              </div>
+              <div class="pkg-card">
+                <div class="pkg-tier">Business</div>
+                <div class="pkg-tag">4 ad platforms</div>
+                <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,000</span><span class="per">/ month</span></div>
+                <ul class="pkg-feat">
+                  <li>20&ndash;24 ad creatives</li>
+                  <li>5 campaigns set up</li>
+                  <li>10 ads live</li>
+                  <li>Analytical reports &amp; goal evaluation</li>
+                  <li>Monthly reporting</li>
+                </ul>
+                <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+              </div>
+              <div class="pkg-card pkg-custom">
+                <div class="pkg-tier">Custom Package</div>
+                <p>Bigger budgets or more platforms? Get in touch for a tailored package.</p>
+                <a href="services.html#contact" class="pkg-cta ghost">Get a Quote</a>
+              </div>
+            </div>
+            <p class="pkg-note">Note: third-party ad spend (i.e. platform advertising costs) is paid directly by the client and is not included in the fees above.</p>
+          </div>
+
+          <!-- SOCIAL + PERFORMANCE BUNDLE -->
+          <div class="ppanel" data-panel="5">
+            <div class="pph">
+              <h3>Social Media + Performance Marketing Bundle</h3>
+              <p>Run always-on social media management and paid advertising together under one combined retainer. Pricing below reflects our bundle rates for each side of the package.</p>
+            </div>
+
+            <div class="pkg-sub" style="margin-top:0;padding-top:0;border-top:none;">
+              <h4>Social Media (Bundle Rate)</h4>
+              <div class="pkg-grid">
+                <div class="pkg-card">
+                  <div class="pkg-tier">Basic</div>
+                  <div class="pkg-tag">Facebook &amp; Instagram</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">700</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>3 post designs per week</li>
+                    <li>2 GIFs / animations per month</li>
+                    <li>Social media audit</li>
+                    <li>Page setup, optimization &amp; management</li>
+                    <li>Content strategy &amp; calendar</li>
+                    <li>Analytical &amp; monthly reports</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+                </div>
+                <div class="pkg-card featured">
+                  <span class="pkg-badge">Most Popular</span>
+                  <div class="pkg-tier">Standard</div>
+                  <div class="pkg-tag">Facebook, Instagram &amp; TikTok</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,000</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>4 post designs per week</li>
+                    <li>4 GIFs / animations per month</li>
+                    <li>Social media audit</li>
+                    <li>Page setup, optimization &amp; management</li>
+                    <li>Content strategy &amp; calendar</li>
+                    <li>Analytical &amp; monthly reports</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta">Get Started</a>
+                </div>
+                <div class="pkg-card">
+                  <div class="pkg-tier">Business</div>
+                  <div class="pkg-tag">Facebook, Instagram, TikTok &amp; YouTube</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,300</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>5 post designs per week</li>
+                    <li>6 GIFs / animations per month</li>
+                    <li>Social media audit</li>
+                    <li>Page setup, optimization &amp; management</li>
+                    <li>Content strategy &amp; calendar</li>
+                    <li>Analytical &amp; monthly reports</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="pkg-sub">
+              <h4>Performance Marketing (Bundle Rate)</h4>
+              <div class="pkg-grid">
+                <div class="pkg-card">
+                  <div class="pkg-tier">Basic</div>
+                  <div class="pkg-tag">2 ad platforms</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">600</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>4&ndash;6 ad creatives</li>
+                    <li>1 campaign set up</li>
+                    <li>2 ads live</li>
+                    <li>Advertising strategy &amp; goal evaluation</li>
+                    <li>Analytical &amp; monthly reports</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+                </div>
+                <div class="pkg-card featured">
+                  <span class="pkg-badge">Most Popular</span>
+                  <div class="pkg-tier">Standard</div>
+                  <div class="pkg-tag">3 ad platforms</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">900</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>12&ndash;14 ad creatives</li>
+                    <li>3 campaigns set up</li>
+                    <li>6 ads live</li>
+                    <li>Advertising strategy &amp; goal evaluation</li>
+                    <li>Analytical &amp; monthly reports</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta">Get Started</a>
+                </div>
+                <div class="pkg-card">
+                  <div class="pkg-tier">Business</div>
+                  <div class="pkg-tag">4 ad platforms</div>
+                  <div class="pkg-price"><span class="cur">RM</span><span class="amt">1,200</span><span class="per">/ month</span></div>
+                  <ul class="pkg-feat">
+                    <li>20&ndash;24 ad creatives</li>
+                    <li>5 campaigns set up</li>
+                    <li>10 ads live</li>
+                    <li>Advertising strategy &amp; goal evaluation</li>
+                    <li>Analytical &amp; monthly reports</li>
+                  </ul>
+                  <a href="services.html#contact" class="pkg-cta ghost">Get Started</a>
+                </div>
+              </div>
+              <p class="pkg-note">Note: third-party ad spend (i.e. platform advertising costs) is paid directly by the client and is not included in the fees above. Mix and match tiers between social media and performance marketing, or <a href="services.html#contact" style="color:var(--blue2);font-weight:600;">get in touch</a> for a fully custom bundle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="finner">
+    <div class="fgrid">
+      <div class="fabout">
+        <div class="logo">
+          <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+          <div class="logo-tag">CONNECTING TO THE WORLD</div>
+        </div>
+        <p>An AI-driven growth agency connecting paid media, analytics, automation and strategy into one system.</p>
+      </div>
+      <div class="fcol">
+        <h5>Services</h5>
+        <a href="services.html#services">AI Paid Media</a>
+        <a href="services.html#services">Analytics &amp; Attribution</a>
+        <a href="services.html#services">GHL Automation</a>
+        <a href="services.html#services">Business Automation</a>
+        <a href="services.html#services">AI Growth Strategy</a>
+      </div>
+      <div class="fcol">
+        <h5>Company</h5>
+        <a href="services.html#results">Results</a>
+        <a href="services.html#why">Why TECH24</a>
+        <a href="packages.html">Packages</a>
+        <a href="policy.html">Policies</a>
+        <a href="services.html#contact">Contact</a>
+      </div>
+      <div class="fcol">
+        <h5>Contact</h5>
+        <a href="mailto:info@tech24.cc">info@tech24.cc</a>
+        <a href="tel:+18126665853">+1 (812) 666-5853</a>
+        <a href="tel:+60173721678">+60 17-372 1678</a>
+        <a style="cursor:default;">Vista Ridge Mall Dr, Lewisville, TX 75067</a>
+        <div class="fsocial" style="margin-top:0.8rem;">
+          <a href="https://www.facebook.com/marketing.agency.24" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/marketing.agency.24/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.linkedin.com/company/marketing-agency24" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="fbottom">
+      <span>&copy; <span id="year"></span> TECH24. All rights reserved.</span>
+      <span>Connecting to the World</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+var header = document.getElementById('siteHeader');
+window.addEventListener('scroll', function(){
+  header.classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+
+var mbtn = document.getElementById('mbtn');
+var mnav = document.getElementById('mnav');
+mbtn.addEventListener('click', function(){
+  mnav.classList.toggle('open');
+});
+mnav.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click', function(){ mnav.classList.remove('open'); });
+});
+
+var revealEls = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.1});
+revealEls.forEach(function(el){ io.observe(el); });
+
+var ptabs = document.querySelectorAll('.ptab');
+var ppanels = document.querySelectorAll('.ppanel');
+function showPackagePanel(i){
+  ptabs.forEach(function(t){
+    var on = t.getAttribute('data-panel') === String(i);
+    t.classList.toggle('on', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  ppanels.forEach(function(p){
+    p.classList.toggle('on', p.getAttribute('data-panel') === String(i));
+  });
+}
+ptabs.forEach(function(tab){
+  tab.addEventListener('click', function(){
+    showPackagePanel(tab.getAttribute('data-panel'));
+    document.getElementById('package-tabs').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+// deep-link support: packages.html#website, #ecommerce, #social, #performance, #bundle
+var hashMap = {'branding':0,'website':1,'ecommerce':2,'social':3,'performance':4,'bundle':5};
+var initial = hashMap[location.hash.replace('#','')];
+if(initial !== undefined) showPackagePanel(initial);
+</script>
+</body>
+</html>
