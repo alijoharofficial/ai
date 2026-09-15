@@ -62,10 +62,8 @@ table.hist tr:last-child td{border-bottom:none;}
 table.hist tbody tr{cursor:pointer;transition:background .15s;}
 table.hist tbody tr:hover{background:var(--bg4);}
 .pill{display:inline-block;padding:0.22rem 0.65rem;border-radius:50px;font-size:0.72rem;font-weight:700;text-transform:capitalize;}
-.pill-open{background:rgba(47,107,255,0.18);color:var(--blue2);}
-.pill-paid{background:rgba(30,180,110,0.18);color:#4fd68f;}
-.pill-draft{background:rgba(255,255,255,0.08);color:var(--t2);}
-.pill-void,.pill-uncollectible{background:rgba(232,25,44,0.18);color:var(--red2);}
+.pill-active{background:rgba(47,107,255,0.18);color:var(--blue2);}
+.pill-void{background:rgba(232,25,44,0.18);color:var(--red2);}
 .empty{padding:3rem 1rem;text-align:center;color:var(--t3);font-size:0.9rem;}
 .loading{padding:2rem;text-align:center;color:var(--t3);font-size:0.85rem;}
 .msg{padding:0.8rem 1rem;border-radius:var(--rs);font-size:0.84rem;margin-bottom:1.2rem;}
@@ -131,10 +129,15 @@ table.hist tbody tr:hover{background:var(--bg4);}
 .s-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
 
 @media print{
-  body{background:#fff;}
+  @page{size:A4;margin:12mm;}
+  html,body{background:#fff;}
   .no-print{display:none !important;}
-  .sheet{box-shadow:none !important;border-radius:0 !important;}
+  .adm-header,.sheet-toolbar{display:none !important;}
+  .wrap{max-width:none;padding:0;margin:0;}
+  .sheet{box-shadow:none !important;border-radius:0 !important;max-width:100% !important;margin:0 !important;}
+  .sheet-in{padding:0 24px 20px !important;}
   .sheet input,.sheet textarea{border:none !important;}
+  .s-pay{margin-top:18px;}
 }
 @media(max-width:700px){
   .wrap{padding:0 5%;}
@@ -306,34 +309,34 @@ async function openInvoice(id){
   document.getElementById('sheetActions').innerHTML = '';
   try {
     var data = await adminFetch(API_INVOICES + '?id=' + encodeURIComponent(id));
-    var inv = data.invoice;
-    if (inv.status === 'draft') {
-      state = {
-        mode: 'edit',
-        editingId: inv.id,
-        invNo: inv.invoiceNo,
-        issueDate: inv.issueDate,
-        dueDate: inv.dueDate,
-        currency: (inv.currency || 'USD').toUpperCase(),
-        taxRate: Number(inv.taxRate) || 0,
-        billTo: { name: inv.clientName || '', email: inv.clientEmail || '', address: inv.clientAddress || '' },
-        items: (inv.items && inv.items.length)
-          ? inv.items.map(function(it){ return { id: nextId++, desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }; })
-          : [ { id: nextId++, desc: '', detail: '', qty: 1, rate: 0 } ],
-        notes: inv.notes || '',
-        result: null
-      };
-      showSheetView();
-      renderSheet();
-      await loadServices();
-      if (state.mode === 'edit') renderSheet();
-    } else {
-      state = { mode: 'view', result: inv };
-      renderSheet();
-    }
+    state = { mode: 'view', result: data.invoice };
+    renderSheet();
   } catch (e) {
     document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
   }
+}
+
+async function editInvoice(){
+  var inv = state.result;
+  if (!inv) return;
+  state = {
+    mode: 'edit',
+    editingId: inv.id,
+    invNo: inv.invoiceNo,
+    issueDate: inv.issueDate,
+    dueDate: inv.dueDate,
+    currency: (inv.currency || 'USD').toUpperCase(),
+    taxRate: Number(inv.taxRate) || 0,
+    billTo: { name: inv.clientName || '', email: inv.clientEmail || '', address: inv.clientAddress || '' },
+    items: (inv.items && inv.items.length)
+      ? inv.items.map(function(it){ return { id: nextId++, desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }; })
+      : [ { id: nextId++, desc: '', detail: '', qty: 1, rate: 0 } ],
+    notes: inv.notes || '',
+    result: null
+  };
+  renderSheet();
+  await loadServices();
+  if (state.mode === 'edit') renderSheet();
 }
 
 async function loadServices(){
@@ -381,8 +384,7 @@ function renderSheet(){
 
   document.getElementById('sheetActions').innerHTML =
     '<button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>' +
-    (s.editingId ? '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="deleteDraftConfirm(\'' + s.editingId + '\')">Delete Draft</button>' : '') +
-    '<button class="btn btn-primary btn-sm" id="createBtn" onclick="submitCreate()">' + (s.editingId ? 'Save &amp; Finalize Invoice' : 'Create Invoice &amp; Get Payment Link') + '</button>';
+    '<button class="btn btn-primary btn-sm" id="createBtn" onclick="submitCreate()">' + (s.editingId ? 'Save Changes &amp; Get New Payment Link' : 'Create Invoice &amp; Get Payment Link') + '</button>';
 
   document.getElementById('sheet').innerHTML =
     '<div class="sheet-band"></div>' +
@@ -497,7 +499,7 @@ function updateTotals(){
 async function submitCreate(){
   var btn = document.getElementById('createBtn');
   var isEdit = !!state.editingId;
-  var defaultLabel = isEdit ? 'Save & Finalize Invoice' : 'Create Invoice & Get Payment Link';
+  var defaultLabel = isEdit ? 'Save Changes & Get New Payment Link' : 'Create Invoice & Get Payment Link';
   if (!state.billTo.name) { document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">Client name is required.</div>'; return; }
   if (!state.items.length || !state.items.some(function(it){ return it.desc; })) { document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">Add at least one line item.</div>'; return; }
   btn.disabled = true;
@@ -528,29 +530,15 @@ async function submitCreate(){
   }
 }
 
-function deleteDraftConfirm(id){
-  if (!confirm('Delete this draft invoice? This cannot be undone.')) return;
-  deleteDraft(id);
-}
-async function deleteDraft(id){
-  try {
-    await adminFetch(API_INVOICES, { method: 'POST', body: { action: 'delete', id: id } });
-    showList();
-  } catch (e) {
-    document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
-  }
-}
-
-// ---------- rendering: view mode (finalized / loaded invoice) ----------
+// ---------- rendering: view mode (existing invoice / payment link) ----------
 function renderSheetView(){
   var inv = state.result;
-  var statusPill = '<span class="pill pill-' + inv.status + '">' + inv.status + '</span>';
+  var statusPill = '<span class="pill pill-' + inv.status + '">' + (inv.status === 'active' ? 'Active' : 'Void') + '</span>';
 
   var actions = '<button class="btn btn-ghost btn-sm" onclick="window.print()">Print / Save PDF</button>';
-  if (inv.invoicePdf) actions += '<a class="btn btn-ghost btn-sm" href="' + inv.invoicePdf + '" target="_blank" rel="noopener">Stripe PDF</a>';
   if (inv.hostedInvoiceUrl) actions += '<button class="btn btn-ghost btn-sm" onclick="copyLink(\'' + inv.hostedInvoiceUrl + '\')">Copy Payment Link</button>';
-  if (inv.status === 'open') {
-    actions += '<button class="btn btn-ghost btn-sm" onclick="sendInvoice(\'' + inv.id + '\')">Email to Client</button>';
+  actions += '<button class="btn btn-ghost btn-sm" onclick="editInvoice()">Edit</button>';
+  if (inv.status === 'active') {
     actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="voidInvoiceConfirm(\'' + inv.id + '\')">Void</button>';
   }
   document.getElementById('sheetActions').innerHTML = actions;
@@ -600,7 +588,7 @@ function renderSheetView(){
         '<div class="s-trow"><span>Subtotal</span><span class="v">' + money(inv.subtotal/100, inv.currency) + '</span></div>' +
         '<div class="s-due"><span class="lbl">TOTAL DUE</span><span class="v">' + money(inv.total/100, inv.currency) + '</span></div>' +
       '</div></div>' +
-      '<div class="s-pay no-print">' + payBtn + '</div>' +
+      '<div class="s-pay">' + payBtn + '</div>' +
       '<div class="s-status no-print">' + statusPill + '</div>' +
       (inv.notes ? ('<div class="s-notes"><div class="cap">Notes</div><div style="font-size:12.5px;color:#556;line-height:1.6;">' + escapeHtml(inv.notes) + '</div></div>') : '') +
       '<div class="s-foot">TECH24 : Connecting to the World</div>' +
@@ -611,14 +599,8 @@ async function copyLink(url){
   try { await navigator.clipboard.writeText(url); flashMsg('Payment link copied.'); }
   catch (e) { flashMsg('Could not copy automatically. Link: ' + url, true); }
 }
-async function sendInvoice(id){
-  try {
-    await adminFetch(API_INVOICES, { method: 'POST', body: { action: 'send', id: id } });
-    flashMsg('Invoice emailed to client.');
-  } catch (e) { flashMsg(e.message, true); }
-}
 function voidInvoiceConfirm(id){
-  if (!confirm('Void this invoice? This cannot be undone.')) return;
+  if (!confirm('Void this invoice? Its payment link will stop working. This cannot be undone.')) return;
   voidInvoice(id);
 }
 async function voidInvoice(id){

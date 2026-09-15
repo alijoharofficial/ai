@@ -1,6 +1,39 @@
 import { getStripe } from './_lib/stripe.js';
 import { cors, checkAdmin } from './_lib/auth.js';
-import { shapeInvoice } from './_lib/shape.js';
+
+// Success/cancel destinations after a client pays via a generated Payment Link.
+const SUCCESS_URL = 'https://www.tech24.cc/index.html?invoice=paid';
+
+// Turns a Stripe Payment Link object into the flat shape the admin UI renders.
+// All the invoice-specific fields (client info, dates, itemized lines, totals)
+// live in the link's own metadata, since Payment Links don't carry them natively.
+function shapeLink(pl) {
+  const meta = pl.metadata || {};
+  let items = [];
+  try {
+    if (meta.tech24_items) items = JSON.parse(meta.tech24_items);
+  } catch (e) {
+    items = [];
+  }
+  return {
+    id: pl.id,
+    invoiceNo: meta.tech24_invoice_no || pl.id,
+    clientName: meta.tech24_client_name || '',
+    clientEmail: meta.tech24_client_email || '',
+    clientAddress: meta.tech24_client_address || '',
+    issueDate: meta.tech24_issue_date || new Date(pl.created * 1000).toISOString().slice(0, 10),
+    dueDate: meta.tech24_due_date || '',
+    currency: pl.currency,
+    subtotal: Number(meta.tech24_subtotal || 0),
+    total: Number(meta.tech24_total || 0),
+    taxRate: meta.tech24_tax_rate || '0',
+    notes: meta.tech24_notes || '',
+    status: pl.active ? 'active' : 'void',
+    items,
+    hostedInvoiceUrl: pl.active ? pl.url : '',
+    created: pl.created,
+  };
+}
 
 export default async function handler(req, res) {
   cors(req, res);
@@ -13,26 +46,14 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const { id } = req.query || {};
       if (id) {
-        const inv = await stripe.invoices.retrieve(id, { expand: ['lines.data', 'customer'] });
-        return res.status(200).json({ invoice: shapeInvoice(inv) });
+        const pl = await stripe.paymentLinks.retrieve(id);
+        return res.status(200).json({ invoice: shapeLink(pl) });
       }
-      const list = await stripe.invoices.list({ limit: 50, expand: ['data.customer'] });
-      const invoices = list.data.map((inv) => {
-        const customerObj = inv.customer && typeof inv.customer === 'object' ? inv.customer : null;
-        return {
-          id: inv.id,
-          invoiceNo: (inv.metadata && inv.metadata.tech24_invoice_no) || inv.number || inv.id,
-          clientName: inv.customer_name || (customerObj && customerObj.name) || '',
-          clientEmail: inv.customer_email || (customerObj && customerObj.email) || '',
-          status: inv.status,
-          total: inv.total,
-          currency: inv.currency,
-          created: inv.created,
-          dueDate: inv.due_date,
-          hostedInvoiceUrl: inv.hosted_invoice_url,
-          invoicePdf: inv.invoice_pdf,
-        };
-      });
+      const list = await stripe.paymentLinks.list({ limit: 50 });
+      const invoices = list.data
+        .filter((pl) => pl.metadata && pl.metadata.tech24_invoice_no !== undefined)
+        .sort((a, b) => b.created - a.created)
+        .map(shapeLink);
       return res.status(200).json({ invoices });
     }
 
@@ -40,29 +61,11 @@ export default async function handler(req, res) {
       const body = req.body || {};
       const action = body.action || 'create';
 
-      if (action === 'void') {
+      if (action === 'void' || action === 'delete') {
         const { id } = body;
         if (!id) return res.status(400).json({ error: 'id is required' });
-        const inv = await stripe.invoices.voidInvoice(id);
-        return res.status(200).json({ invoice: shapeInvoice(inv) });
-      }
-
-      if (action === 'send') {
-        const { id } = body;
-        if (!id) return res.status(400).json({ error: 'id is required' });
-        const inv = await stripe.invoices.sendInvoice(id);
-        return res.status(200).json({ invoice: shapeInvoice(inv) });
-      }
-
-      if (action === 'delete') {
-        const { id } = body;
-        if (!id) return res.status(400).json({ error: 'id is required' });
-        const existing = await stripe.invoices.retrieve(id);
-        if (existing.status !== 'draft') {
-          return res.status(400).json({ error: 'Only draft invoices can be deleted. Void it instead.' });
-        }
-        await stripe.invoices.del(id);
-        return res.status(200).json({ ok: true });
+        const pl = await stripe.paymentLinks.update(id, { active: false });
+        return res.status(200).json({ invoice: shapeLink(pl) });
       }
 
       if (action === 'create' || action === 'update') {
@@ -79,125 +82,84 @@ export default async function handler(req, res) {
 
         const cur = String(currency).toLowerCase();
 
-        if (action === 'update') {
-          if (!id) return res.status(400).json({ error: 'id is required to update an invoice' });
-          const existing = await stripe.invoices.retrieve(id);
-          if (existing.status !== 'draft') {
-            return res.status(400).json({ error: 'Only draft invoices can be edited. Void this one and create a new invoice instead.' });
+        // Editing an invoice means retiring the old link and minting a fresh one:
+        // Payment Links can't have their line items changed after creation.
+        if (action === 'update' && id) {
+          try {
+            await stripe.paymentLinks.update(id, { active: false });
+          } catch (e) {
+            // non-fatal: proceed to create the replacement link regardless
           }
         }
 
-        let customer;
-        if (clientEmail) {
-          const existingCustomers = await stripe.customers.list({ email: clientEmail, limit: 1 });
-          if (existingCustomers.data.length) {
-            customer = existingCustomers.data[0];
-            if (customer.name !== clientName) {
-              customer = await stripe.customers.update(customer.id, { name: clientName });
-            }
-          } else {
-            customer = await stripe.customers.create({ name: clientName, email: clientEmail });
-          }
-        } else {
-          customer = await stripe.customers.create({ name: clientName });
-        }
-
-        const issue = issueDate || new Date().toISOString().slice(0, 10);
-        const due = dueDate || issue;
-        const daysUntilDue = Math.max(
-          0,
-          Math.round((new Date(due + 'T00:00:00') - new Date(issue + 'T00:00:00')) / 86400000)
+        const subtotalMinor = items.reduce(
+          (s, it) => s + Math.round((Number(it.rate) || 0) * 100) * Math.max(1, Number(it.qty) || 1),
+          0
         );
+        const taxPct = Number(taxRate) || 0;
+        const taxMinor = taxPct > 0 ? Math.round(subtotalMinor * (taxPct / 100)) : 0;
+        const totalMinor = subtotalMinor + taxMinor;
 
-        const metadata = {
-          tech24_invoice_no: invoiceNo || '',
-          tech24_issue_date: issue,
-          tech24_client_address: (clientAddress || '').slice(0, 490),
-          tech24_notes: (notes || '').slice(0, 490),
-          tech24_tax_rate: String(taxRate || 0),
-        };
-
-        let invoice;
-        if (action === 'update') {
-          // Draft invoices can be freely re-synced: drop the old line items and
-          // rebuild them from the submitted state, then update invoice-level fields.
-          const existingItems = await stripe.invoiceItems.list({ invoice: id, limit: 100 });
-          for (const li of existingItems.data) {
-            await stripe.invoiceItems.del(li.id);
-          }
-          invoice = await stripe.invoices.update(id, {
-            customer: customer.id,
-            currency: cur,
-            days_until_due: daysUntilDue,
-            description: notes || undefined,
-            metadata,
-          });
-        } else {
-          invoice = await stripe.invoices.create({
-            customer: customer.id,
-            currency: cur,
-            collection_method: 'send_invoice',
-            days_until_due: daysUntilDue,
-            description: notes || undefined,
-            auto_advance: false,
-            metadata,
-          });
-        }
-
+        const lineItems = [];
         for (const it of items) {
           const qty = Math.max(1, Number(it.qty) || 1);
           const rate = Math.max(0, Number(it.rate) || 0);
           const desc = it.detail ? `${it.desc || 'Item'}: ${it.detail}` : (it.desc || 'Item');
-          await stripe.invoiceItems.create({
-            customer: customer.id,
-            invoice: invoice.id,
-            price_data: {
-              currency: cur,
-              unit_amount: Math.round(rate * 100),
-              product_data: { name: desc },
-            },
-            quantity: qty,
-            description: desc,
+          const price = await stripe.prices.create({
+            currency: cur,
+            unit_amount: Math.round(rate * 100),
+            product_data: { name: desc },
           });
+          lineItems.push({ price: price.id, quantity: qty });
+        }
+        if (taxMinor > 0) {
+          const taxPrice = await stripe.prices.create({
+            currency: cur,
+            unit_amount: taxMinor,
+            product_data: { name: `Tax (${taxPct}%)` },
+          });
+          lineItems.push({ price: taxPrice.id, quantity: 1 });
         }
 
-        const taxPct = Number(taxRate) || 0;
-        if (taxPct > 0) {
-          const subtotalMinor = items.reduce(
-            (s, it) => s + Math.round((Number(it.rate) || 0) * 100) * Math.max(1, Number(it.qty) || 1),
-            0
-          );
-          const taxMinor = Math.round(subtotalMinor * (taxPct / 100));
-          if (taxMinor > 0) {
-            await stripe.invoiceItems.create({
-              customer: customer.id,
-              invoice: invoice.id,
-              price_data: {
-                currency: cur,
-                unit_amount: taxMinor,
-                product_data: { name: `Tax (${taxPct}%)` },
-              },
-              quantity: 1,
-              description: `Tax (${taxPct}%)`,
-            });
-          }
+        const issue = issueDate || new Date().toISOString().slice(0, 10);
+        const due = dueDate || issue;
+
+        const metadata = {
+          tech24_invoice_no: invoiceNo || '',
+          tech24_issue_date: issue,
+          tech24_due_date: due,
+          tech24_client_name: clientName,
+          tech24_client_email: clientEmail || '',
+          tech24_client_address: (clientAddress || '').slice(0, 400),
+          tech24_notes: (notes || '').slice(0, 400),
+          tech24_tax_rate: String(taxPct),
+          tech24_subtotal: String(subtotalMinor),
+          tech24_total: String(totalMinor),
+        };
+        const itemsJson = JSON.stringify(
+          items.map((it) => ({ desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }))
+        );
+        if (itemsJson.length <= 480) {
+          metadata.tech24_items = itemsJson;
         }
 
-        try {
-          const itemsJson = JSON.stringify(
-            items.map((it) => ({ desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }))
-          );
-          if (itemsJson.length <= 490) {
-            await stripe.invoices.update(invoice.id, {
-              metadata: { ...invoice.metadata, tech24_items: itemsJson },
-            });
-          }
-        } catch (e) {
-          // non-fatal: rich line-item rendering falls back to Stripe's own line descriptions
-        }
+        const paymentLink = await stripe.paymentLinks.create({
+          line_items: lineItems,
+          phone_number_collection: { enabled: true },
+          billing_address_collection: 'required',
+          custom_fields: [
+            {
+              key: 'business_name',
+              label: { type: 'custom', custom: 'Business / Company Name' },
+              type: 'text',
+              optional: true,
+            },
+          ],
+          metadata,
+          after_completion: { type: 'redirect', redirect: { url: SUCCESS_URL } },
+        });
 
-        const finalized = await stripe.invoices.finalizeInvoice(invoice.id);
-        return res.status(200).json({ invoice: shapeInvoice(finalized) });
+        return res.status(200).json({ invoice: shapeLink(paymentLink) });
       }
 
       return res.status(400).json({ error: 'Unknown action' });
