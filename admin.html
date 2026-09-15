@@ -292,7 +292,7 @@ function renderInvoiceList(invoices){
     return '<tr onclick="openInvoice(\'' + inv.id + '\')">' +
       '<td>' + escapeHtml(inv.invoiceNo) + '</td>' +
       '<td>' + escapeHtml(inv.clientName || 'N/A') + '</td>' +
-      '<td>' + fmtDate(new Date(inv.created*1000).toISOString().slice(0,10)) + '</td>' +
+      '<td>' + fmtDate(inv.issueDate) + '</td>' +
       '<td>' + money(inv.total/100, inv.currency) + '</td>' +
       '<td><span class="pill pill-' + inv.status + '">' + inv.status + '</span></td>' +
     '</tr>';

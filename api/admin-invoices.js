@@ -21,7 +21,7 @@ function shapeLink(pl) {
     clientName: meta.tech24_client_name || '',
     clientEmail: meta.tech24_client_email || '',
     clientAddress: meta.tech24_client_address || '',
-    issueDate: meta.tech24_issue_date || new Date(pl.created * 1000).toISOString().slice(0, 10),
+    issueDate: meta.tech24_issue_date || new Date().toISOString().slice(0, 10),
     dueDate: meta.tech24_due_date || '',
     currency: pl.currency,
     subtotal: Number(meta.tech24_subtotal || 0),
@@ -31,7 +31,6 @@ function shapeLink(pl) {
     status: pl.active ? 'active' : 'void',
     items,
     hostedInvoiceUrl: pl.active ? pl.url : '',
-    created: pl.created,
   };
 }
 
@@ -49,10 +48,11 @@ export default async function handler(req, res) {
         const pl = await stripe.paymentLinks.retrieve(id);
         return res.status(200).json({ invoice: shapeLink(pl) });
       }
+      // Payment Links come back newest-first already; they have no `created`
+      // timestamp field to sort by (unlike most Stripe resources).
       const list = await stripe.paymentLinks.list({ limit: 50 });
       const invoices = list.data
         .filter((pl) => pl.metadata && pl.metadata.tech24_invoice_no !== undefined)
-        .sort((a, b) => b.created - a.created)
         .map(shapeLink);
       return res.status(200).json({ invoices });
     }
