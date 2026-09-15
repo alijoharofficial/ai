@@ -548,6 +548,7 @@ function renderSheetView(){
   if (inv.status === 'active') {
     actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="voidInvoiceConfirm(\'' + inv.id + '\')">Void</button>';
   }
+  actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="deleteInvoiceConfirm(\'' + inv.id + '\')">Delete</button>';
   document.getElementById('sheetActions').innerHTML = actions;
 
   var itemsHtml = inv.items.map(function(it){
@@ -619,6 +620,18 @@ async function voidInvoice(id){
     renderSheet();
     flashMsg('Invoice voided.');
   } catch (e) { flashMsg(e.message, true); }
+}
+function deleteInvoiceConfirm(id){
+  if (!confirm('Delete this invoice? It will be removed from this list and its payment link deactivated. This cannot be undone.')) return;
+  deleteInvoice(id);
+}
+async function deleteInvoice(id){
+  try {
+    await adminFetch(API_INVOICES, { method: 'POST', body: { action: 'delete', id: id } });
+    showList();
+  } catch (e) {
+    document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  }
 }
 function flashMsg(text, isErr){
   document.getElementById('sheetMsg').innerHTML = '<div class="msg ' + (isErr?'msg-err':'msg-ok') + '">' + escapeHtml(text) + '</div>';

@@ -61,11 +61,26 @@ export default async function handler(req, res) {
       const body = req.body || {};
       const action = body.action || 'create';
 
-      if (action === 'void' || action === 'delete') {
+      if (action === 'void') {
         const { id } = body;
         if (!id) return res.status(400).json({ error: 'id is required' });
         const pl = await stripe.paymentLinks.update(id, { active: false });
         return res.status(200).json({ invoice: shapeLink(pl) });
+      }
+
+      if (action === 'delete') {
+        const { id } = body;
+        if (!id) return res.status(400).json({ error: 'id is required' });
+        // Stripe has no endpoint to truly delete a Payment Link, only to
+        // deactivate one. Deactivating it and clearing the metadata key our
+        // list filter relies on removes it from the admin permanently while
+        // leaving an inert, untracked object behind in the Stripe account
+        // (the closest equivalent Stripe's API actually allows).
+        await stripe.paymentLinks.update(id, {
+          active: false,
+          metadata: { tech24_invoice_no: '' },
+        });
+        return res.status(200).json({ ok: true });
       }
 
       if (action === 'create' || action === 'update') {
