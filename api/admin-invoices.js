@@ -110,8 +110,11 @@ export default async function handler(req, res) {
         await stripe.invoiceItems.create({
           customer: customer.id,
           invoice: invoice.id,
-          currency: cur,
-          unit_amount: Math.round(rate * 100),
+          price_data: {
+            currency: cur,
+            unit_amount: Math.round(rate * 100),
+            product_data: { name: desc },
+          },
           quantity: qty,
           description: desc,
         });
@@ -128,8 +131,11 @@ export default async function handler(req, res) {
           await stripe.invoiceItems.create({
             customer: customer.id,
             invoice: invoice.id,
-            currency: cur,
-            unit_amount: taxMinor,
+            price_data: {
+              currency: cur,
+              unit_amount: taxMinor,
+              product_data: { name: `Tax (${taxPct}%)` },
+            },
             quantity: 1,
             description: `Tax (${taxPct}%)`,
           });
