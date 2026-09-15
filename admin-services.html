@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>if(!sessionStorage.getItem('t24_admin_auth')){location.href='admin-login.html';}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services: TECH24 Admin</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e8192c'/><text x='50%25' y='54%25' dominant-baseline='central' text-anchor='middle' font-family='Rajdhani,sans-serif' font-weight='800' font-size='14' fill='white'>T24</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070a;--bg2:#0d0d12;--bg3:#141419;--bg4:#1b1b21;
+  --red:#e8192c;--red2:#ff4d5e;
+  --blue:#2f6bff;--blue2:#6a93ff;
+  --text:#f7f7f9;--t2:#9d9da8;--t3:#5c5c66;
+  --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+  --r:16px;--rs:10px;
+}
+body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+.wrap{max-width:960px;margin:0 auto;padding:0 5%;}
+h1,h2,h3,.logo-mark{font-family:"Rajdhani",sans-serif;}
+
+.adm-header{border-bottom:1px solid var(--line);padding:1rem 0;position:sticky;top:0;background:rgba(7,7,10,0.92);backdrop-filter:blur(10px);z-index:10;}
+.adm-nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.logo-mark{display:flex;align-items:baseline;gap:1px;font-weight:700;font-size:1.3rem;}
+.logo-tech{color:var(--red);}
+.logo-24{color:var(--blue);}
+.adm-tag{font-size:0.68rem;color:var(--t3);font-weight:600;letter-spacing:0.05em;margin-left:8px;border-left:1px solid var(--line2);padding-left:8px;}
+.adm-links{display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;}
+.adm-links a,.adm-links button{font-size:0.84rem;font-weight:600;color:var(--t2);padding:0.5rem 0.85rem;border-radius:8px;background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .15s;}
+.adm-links a:hover,.adm-links button:hover{background:var(--bg3);color:var(--text);}
+.adm-links a.on{background:var(--bg3);color:var(--text);}
+.adm-links .logout{color:var(--red2);}
+
+.adm-main{padding:2.2rem 0 5rem;}
+.adm-toolbar h2{font-size:1.5rem;font-weight:700;margin-bottom:1.4rem;}
+
+.card{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:1.8rem;margin-bottom:1.6rem;}
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:1.2rem;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.fg{display:flex;flex-direction:column;gap:0.4rem;}
+.fg.full{grid-column:1 / -1;}
+.fg label{font-size:0.78rem;font-weight:600;color:var(--t2);}
+.fg input,.fg select,.fg textarea{background:var(--bg4);border:1px solid var(--line2);border-radius:var(--rs);padding:0.65rem 0.8rem;font-family:inherit;font-size:0.9rem;color:var(--text);outline:none;width:100%;min-width:0;box-sizing:border-box;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue);}
+.priceRow{display:grid;grid-template-columns:110px 100px 1fr;gap:0.7rem;}
+
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:var(--rs);padding:0.7rem 1.2rem;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all .15s;}
+.btn-primary{background:var(--red);color:#fff;}
+.btn-primary:hover{background:var(--red2);}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;}
+.btn-ghost{background:var(--bg4);color:var(--text);border:1px solid var(--line2);padding:0.4rem 0.75rem;font-size:0.76rem;}
+.btn-ghost:hover{border-color:var(--red);color:var(--red2);}
+
+.msg{padding:0.8rem 1rem;border-radius:var(--rs);font-size:0.84rem;margin-bottom:1.2rem;}
+.msg-err{background:rgba(232,25,44,0.12);color:var(--red2);border:1px solid rgba(232,25,44,0.3);}
+.msg-ok{background:rgba(30,180,110,0.12);color:#4fd68f;border:1px solid rgba(30,180,110,0.3);}
+
+table.svc{width:100%;border-collapse:collapse;font-size:0.86rem;}
+table.svc th{text-align:left;padding:0.85rem 1rem;color:var(--t2);font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--line);}
+table.svc td{padding:0.85rem 1rem;border-bottom:1px solid var(--line);vertical-align:middle;}
+table.svc tr:last-child td{border-bottom:none;}
+.empty,.loading{padding:2.5rem 1rem;text-align:center;color:var(--t3);font-size:0.88rem;}
+
+@media(max-width:640px){
+  .frow{grid-template-columns:1fr;}
+  .priceRow{grid-template-columns:1fr 1fr;}
+  table.svc th:nth-child(3),table.svc td:nth-child(3){display:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="adm-header">
+  <div class="wrap">
+    <nav class="adm-nav">
+      <div style="display:flex;align-items:center;">
+        <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+        <span class="adm-tag">ADMIN</span>
+      </div>
+      <div class="adm-links">
+        <a href="admin.html">Invoices</a>
+        <a href="admin-services.html" class="on">Services</a>
+        <a href="services.html">View Site</a>
+        <button class="logout" onclick="adminLogout()">Logout</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="adm-main">
+  <div class="wrap">
+    <div class="adm-toolbar"><h2>Services</h2></div>
+
+    <div class="card">
+      <h3>Create a New Service</h3>
+      <div id="createMsg"></div>
+      <form id="svcForm" onsubmit="return createService(event)">
+        <div class="frow">
+          <div class="fg full">
+            <label for="svcName">Service Name *</label>
+            <input id="svcName" placeholder="e.g. Marketing Session" required>
+          </div>
+          <div class="fg full">
+            <label for="svcDesc">Description (optional)</label>
+            <textarea id="svcDesc" rows="2" placeholder="Strategy & growth consultation session"></textarea>
+          </div>
+          <div class="fg full">
+            <label>Price</label>
+            <div class="priceRow">
+              <input id="svcCurrency" value="USD" placeholder="Currency" maxlength="3" style="text-transform:uppercase;" required>
+              <input id="svcAmount" type="number" min="0" step="0.01" placeholder="Amount" required>
+              <select id="svcInterval">
+                <option value="">One-time</option>
+                <option value="month">Billed monthly</option>
+                <option value="year">Billed yearly</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="svcSubmit">Create Service in Stripe</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Existing Services</h3>
+      <div id="listMsg"></div>
+      <div id="svcList" class="loading">Loading services&hellip;</div>
+    </div>
+  </div>
+</main>
+
+<script>
+var API_SERVICES = 'api/admin-services';
+var CURRENCIES = { USD:'$', GBP:'£', EUR:'€', AED:'AED ', PKR:'Rs ', MYR:'RM ' };
+
+function adminKey(){ return sessionStorage.getItem('t24_admin_key') || ''; }
+function adminLogout(){
+  sessionStorage.removeItem('t24_admin_auth');
+  sessionStorage.removeItem('t24_admin_key');
+  location.href = 'admin-login.html';
+}
+async function adminFetch(url, opts){
+  opts = opts || {};
+  var headers = Object.assign({}, opts.headers, { 'x-admin-key': adminKey() });
+  if (opts.body && typeof opts.body !== 'string') {
+    headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+  }
+  opts.headers = headers;
+  var res = await fetch(url, opts);
+  if (res.status === 401) { adminLogout(); throw new Error('Session expired'); }
+  var data = await res.json().catch(function(){ return {}; });
+  if (!res.ok) throw new Error(data.error || ('Request failed (' + res.status + ')'));
+  return data;
+}
+function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function money(n, currency){ var sym = CURRENCIES[currency ? currency.toUpperCase() : 'USD'] || (currency ? currency.toUpperCase()+' ' : ''); return sym + Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+async function loadServices(){
+  var box = document.getElementById('svcList');
+  box.className = 'loading';
+  box.textContent = 'Loading services…';
+  try {
+    var data = await adminFetch(API_SERVICES);
+    renderServices(data.services || []);
+  } catch (e) {
+    box.className = 'empty';
+    box.textContent = '';
+    document.getElementById('listMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  }
+}
+function renderServices(services){
+  var box = document.getElementById('svcList');
+  if (!services.length) {
+    box.className = 'empty';
+    box.textContent = 'No services yet. Create one above and it will also appear as a real product in your Stripe dashboard.';
+    return;
+  }
+  box.className = '';
+  var rows = services.map(function(s){
+    return '<tr>' +
+      '<td><strong>' + escapeHtml(s.name) + '</strong>' + (s.description ? '<div style="color:var(--t3);font-size:0.78rem;margin-top:2px;">' + escapeHtml(s.description) + '</div>' : '') + '</td>' +
+      '<td>' + money((s.unitAmount||0)/100, s.currency) + (s.recurring ? ' / ' + s.recurring : '') + '</td>' +
+      '<td style="color:var(--t3);font-size:0.78rem;">' + escapeHtml(s.productId) + '</td>' +
+      '<td><button class="btn-ghost" onclick="archiveService(\'' + s.productId + '\', this)">Archive</button></td>' +
+    '</tr>';
+  }).join('');
+  box.innerHTML = '<table class="svc"><thead><tr><th>Service</th><th>Price</th><th>Stripe Product ID</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+async function createService(e){
+  e.preventDefault();
+  var btn = document.getElementById('svcSubmit');
+  var msg = document.getElementById('createMsg');
+  msg.innerHTML = '';
+  var name = document.getElementById('svcName').value.trim();
+  var description = document.getElementById('svcDesc').value.trim();
+  var currency = document.getElementById('svcCurrency').value.trim().toUpperCase();
+  var amount = document.getElementById('svcAmount').value;
+  var interval = document.getElementById('svcInterval').value;
+
+  if (!name || !amount || !currency) {
+    msg.innerHTML = '<div class="msg msg-err">Please fill in the service name, currency and amount.</div>';
+    return false;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Creating…';
+  try {
+    await adminFetch(API_SERVICES, {
+      method: 'POST',
+      body: { action: 'create', name: name, description: description, amount: amount, currency: currency, interval: interval || null }
+    });
+    msg.innerHTML = '<div class="msg msg-ok">Service created in Stripe.</div>';
+    document.getElementById('svcForm').reset();
+    document.getElementById('svcCurrency').value = 'USD';
+    loadServices();
+  } catch (e) {
+    msg.innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Create Service in Stripe';
+  }
+  return false;
+}
+
+async function archiveService(productId, btn){
+  if (!confirm('Archive this service? It will no longer be available to add to new invoices.')) return;
+  btn.disabled = true;
+  btn.textContent = 'Archiving…';
+  try {
+    await adminFetch(API_SERVICES, { method: 'POST', body: { action: 'archive', productId: productId } });
+    loadServices();
+  } catch (e) {
+    document.getElementById('listMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+    btn.disabled = false;
+    btn.textContent = 'Archive';
+  }
+}
+
+loadServices();
+</script>
+</body>
+</html>

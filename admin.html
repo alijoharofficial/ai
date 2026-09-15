@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>if(!sessionStorage.getItem('t24_admin_auth')){location.href='admin-login.html';}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoices: TECH24 Admin</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e8192c'/><text x='50%25' y='54%25' dominant-baseline='central' text-anchor='middle' font-family='Rajdhani,sans-serif' font-weight='800' font-size='14' fill='white'>T24</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070a;--bg2:#0d0d12;--bg3:#141419;--bg4:#1b1b21;
+  --red:#e8192c;--red2:#ff4d5e;
+  --blue:#2f6bff;--blue2:#6a93ff;
+  --navy:#1B2A8A;--ink:#1a1f36;
+  --text:#f7f7f9;--t2:#9d9da8;--t3:#5c5c66;
+  --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+  --r:16px;--rs:10px;
+}
+body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+.wrap{max-width:960px;margin:0 auto;padding:0 5%;}
+h1,h2,h3,.logo-mark{font-family:"Rajdhani",sans-serif;}
+
+/* chrome */
+.adm-header{border-bottom:1px solid var(--line);padding:1rem 0;position:sticky;top:0;background:rgba(7,7,10,0.92);backdrop-filter:blur(10px);z-index:10;}
+.adm-nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.logo-mark{display:flex;align-items:baseline;gap:1px;font-weight:700;font-size:1.3rem;}
+.logo-tech{color:var(--red);}
+.logo-24{color:var(--blue);}
+.adm-tag{font-size:0.68rem;color:var(--t3);font-weight:600;letter-spacing:0.05em;margin-left:8px;border-left:1px solid var(--line2);padding-left:8px;}
+.adm-links{display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;}
+.adm-links a,.adm-links button{font-size:0.84rem;font-weight:600;color:var(--t2);padding:0.5rem 0.85rem;border-radius:8px;background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .15s;}
+.adm-links a:hover,.adm-links button:hover{background:var(--bg3);color:var(--text);}
+.adm-links a.on{background:var(--bg3);color:var(--text);}
+.adm-links .logout{color:var(--red2);}
+
+.adm-main{padding:2.2rem 0 5rem;}
+.adm-toolbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.4rem;flex-wrap:wrap;}
+.adm-toolbar h2{font-size:1.5rem;font-weight:700;}
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:var(--rs);padding:0.7rem 1.2rem;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all .15s;text-decoration:none;}
+.btn-primary{background:var(--red);color:#fff;}
+.btn-primary:hover{background:var(--red2);}
+.btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--line2);}
+.btn-ghost:hover{border-color:var(--blue);}
+.btn-sm{padding:0.45rem 0.85rem;font-size:0.78rem;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+
+/* invoice history table */
+.tbl-wrap{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
+table.hist{width:100%;border-collapse:collapse;font-size:0.86rem;}
+table.hist th{text-align:left;padding:0.9rem 1.1rem;color:var(--t2);font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--line);}
+table.hist td{padding:0.9rem 1.1rem;border-bottom:1px solid var(--line);vertical-align:middle;}
+table.hist tr:last-child td{border-bottom:none;}
+table.hist tbody tr{cursor:pointer;transition:background .15s;}
+table.hist tbody tr:hover{background:var(--bg4);}
+.pill{display:inline-block;padding:0.22rem 0.65rem;border-radius:50px;font-size:0.72rem;font-weight:700;text-transform:capitalize;}
+.pill-open{background:rgba(47,107,255,0.18);color:var(--blue2);}
+.pill-paid{background:rgba(30,180,110,0.18);color:#4fd68f;}
+.pill-draft{background:rgba(255,255,255,0.08);color:var(--t2);}
+.pill-void,.pill-uncollectible{background:rgba(232,25,44,0.18);color:var(--red2);}
+.empty{padding:3rem 1rem;text-align:center;color:var(--t3);font-size:0.9rem;}
+.loading{padding:2rem;text-align:center;color:var(--t3);font-size:0.85rem;}
+.msg{padding:0.8rem 1rem;border-radius:var(--rs);font-size:0.84rem;margin-bottom:1.2rem;}
+.msg-err{background:rgba(232,25,44,0.12);color:var(--red2);border:1px solid rgba(232,25,44,0.3);}
+.msg-ok{background:rgba(30,180,110,0.12);color:#4fd68f;border:1px solid rgba(30,180,110,0.3);}
+
+/* toolbar above the sheet */
+.sheet-toolbar{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.sheet-toolbar .left{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;}
+.sheet-controls{display:flex;gap:0.5rem;align-items:center;font-size:0.8rem;color:var(--t2);}
+.sheet-controls select,.sheet-controls input[type=number]{background:var(--bg3);border:1px solid var(--line2);color:var(--text);border-radius:8px;padding:0.4rem 0.6rem;font-family:inherit;font-size:0.82rem;}
+
+/* the invoice document itself: light, print-friendly, matches the brand reference */
+.sheet{max-width:820px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,0.35);overflow:hidden;color:var(--ink);}
+.sheet-band{height:6px;background:linear-gradient(90deg, var(--red) 0%, var(--red) 55%, var(--navy) 55%, var(--navy) 100%);}
+.sheet-in{padding:34px 40px 40px;}
+.sheet input,.sheet textarea{font:inherit;color:var(--ink);border:1px solid transparent;border-radius:6px;padding:4px 6px;background:transparent;outline:none;width:100%;box-sizing:border-box;}
+.sheet input::placeholder,.sheet textarea::placeholder{color:#aab;}
+.sheet .editable{border-bottom:1px dashed #c7cbe0;}
+.sheet input:focus,.sheet textarea:focus{background:#fff;border-color:var(--navy);}
+.s-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;}
+.s-brand-mark{display:flex;align-items:baseline;gap:1px;font-weight:800;font-size:1.9rem;font-family:"Rajdhani",sans-serif;}
+.s-brand-tech{color:var(--red);}
+.s-brand-24{color:var(--navy);}
+.s-brand-meta{font-size:12px;color:#667;line-height:1.6;margin-top:6px;}
+.s-doctitle{font-size:34px;font-weight:800;letter-spacing:1px;color:var(--navy);line-height:1;text-align:right;font-family:"Rajdhani",sans-serif;}
+.s-meta{margin-top:14px;font-size:12.5px;color:#556;}
+.s-meta-row{display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-bottom:6px;}
+.s-meta-row .lbl{color:#889;font-weight:600;white-space:nowrap;}
+.s-meta-row input{width:170px;min-width:0;flex:1 1 170px;text-align:right;font-weight:700;}
+.s-billto{margin-top:30px;background:#f6f7fc;border-radius:10px;padding:16px 20px;border-left:4px solid var(--red);max-width:380px;}
+.s-billto .cap{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--navy);text-transform:uppercase;margin-bottom:6px;}
+.s-billto input{margin-bottom:3px;}
+.s-billto .nm{font-size:16px;font-weight:700;}
+.s-billto .sub{font-size:12.5px;color:#556;}
+.s-items{margin-top:26px;}
+.s-ihead{display:grid;grid-template-columns:1fr 70px 110px 120px 34px;gap:8px;padding:10px 12px;background:var(--navy);color:#fff;border-radius:8px 8px 0 0;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;}
+.s-irow{display:grid;grid-template-columns:1fr 70px 110px 120px 34px;gap:8px;padding:10px 12px;align-items:center;border-bottom:1px solid #eef0f7;}
+.s-irow:nth-child(even){background:#fafbff;}
+.s-irow .desc{font-size:13.5px;font-weight:600;}
+.s-irow .detail{font-size:11.5px;color:#778;margin-top:2px;}
+.s-irow .qty,.s-irow .rate{text-align:center;font-size:13px;}
+.s-irow .rate{text-align:right;}
+.s-irow .amt{text-align:right;font-size:13px;font-weight:700;}
+.s-irow .rm{background:none;border:none;color:#c33;cursor:pointer;font-size:18px;line-height:1;}
+.s-irow .rm:disabled{opacity:0.25;cursor:default;}
+.s-additem{margin-top:10px;background:#eef0fb;color:var(--navy);border:1px dashed var(--navy);border-radius:8px;padding:7px 14px;font-weight:600;font-size:12.5px;cursor:pointer;font-family:inherit;}
+.s-totals{display:flex;justify-content:flex-end;margin-top:22px;}
+.s-totals-box{width:300px;}
+.s-trow{display:flex;justify-content:space-between;padding:7px 16px;font-size:13px;color:#445;}
+.s-trow .v{font-weight:600;}
+.s-due{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding:13px 16px;background:var(--navy);color:#fff;border-radius:10px;}
+.s-due .lbl{font-size:13px;font-weight:700;letter-spacing:0.5px;}
+.s-due .v{font-size:20px;font-weight:800;}
+.s-pay{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.s-pay a.btn-pay{text-decoration:none;background:var(--red);color:#fff;border-radius:10px;padding:13px 34px;font-weight:800;font-size:15px;box-shadow:0 8px 20px rgba(227,30,36,0.28);display:inline-flex;align-items:center;gap:10px;}
+.s-pay .link{font-size:11px;color:#889;word-break:break-all;text-align:center;}
+.s-status{margin-top:16px;text-align:center;}
+.s-notes{margin-top:26px;border-top:1px solid #eef0f7;padding-top:16px;}
+.s-notes .cap{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--navy);text-transform:uppercase;margin-bottom:6px;}
+.s-notes textarea{border:1px dashed #c7cbe0;border-radius:8px;padding:10px;font-size:12.5px;color:#556;line-height:1.6;resize:vertical;}
+.s-foot{margin-top:22px;text-align:center;font-size:11.5px;color:#99a;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.s-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+
+@media print{
+  body{background:#fff;}
+  .no-print{display:none !important;}
+  .sheet{box-shadow:none !important;border-radius:0 !important;}
+  .sheet input,.sheet textarea{border:none !important;}
+}
+@media(max-width:700px){
+  .wrap{padding:0 5%;}
+  .sheet-in{padding:24px 20px 28px;}
+  .s-doctitle{font-size:26px;}
+  .s-meta-row{justify-content:space-between;}
+  .s-meta-row input{width:auto;flex:1 1 auto;font-size:12px;}
+  .s-ihead,.s-irow{grid-template-columns:1fr 44px 74px 84px 24px;font-size:10.5px;gap:4px;}
+  .s-irow .desc{font-size:12px;}
+  table.hist th:nth-child(4),table.hist td:nth-child(4){display:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="adm-header no-print">
+  <div class="wrap">
+    <nav class="adm-nav">
+      <div style="display:flex;align-items:center;">
+        <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+        <span class="adm-tag">ADMIN</span>
+      </div>
+      <div class="adm-links">
+        <a href="admin.html" class="on">Invoices</a>
+        <a href="admin-services.html">Services</a>
+        <a href="services.html">View Site</a>
+        <button class="logout" onclick="adminLogout()">Logout</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="adm-main">
+  <div class="wrap" id="viewList">
+    <div class="adm-toolbar">
+      <h2>Invoices</h2>
+      <button class="btn btn-primary" onclick="newInvoice()">+ New Invoice</button>
+    </div>
+    <div id="listMsg"></div>
+    <div class="tbl-wrap">
+      <div id="listBody" class="loading">Loading invoices&hellip;</div>
+    </div>
+  </div>
+
+  <div class="wrap" id="viewSheetWrap" style="display:none;">
+    <div class="sheet-toolbar no-print">
+      <div class="left">
+        <button class="btn btn-ghost btn-sm" onclick="showList()">&larr; All Invoices</button>
+      </div>
+      <div id="sheetActions" class="left"></div>
+    </div>
+    <div id="sheetMsg"></div>
+    <div class="sheet" id="sheet"></div>
+  </div>
+</main>
+
+<script>
+var API_INVOICES = 'api/admin-invoices';
+var API_SERVICES = 'api/admin-services';
+
+var CURRENCIES = { USD:'$', GBP:'£', EUR:'€', AED:'AED ', PKR:'Rs ', MYR:'RM ' };
+
+function adminKey(){ return sessionStorage.getItem('t24_admin_key') || ''; }
+function adminLogout(){
+  sessionStorage.removeItem('t24_admin_auth');
+  sessionStorage.removeItem('t24_admin_key');
+  location.href = 'admin-login.html';
+}
+async function adminFetch(url, opts){
+  opts = opts || {};
+  var headers = Object.assign({}, opts.headers, { 'x-admin-key': adminKey() });
+  if (opts.body && typeof opts.body !== 'string') {
+    headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+  }
+  opts.headers = headers;
+  var res = await fetch(url, opts);
+  if (res.status === 401) { adminLogout(); throw new Error('Session expired'); }
+  var data = await res.json().catch(function(){ return {}; });
+  if (!res.ok) throw new Error(data.error || ('Request failed (' + res.status + ')'));
+  return data;
+}
+
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function addDays(iso, n){ var d = new Date(iso + 'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function fmtDate(iso){ if(!iso) return ''; var d = new Date(iso + 'T00:00:00'); return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function money(n, currency){ var sym = CURRENCIES[currency ? currency.toUpperCase() : 'USD'] || ''; return sym + Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+// ---------- state ----------
+var state = null;
+var services = [];
+var nextId = 1;
+
+function blankState(){
+  var today = todayISO();
+  return {
+    mode: 'edit',
+    invNo: 'TECH24-' + today.replace(/-/g,'') + '-001',
+    issueDate: today,
+    dueDate: addDays(today, 7),
+    currency: 'USD',
+    taxRate: 0,
+    billTo: { name: '', email: '', address: '' },
+    items: [ { id: nextId++, desc: '', detail: '', qty: 1, rate: 0 } ],
+    notes: 'Thank you for your business. Please use the secure Stripe link below to complete your payment.',
+    result: null
+  };
+}
+
+// ---------- view switching ----------
+function showList(){
+  document.getElementById('viewList').style.display = '';
+  document.getElementById('viewSheetWrap').style.display = 'none';
+  loadInvoiceList();
+}
+function showSheetView(){
+  document.getElementById('viewList').style.display = 'none';
+  document.getElementById('viewSheetWrap').style.display = '';
+}
+
+// ---------- invoice list ----------
+async function loadInvoiceList(){
+  var body = document.getElementById('listBody');
+  body.className = 'loading';
+  body.textContent = 'Loading invoices…';
+  document.getElementById('listMsg').innerHTML = '';
+  try {
+    var data = await adminFetch(API_INVOICES);
+    renderInvoiceList(data.invoices || []);
+  } catch (e) {
+    body.className = 'empty';
+    body.textContent = '';
+    document.getElementById('listMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  }
+}
+function renderInvoiceList(invoices){
+  var body = document.getElementById('listBody');
+  if (!invoices.length) {
+    body.className = 'empty';
+    body.textContent = 'No invoices yet. Click "New Invoice" to create your first one.';
+    return;
+  }
+  body.className = '';
+  var rows = invoices.map(function(inv){
+    return '<tr onclick="openInvoice(\'' + inv.id + '\')">' +
+      '<td>' + escapeHtml(inv.invoiceNo) + '</td>' +
+      '<td>' + escapeHtml(inv.clientName || '—') + '</td>' +
+      '<td>' + fmtDate(new Date(inv.created*1000).toISOString().slice(0,10)) + '</td>' +
+      '<td>' + money(inv.total/100, inv.currency) + '</td>' +
+      '<td><span class="pill pill-' + inv.status + '">' + inv.status + '</span></td>' +
+    '</tr>';
+  }).join('');
+  body.innerHTML = '<table class="hist"><thead><tr><th>Invoice No.</th><th>Client</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+// ---------- create flow ----------
+async function newInvoice(){
+  state = blankState();
+  showSheetView();
+  renderSheet();
+  await loadServices();
+  if (state.mode === 'edit') renderSheet();
+}
+async function openInvoice(id){
+  showSheetView();
+  document.getElementById('sheet').innerHTML = '<div class="loading" style="color:#889;">Loading invoice…</div>';
+  document.getElementById('sheetActions').innerHTML = '';
+  try {
+    var data = await adminFetch(API_INVOICES + '?id=' + encodeURIComponent(id));
+    state = { mode: 'view', result: data.invoice };
+    renderSheet();
+  } catch (e) {
+    document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  }
+}
+
+async function loadServices(){
+  try {
+    var data = await adminFetch(API_SERVICES);
+    services = data.services || [];
+  } catch (e) {
+    services = [];
+  }
+}
+
+function addItem(){
+  state.items.push({ id: nextId++, desc: '', detail: '', qty: 1, rate: 0 });
+  renderItemsEdit();
+}
+function removeItem(id){
+  if (state.items.length <= 1) return;
+  state.items = state.items.filter(function(it){ return it.id !== id; });
+  renderItemsEdit();
+}
+function addFromService(){
+  var pick = document.getElementById('svcPicker');
+  if (!pick || !pick.value) return;
+  var svc = services.filter(function(s){ return s.priceId === pick.value; })[0];
+  if (!svc) return;
+  state.items.push({ id: nextId++, desc: svc.name, detail: svc.description || '', qty: 1, rate: (svc.unitAmount||0)/100 });
+  pick.value = '';
+  renderItemsEdit();
+}
+
+function computeTotals(){
+  var subtotal = state.items.reduce(function(s,it){ return s + (Number(it.qty)||0) * (Number(it.rate)||0); }, 0);
+  var taxAmt = subtotal * ((Number(state.taxRate)||0) / 100);
+  return { subtotal: subtotal, taxAmt: taxAmt, total: subtotal + taxAmt };
+}
+
+// ---------- rendering: edit mode ----------
+function renderSheet(){
+  if (state.mode === 'view') { renderSheetView(); return; }
+  var s = state;
+  var svcOptions = services
+    .filter(function(sv){ return sv.currency && sv.currency.toUpperCase() === s.currency; })
+    .map(function(sv){ return '<option value="' + sv.priceId + '">' + escapeHtml(sv.name) + ' (' + money((sv.unitAmount||0)/100, sv.currency) + ')</option>'; })
+    .join('');
+
+  document.getElementById('sheetActions').innerHTML =
+    '<button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>' +
+    '<button class="btn btn-primary btn-sm" id="createBtn" onclick="submitCreate()">Create Invoice &amp; Get Payment Link</button>';
+
+  document.getElementById('sheet').innerHTML =
+    '<div class="sheet-band"></div>' +
+    '<div class="sheet-in">' +
+      '<div class="no-print" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid #eef0f7;">' +
+        '<label style="font-size:12px;color:#556;font-weight:600;">Currency' +
+          '<select id="fCurrency" style="margin-left:6px;padding:6px 8px;border-radius:6px;border:1px solid #c7cbe0;font:inherit;">' +
+            Object.keys(CURRENCIES).map(function(c){ return '<option value="' + c + '"' + (c===s.currency?' selected':'') + '>' + c + '</option>'; }).join('') +
+          '</select>' +
+        '</label>' +
+        '<label style="font-size:12px;color:#556;font-weight:600;">Tax %' +
+          '<input id="fTax" type="number" min="0" value="' + s.taxRate + '" style="margin-left:6px;width:64px;padding:6px 8px;border-radius:6px;border:1px solid #c7cbe0;font:inherit;">' +
+        '</label>' +
+      '</div>' +
+      '<div class="s-head">' +
+        '<div>' +
+          '<div class="s-brand-mark"><span class="s-brand-tech">TECH</span><span class="s-brand-24">24</span></div>' +
+          '<div class="s-brand-meta">tech24.cc &nbsp;&bull;&nbsp; info@tech24.cc<br>Connecting to the World</div>' +
+        '</div>' +
+        '<div>' +
+          '<div class="s-doctitle">INVOICE</div>' +
+          '<div class="s-meta">' +
+            '<div class="s-meta-row"><span class="lbl">Invoice No.</span><input id="fInvNo" class="editable" value="' + escapeHtml(s.invNo) + '"></div>' +
+            '<div class="s-meta-row"><span class="lbl">Issue Date</span><input id="fIssue" class="editable" type="date" value="' + s.issueDate + '"></div>' +
+            '<div class="s-meta-row"><span class="lbl">Due Date</span><input id="fDue" class="editable" type="date" value="' + s.dueDate + '"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="s-billto">' +
+        '<div class="cap">Bill To</div>' +
+        '<input id="fBillName" class="editable nm" placeholder="Client name" value="' + escapeHtml(s.billTo.name) + '">' +
+        '<input id="fBillAddr" class="editable sub" placeholder="Address / company (optional)" value="' + escapeHtml(s.billTo.address) + '">' +
+        '<input id="fBillEmail" class="editable sub" placeholder="Email (optional)" value="' + escapeHtml(s.billTo.email) + '">' +
+      '</div>' +
+      '<div class="s-items">' +
+        '<div class="s-ihead"><div>Description</div><div style="text-align:center;">Qty</div><div style="text-align:right;">Rate</div><div style="text-align:right;">Amount</div><div class="no-print"></div></div>' +
+        '<div id="itemsTable"></div>' +
+        '<div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;">' +
+          '<button type="button" class="s-additem" onclick="addItem()">+ Add line item</button>' +
+          (svcOptions ? ('<select id="svcPicker" style="padding:7px 10px;border-radius:8px;border:1px dashed ' + 'var(--navy)' + ';font:inherit;font-size:12.5px;color:var(--navy);" onchange="addFromService()"><option value="">+ Add from services…</option>' + svcOptions + '</select>') : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="s-totals"><div class="s-totals-box" id="totalsBox"></div></div>' +
+      '<div class="s-notes">' +
+        '<div class="cap">Notes</div>' +
+        '<textarea id="fNotes" rows="3">' + escapeHtml(s.notes) + '</textarea>' +
+      '</div>' +
+      '<div class="s-foot">TECH24 : Connecting to the World</div>' +
+    '</div>';
+
+  renderItemsEdit();
+  wireEditHandlers();
+}
+
+function wireEditHandlers(){
+  document.getElementById('fCurrency').onchange = function(){ state.currency = this.value; renderSheet(); };
+  document.getElementById('fTax').oninput = function(){ state.taxRate = this.value; updateTotals(); };
+  document.getElementById('fInvNo').oninput = function(){ state.invNo = this.value; };
+  document.getElementById('fIssue').oninput = function(){ state.issueDate = this.value; };
+  document.getElementById('fDue').oninput = function(){ state.dueDate = this.value; };
+  document.getElementById('fBillName').oninput = function(){ state.billTo.name = this.value; };
+  document.getElementById('fBillAddr').oninput = function(){ state.billTo.address = this.value; };
+  document.getElementById('fBillEmail').oninput = function(){ state.billTo.email = this.value; };
+  document.getElementById('fNotes').oninput = function(){ state.notes = this.value; };
+}
+
+function renderItemsEdit(){
+  var tbl = document.getElementById('itemsTable');
+  tbl.innerHTML = state.items.map(function(it){
+    return '<div class="s-irow" data-id="' + it.id + '">' +
+      '<div>' +
+        '<input class="editable desc" data-field="desc" placeholder="Item" value="' + escapeHtml(it.desc) + '">' +
+        '<input class="editable detail" data-field="detail" placeholder="Details (optional)" value="' + escapeHtml(it.detail) + '">' +
+      '</div>' +
+      '<input class="editable qty" data-field="qty" type="number" min="0" value="' + it.qty + '">' +
+      '<input class="editable rate" data-field="rate" type="number" min="0" step="0.01" value="' + it.rate + '">' +
+      '<div class="amt" data-amt>' + money((Number(it.qty)||0)*(Number(it.rate)||0), state.currency) + '</div>' +
+      '<button type="button" class="rm no-print" onclick="removeItem(' + it.id + ')"' + (state.items.length===1?' disabled':'') + '>&times;</button>' +
+    '</div>';
+  }).join('');
+
+  tbl.oninput = function(e){
+    var row = e.target.closest('.s-irow');
+    if (!row) return;
+    var id = Number(row.getAttribute('data-id'));
+    var field = e.target.getAttribute('data-field');
+    var item = state.items.filter(function(it){ return it.id === id; })[0];
+    if (!item) return;
+    item[field] = e.target.value;
+    if (field === 'qty' || field === 'rate') {
+      row.querySelector('[data-amt]').textContent = money((Number(item.qty)||0)*(Number(item.rate)||0), state.currency);
+      updateTotals();
+    }
+  };
+
+  updateTotals();
+}
+
+function updateTotals(){
+  var t = computeTotals();
+  var box = document.getElementById('totalsBox');
+  if (!box) return;
+  var rows = '<div class="s-trow"><span>Subtotal</span><span class="v">' + money(t.subtotal, state.currency) + '</span></div>';
+  if (Number(state.taxRate) > 0) {
+    rows += '<div class="s-trow"><span>Tax (' + state.taxRate + '%)</span><span class="v">' + money(t.taxAmt, state.currency) + '</span></div>';
+  }
+  rows += '<div class="s-due"><span class="lbl">TOTAL DUE</span><span class="v">' + money(t.total, state.currency) + '</span></div>';
+  box.innerHTML = rows;
+}
+
+// ---------- submit ----------
+async function submitCreate(){
+  var btn = document.getElementById('createBtn');
+  if (!state.billTo.name) { document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">Client name is required.</div>'; return; }
+  if (!state.items.length || !state.items.some(function(it){ return it.desc; })) { document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">Add at least one line item.</div>'; return; }
+  btn.disabled = true;
+  btn.textContent = 'Creating…';
+  document.getElementById('sheetMsg').innerHTML = '';
+  try {
+    var payload = {
+      action: 'create',
+      invoiceNo: state.invNo,
+      clientName: state.billTo.name,
+      clientEmail: state.billTo.email,
+      clientAddress: state.billTo.address,
+      issueDate: state.issueDate,
+      dueDate: state.dueDate,
+      currency: state.currency,
+      taxRate: state.taxRate,
+      notes: state.notes,
+      items: state.items.map(function(it){ return { desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }; })
+    };
+    var data = await adminFetch(API_INVOICES, { method: 'POST', body: payload });
+    state = { mode: 'view', result: data.invoice };
+    renderSheet();
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = 'Create Invoice & Get Payment Link';
+    document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  }
+}
+
+// ---------- rendering: view mode (finalized / loaded invoice) ----------
+function renderSheetView(){
+  var inv = state.result;
+  var statusPill = '<span class="pill pill-' + inv.status + '">' + inv.status + '</span>';
+
+  var actions = '<button class="btn btn-ghost btn-sm" onclick="window.print()">Print / Save PDF</button>';
+  if (inv.invoicePdf) actions += '<a class="btn btn-ghost btn-sm" href="' + inv.invoicePdf + '" target="_blank" rel="noopener">Stripe PDF</a>';
+  if (inv.hostedInvoiceUrl) actions += '<button class="btn btn-ghost btn-sm" onclick="copyLink(\'' + inv.hostedInvoiceUrl + '\')">Copy Payment Link</button>';
+  if (inv.status === 'open') {
+    actions += '<button class="btn btn-ghost btn-sm" onclick="sendInvoice(\'' + inv.id + '\')">Email to Client</button>';
+    actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="voidInvoiceConfirm(\'' + inv.id + '\')">Void</button>';
+  }
+  document.getElementById('sheetActions').innerHTML = actions;
+
+  var itemsHtml = inv.items.map(function(it){
+    return '<div class="s-irow">' +
+      '<div><div class="desc">' + escapeHtml(it.desc) + '</div>' + (it.detail ? '<div class="detail">' + escapeHtml(it.detail) + '</div>' : '') + '</div>' +
+      '<div class="qty">' + it.qty + '</div>' +
+      '<div class="rate">' + money(it.rate, inv.currency) + '</div>' +
+      '<div class="amt">' + money(it.qty*it.rate, inv.currency) + '</div>' +
+      '<div class="no-print"></div>' +
+    '</div>';
+  }).join('');
+
+  var payBtn = inv.hostedInvoiceUrl
+    ? '<a href="' + inv.hostedInvoiceUrl + '" target="_blank" rel="noopener" class="btn-pay"><span style="font-size:17px;">&#128179;</span> Pay Securely with Stripe</a><div class="link">' + escapeHtml(inv.hostedInvoiceUrl) + '</div>'
+    : '';
+
+  document.getElementById('sheet').innerHTML =
+    '<div class="sheet-band"></div>' +
+    '<div class="sheet-in">' +
+      '<div class="s-head">' +
+        '<div>' +
+          '<div class="s-brand-mark"><span class="s-brand-tech">TECH</span><span class="s-brand-24">24</span></div>' +
+          '<div class="s-brand-meta">tech24.cc &nbsp;&bull;&nbsp; info@tech24.cc<br>Connecting to the World</div>' +
+        '</div>' +
+        '<div>' +
+          '<div class="s-doctitle">INVOICE</div>' +
+          '<div class="s-meta">' +
+            '<div class="s-meta-row"><span class="lbl">Invoice No.</span><strong>' + escapeHtml(inv.invoiceNo) + '</strong></div>' +
+            '<div class="s-meta-row"><span class="lbl">Issue Date</span>' + fmtDate(inv.issueDate) + '</div>' +
+            '<div class="s-meta-row"><span class="lbl">Due Date</span>' + fmtDate(inv.dueDate) + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="s-billto">' +
+        '<div class="cap">Bill To</div>' +
+        '<div class="nm">' + escapeHtml(inv.clientName) + '</div>' +
+        (inv.clientAddress ? '<div class="sub">' + escapeHtml(inv.clientAddress) + '</div>' : '') +
+        (inv.clientEmail ? '<div class="sub">' + escapeHtml(inv.clientEmail) + '</div>' : '') +
+      '</div>' +
+      '<div class="s-items">' +
+        '<div class="s-ihead"><div>Description</div><div style="text-align:center;">Qty</div><div style="text-align:right;">Rate</div><div style="text-align:right;">Amount</div><div class="no-print"></div></div>' +
+        itemsHtml +
+      '</div>' +
+      '<div class="s-totals"><div class="s-totals-box">' +
+        '<div class="s-trow"><span>Subtotal</span><span class="v">' + money(inv.subtotal/100, inv.currency) + '</span></div>' +
+        '<div class="s-due"><span class="lbl">TOTAL DUE</span><span class="v">' + money(inv.total/100, inv.currency) + '</span></div>' +
+      '</div></div>' +
+      '<div class="s-pay no-print">' + payBtn + '</div>' +
+      '<div class="s-status no-print">' + statusPill + '</div>' +
+      (inv.notes ? ('<div class="s-notes"><div class="cap">Notes</div><div style="font-size:12.5px;color:#556;line-height:1.6;">' + escapeHtml(inv.notes) + '</div></div>') : '') +
+      '<div class="s-foot">TECH24 : Connecting to the World</div>' +
+    '</div>';
+}
+
+async function copyLink(url){
+  try { await navigator.clipboard.writeText(url); flashMsg('Payment link copied.'); }
+  catch (e) { flashMsg('Could not copy automatically. Link: ' + url, true); }
+}
+async function sendInvoice(id){
+  try {
+    await adminFetch(API_INVOICES, { method: 'POST', body: { action: 'send', id: id } });
+    flashMsg('Invoice emailed to client.');
+  } catch (e) { flashMsg(e.message, true); }
+}
+function voidInvoiceConfirm(id){
+  if (!confirm('Void this invoice? This cannot be undone.')) return;
+  voidInvoice(id);
+}
+async function voidInvoice(id){
+  try {
+    var data = await adminFetch(API_INVOICES, { method: 'POST', body: { action: 'void', id: id } });
+    state = { mode: 'view', result: data.invoice };
+    renderSheet();
+    flashMsg('Invoice voided.');
+  } catch (e) { flashMsg(e.message, true); }
+}
+function flashMsg(text, isErr){
+  document.getElementById('sheetMsg').innerHTML = '<div class="msg ' + (isErr?'msg-err':'msg-ok') + '">' + escapeHtml(text) + '</div>';
+}
+
+// ---------- init ----------
+showList();
+</script>
+</body>
+</html>

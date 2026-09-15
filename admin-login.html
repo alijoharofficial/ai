@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login: TECH24</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e8192c'/><text x='50%25' y='54%25' dominant-baseline='central' text-anchor='middle' font-family='Rajdhani,sans-serif' font-weight='800' font-size='14' fill='white'>T24</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070a;--bg2:#0d0d12;--bg3:#141419;--bg4:#1b1b21;
+  --red:#e8192c;--red2:#ff4d5e;
+  --blue:#2f6bff;--blue2:#6a93ff;
+  --text:#f7f7f9;--t2:#9d9da8;--t3:#5c5c66;
+  --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+  --r:16px;--rs:10px;
+}
+body{font-family:"Inter",sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;color:var(--text);-webkit-font-smoothing:antialiased;}
+.logo-mark{display:flex;align-items:baseline;gap:1px;font-weight:700;font-size:1.7rem;letter-spacing:0.02em;font-family:"Rajdhani",sans-serif;justify-content:center;}
+.logo-tech{color:var(--red);}
+.logo-24{color:var(--blue);font-size:1.8rem;}
+.logo-tag{margin-top:6px;text-align:center;font-size:0.62rem;letter-spacing:0.22em;color:var(--t2);font-weight:600;}
+
+.card{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:2.6rem 2.2rem;width:100%;max-width:380px;margin:1rem;}
+h2{font-family:"Rajdhani",sans-serif;font-size:1.5rem;font-weight:700;text-align:center;margin:1.8rem 0 0.35rem;}
+p.sub{font-size:0.82rem;color:var(--t2);text-align:center;margin-bottom:1.8rem;}
+input[type="password"]{width:100%;background:var(--bg4);border:1px solid var(--line2);border-radius:var(--rs);padding:0.85rem 1rem;font-size:0.95rem;color:var(--text);font-family:inherit;outline:none;transition:border-color .2s;letter-spacing:0.05em;}
+input[type="password"]:focus{border-color:var(--blue);}
+input[type="password"]::placeholder{color:var(--t3);letter-spacing:normal;}
+.err{display:none;font-size:0.78rem;color:var(--red2);margin-top:0.6rem;text-align:center;}
+.err.show{display:block;}
+button{width:100%;margin-top:1.3rem;padding:0.85rem;background:var(--red);border:none;border-radius:var(--rs);color:#fff;font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s;}
+button:hover{background:var(--red2);transform:translateY(-1px);}
+button:active{transform:translateY(0);}
+.back{display:block;text-align:center;margin-top:1.4rem;font-size:0.8rem;color:var(--t3);text-decoration:none;}
+.back:hover{color:var(--t2);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo-mark"><span class="logo-tech">TECH</span><span class="logo-24">24</span></div>
+  <div class="logo-tag">CONNECTING TO THE WORLD</div>
+  <h2>Admin Access</h2>
+  <p class="sub">Enter the admin password to manage services and invoices.</p>
+  <input type="password" id="key" placeholder="Password" autofocus>
+  <div class="err" id="err">Incorrect password. Please try again.</div>
+  <button onclick="login()">Sign In</button>
+  <a href="services.html" class="back">&larr; Back to site</a>
+</div>
+<script>
+var K = "Link2Lord";
+function login(){
+  var v = document.getElementById("key").value;
+  if(v === K){
+    sessionStorage.setItem('t24_admin_auth', '1');
+    sessionStorage.setItem('t24_admin_key', v);
+    window.location.href = "admin.html";
+  } else {
+    var e = document.getElementById("err");
+    e.classList.add("show");
+    document.getElementById("key").value = "";
+    document.getElementById("key").focus();
+  }
+}
+document.getElementById("key").addEventListener("keydown", function(e){
+  if(e.key === "Enter") login();
+});
+</script>
+</body>
+</html>
