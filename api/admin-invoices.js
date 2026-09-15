@@ -13,23 +13,26 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const { id } = req.query || {};
       if (id) {
-        const inv = await stripe.invoices.retrieve(id, { expand: ['lines.data'] });
+        const inv = await stripe.invoices.retrieve(id, { expand: ['lines.data', 'customer'] });
         return res.status(200).json({ invoice: shapeInvoice(inv) });
       }
-      const list = await stripe.invoices.list({ limit: 50 });
-      const invoices = list.data.map((inv) => ({
-        id: inv.id,
-        invoiceNo: (inv.metadata && inv.metadata.tech24_invoice_no) || inv.number || inv.id,
-        clientName: inv.customer_name || '',
-        clientEmail: inv.customer_email || '',
-        status: inv.status,
-        total: inv.total,
-        currency: inv.currency,
-        created: inv.created,
-        dueDate: inv.due_date,
-        hostedInvoiceUrl: inv.hosted_invoice_url,
-        invoicePdf: inv.invoice_pdf,
-      }));
+      const list = await stripe.invoices.list({ limit: 50, expand: ['data.customer'] });
+      const invoices = list.data.map((inv) => {
+        const customerObj = inv.customer && typeof inv.customer === 'object' ? inv.customer : null;
+        return {
+          id: inv.id,
+          invoiceNo: (inv.metadata && inv.metadata.tech24_invoice_no) || inv.number || inv.id,
+          clientName: inv.customer_name || (customerObj && customerObj.name) || '',
+          clientEmail: inv.customer_email || (customerObj && customerObj.email) || '',
+          status: inv.status,
+          total: inv.total,
+          currency: inv.currency,
+          created: inv.created,
+          dueDate: inv.due_date,
+          hostedInvoiceUrl: inv.hosted_invoice_url,
+          invoicePdf: inv.invoice_pdf,
+        };
+      });
       return res.status(200).json({ invoices });
     }
 
@@ -51,112 +54,153 @@ export default async function handler(req, res) {
         return res.status(200).json({ invoice: shapeInvoice(inv) });
       }
 
-      // action === 'create'
-      const {
-        invoiceNo, clientName, clientEmail, clientAddress,
-        issueDate, dueDate, currency, taxRate, notes, items,
-      } = body;
-
-      if (!clientName) return res.status(400).json({ error: 'clientName is required' });
-      if (!Array.isArray(items) || items.length === 0) {
-        return res.status(400).json({ error: 'At least one line item is required' });
+      if (action === 'delete') {
+        const { id } = body;
+        if (!id) return res.status(400).json({ error: 'id is required' });
+        const existing = await stripe.invoices.retrieve(id);
+        if (existing.status !== 'draft') {
+          return res.status(400).json({ error: 'Only draft invoices can be deleted. Void it instead.' });
+        }
+        await stripe.invoices.del(id);
+        return res.status(200).json({ ok: true });
       }
-      if (!currency) return res.status(400).json({ error: 'currency is required' });
 
-      const cur = String(currency).toLowerCase();
+      if (action === 'create' || action === 'update') {
+        const {
+          id, invoiceNo, clientName, clientEmail, clientAddress,
+          issueDate, dueDate, currency, taxRate, notes, items,
+        } = body;
 
-      let customer;
-      if (clientEmail) {
-        const existing = await stripe.customers.list({ email: clientEmail, limit: 1 });
-        if (existing.data.length) {
-          customer = existing.data[0];
-          if (customer.name !== clientName) {
-            customer = await stripe.customers.update(customer.id, { name: clientName });
+        if (!clientName) return res.status(400).json({ error: 'clientName is required' });
+        if (!Array.isArray(items) || items.length === 0) {
+          return res.status(400).json({ error: 'At least one line item is required' });
+        }
+        if (!currency) return res.status(400).json({ error: 'currency is required' });
+
+        const cur = String(currency).toLowerCase();
+
+        if (action === 'update') {
+          if (!id) return res.status(400).json({ error: 'id is required to update an invoice' });
+          const existing = await stripe.invoices.retrieve(id);
+          if (existing.status !== 'draft') {
+            return res.status(400).json({ error: 'Only draft invoices can be edited. Void this one and create a new invoice instead.' });
+          }
+        }
+
+        let customer;
+        if (clientEmail) {
+          const existingCustomers = await stripe.customers.list({ email: clientEmail, limit: 1 });
+          if (existingCustomers.data.length) {
+            customer = existingCustomers.data[0];
+            if (customer.name !== clientName) {
+              customer = await stripe.customers.update(customer.id, { name: clientName });
+            }
+          } else {
+            customer = await stripe.customers.create({ name: clientName, email: clientEmail });
           }
         } else {
-          customer = await stripe.customers.create({ name: clientName, email: clientEmail });
+          customer = await stripe.customers.create({ name: clientName });
         }
-      } else {
-        customer = await stripe.customers.create({ name: clientName });
-      }
 
-      const issue = issueDate || new Date().toISOString().slice(0, 10);
-      const due = dueDate || issue;
-      const daysUntilDue = Math.max(
-        0,
-        Math.round((new Date(due + 'T00:00:00') - new Date(issue + 'T00:00:00')) / 86400000)
-      );
+        const issue = issueDate || new Date().toISOString().slice(0, 10);
+        const due = dueDate || issue;
+        const daysUntilDue = Math.max(
+          0,
+          Math.round((new Date(due + 'T00:00:00') - new Date(issue + 'T00:00:00')) / 86400000)
+        );
 
-      const invoice = await stripe.invoices.create({
-        customer: customer.id,
-        currency: cur,
-        collection_method: 'send_invoice',
-        days_until_due: daysUntilDue,
-        description: notes || undefined,
-        auto_advance: false,
-        metadata: {
+        const metadata = {
           tech24_invoice_no: invoiceNo || '',
           tech24_issue_date: issue,
           tech24_client_address: (clientAddress || '').slice(0, 490),
           tech24_notes: (notes || '').slice(0, 490),
           tech24_tax_rate: String(taxRate || 0),
-        },
-      });
+        };
 
-      for (const it of items) {
-        const qty = Math.max(1, Number(it.qty) || 1);
-        const rate = Math.max(0, Number(it.rate) || 0);
-        const desc = it.detail ? `${it.desc || 'Item'}: ${it.detail}` : (it.desc || 'Item');
-        await stripe.invoiceItems.create({
-          customer: customer.id,
-          invoice: invoice.id,
-          price_data: {
+        let invoice;
+        if (action === 'update') {
+          // Draft invoices can be freely re-synced: drop the old line items and
+          // rebuild them from the submitted state, then update invoice-level fields.
+          const existingItems = await stripe.invoiceItems.list({ invoice: id, limit: 100 });
+          for (const li of existingItems.data) {
+            await stripe.invoiceItems.del(li.id);
+          }
+          invoice = await stripe.invoices.update(id, {
+            customer: customer.id,
             currency: cur,
-            unit_amount: Math.round(rate * 100),
-            product_data: { name: desc },
-          },
-          quantity: qty,
-          description: desc,
-        });
-      }
+            days_until_due: daysUntilDue,
+            description: notes || undefined,
+            metadata,
+          });
+        } else {
+          invoice = await stripe.invoices.create({
+            customer: customer.id,
+            currency: cur,
+            collection_method: 'send_invoice',
+            days_until_due: daysUntilDue,
+            description: notes || undefined,
+            auto_advance: false,
+            metadata,
+          });
+        }
 
-      const taxPct = Number(taxRate) || 0;
-      if (taxPct > 0) {
-        const subtotalMinor = items.reduce(
-          (s, it) => s + Math.round((Number(it.rate) || 0) * 100) * Math.max(1, Number(it.qty) || 1),
-          0
-        );
-        const taxMinor = Math.round(subtotalMinor * (taxPct / 100));
-        if (taxMinor > 0) {
+        for (const it of items) {
+          const qty = Math.max(1, Number(it.qty) || 1);
+          const rate = Math.max(0, Number(it.rate) || 0);
+          const desc = it.detail ? `${it.desc || 'Item'}: ${it.detail}` : (it.desc || 'Item');
           await stripe.invoiceItems.create({
             customer: customer.id,
             invoice: invoice.id,
             price_data: {
               currency: cur,
-              unit_amount: taxMinor,
-              product_data: { name: `Tax (${taxPct}%)` },
+              unit_amount: Math.round(rate * 100),
+              product_data: { name: desc },
             },
-            quantity: 1,
-            description: `Tax (${taxPct}%)`,
+            quantity: qty,
+            description: desc,
           });
         }
-      }
 
-      try {
-        const itemsJson = JSON.stringify(
-          items.map((it) => ({ desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }))
-        );
-        if (itemsJson.length <= 490) {
-          await stripe.invoices.update(invoice.id, {
-            metadata: { ...invoice.metadata, tech24_items: itemsJson },
-          });
+        const taxPct = Number(taxRate) || 0;
+        if (taxPct > 0) {
+          const subtotalMinor = items.reduce(
+            (s, it) => s + Math.round((Number(it.rate) || 0) * 100) * Math.max(1, Number(it.qty) || 1),
+            0
+          );
+          const taxMinor = Math.round(subtotalMinor * (taxPct / 100));
+          if (taxMinor > 0) {
+            await stripe.invoiceItems.create({
+              customer: customer.id,
+              invoice: invoice.id,
+              price_data: {
+                currency: cur,
+                unit_amount: taxMinor,
+                product_data: { name: `Tax (${taxPct}%)` },
+              },
+              quantity: 1,
+              description: `Tax (${taxPct}%)`,
+            });
+          }
         }
-      } catch (e) {
-        // non-fatal: rich line-item rendering falls back to Stripe's own line descriptions
+
+        try {
+          const itemsJson = JSON.stringify(
+            items.map((it) => ({ desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }))
+          );
+          if (itemsJson.length <= 490) {
+            await stripe.invoices.update(invoice.id, {
+              metadata: { ...invoice.metadata, tech24_items: itemsJson },
+            });
+          }
+        } catch (e) {
+          // non-fatal: rich line-item rendering falls back to Stripe's own line descriptions
+        }
+
+        const finalized = await stripe.invoices.finalizeInvoice(invoice.id);
+        return res.status(200).json({ invoice: shapeInvoice(finalized) });
       }
 
-      const finalized = await stripe.invoices.finalizeInvoice(invoice.id);
-      return res.status(200).json({ invoice: shapeInvoice(finalized) });
+      return res.status(400).json({ error: 'Unknown action' });
     }
 
     return res.status(405).json({ error: 'Method not allowed' });

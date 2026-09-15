@@ -233,6 +233,7 @@ function blankState(){
   var today = todayISO();
   return {
     mode: 'edit',
+    editingId: null,
     invNo: 'TECH24-' + today.replace(/-/g,'') + '-001',
     issueDate: today,
     dueDate: addDays(today, 7),
@@ -282,7 +283,7 @@ function renderInvoiceList(invoices){
   var rows = invoices.map(function(inv){
     return '<tr onclick="openInvoice(\'' + inv.id + '\')">' +
       '<td>' + escapeHtml(inv.invoiceNo) + '</td>' +
-      '<td>' + escapeHtml(inv.clientName || '—') + '</td>' +
+      '<td>' + escapeHtml(inv.clientName || 'N/A') + '</td>' +
       '<td>' + fmtDate(new Date(inv.created*1000).toISOString().slice(0,10)) + '</td>' +
       '<td>' + money(inv.total/100, inv.currency) + '</td>' +
       '<td><span class="pill pill-' + inv.status + '">' + inv.status + '</span></td>' +
@@ -305,8 +306,31 @@ async function openInvoice(id){
   document.getElementById('sheetActions').innerHTML = '';
   try {
     var data = await adminFetch(API_INVOICES + '?id=' + encodeURIComponent(id));
-    state = { mode: 'view', result: data.invoice };
-    renderSheet();
+    var inv = data.invoice;
+    if (inv.status === 'draft') {
+      state = {
+        mode: 'edit',
+        editingId: inv.id,
+        invNo: inv.invoiceNo,
+        issueDate: inv.issueDate,
+        dueDate: inv.dueDate,
+        currency: (inv.currency || 'USD').toUpperCase(),
+        taxRate: Number(inv.taxRate) || 0,
+        billTo: { name: inv.clientName || '', email: inv.clientEmail || '', address: inv.clientAddress || '' },
+        items: (inv.items && inv.items.length)
+          ? inv.items.map(function(it){ return { id: nextId++, desc: it.desc, detail: it.detail, qty: it.qty, rate: it.rate }; })
+          : [ { id: nextId++, desc: '', detail: '', qty: 1, rate: 0 } ],
+        notes: inv.notes || '',
+        result: null
+      };
+      showSheetView();
+      renderSheet();
+      await loadServices();
+      if (state.mode === 'edit') renderSheet();
+    } else {
+      state = { mode: 'view', result: inv };
+      renderSheet();
+    }
   } catch (e) {
     document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
   }
@@ -357,7 +381,8 @@ function renderSheet(){
 
   document.getElementById('sheetActions').innerHTML =
     '<button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>' +
-    '<button class="btn btn-primary btn-sm" id="createBtn" onclick="submitCreate()">Create Invoice &amp; Get Payment Link</button>';
+    (s.editingId ? '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="deleteDraftConfirm(\'' + s.editingId + '\')">Delete Draft</button>' : '') +
+    '<button class="btn btn-primary btn-sm" id="createBtn" onclick="submitCreate()">' + (s.editingId ? 'Save &amp; Finalize Invoice' : 'Create Invoice &amp; Get Payment Link') + '</button>';
 
   document.getElementById('sheet').innerHTML =
     '<div class="sheet-band"></div>' +
@@ -471,14 +496,17 @@ function updateTotals(){
 // ---------- submit ----------
 async function submitCreate(){
   var btn = document.getElementById('createBtn');
+  var isEdit = !!state.editingId;
+  var defaultLabel = isEdit ? 'Save & Finalize Invoice' : 'Create Invoice & Get Payment Link';
   if (!state.billTo.name) { document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">Client name is required.</div>'; return; }
   if (!state.items.length || !state.items.some(function(it){ return it.desc; })) { document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">Add at least one line item.</div>'; return; }
   btn.disabled = true;
-  btn.textContent = 'Creating…';
+  btn.textContent = isEdit ? 'Saving…' : 'Creating…';
   document.getElementById('sheetMsg').innerHTML = '';
   try {
     var payload = {
-      action: 'create',
+      action: isEdit ? 'update' : 'create',
+      id: state.editingId || undefined,
       invoiceNo: state.invNo,
       clientName: state.billTo.name,
       clientEmail: state.billTo.email,
@@ -495,7 +523,20 @@ async function submitCreate(){
     renderSheet();
   } catch (e) {
     btn.disabled = false;
-    btn.textContent = 'Create Invoice & Get Payment Link';
+    btn.textContent = defaultLabel;
+    document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
+  }
+}
+
+function deleteDraftConfirm(id){
+  if (!confirm('Delete this draft invoice? This cannot be undone.')) return;
+  deleteDraft(id);
+}
+async function deleteDraft(id){
+  try {
+    await adminFetch(API_INVOICES, { method: 'POST', body: { action: 'delete', id: id } });
+    showList();
+  } catch (e) {
     document.getElementById('sheetMsg').innerHTML = '<div class="msg msg-err">' + escapeHtml(e.message) + '</div>';
   }
 }

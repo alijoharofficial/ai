@@ -21,13 +21,16 @@ export function shapeInvoice(inv) {
   }
 
   const meta = inv.metadata || {};
+  // Stripe only snapshots customer_name/customer_email onto the invoice once it's
+  // finalized. For a still-draft invoice, fall back to the (expanded) Customer object.
+  const customerObj = inv.customer && typeof inv.customer === 'object' ? inv.customer : null;
 
   return {
     id: inv.id,
     invoiceNo: meta.tech24_invoice_no || inv.number || inv.id,
     stripeNumber: inv.number || '',
-    clientName: inv.customer_name || '',
-    clientEmail: inv.customer_email || '',
+    clientName: inv.customer_name || (customerObj && customerObj.name) || '',
+    clientEmail: inv.customer_email || (customerObj && customerObj.email) || '',
     clientAddress: meta.tech24_client_address || '',
     issueDate: meta.tech24_issue_date || new Date(inv.created * 1000).toISOString().slice(0, 10),
     dueDate: inv.due_date ? new Date(inv.due_date * 1000).toISOString().slice(0, 10) : '',
