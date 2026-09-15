@@ -149,6 +149,12 @@ export default async function handler(req, res) {
           billing_address_collection: 'required',
           custom_fields: [
             {
+              key: 'full_name',
+              label: { type: 'custom', custom: 'Full Name' },
+              type: 'text',
+              optional: false,
+            },
+            {
               key: 'business_name',
               label: { type: 'custom', custom: 'Business / Company Name' },
               type: 'text',

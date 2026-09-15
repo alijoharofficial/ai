@@ -89,7 +89,7 @@ table.svc tr:last-child td{border-bottom:none;}
       <div class="adm-links">
         <a href="admin.html">Invoices</a>
         <a href="admin-services.html" class="on">Services</a>
-        <a href="services.html">View Site</a>
+        <a href="services.html" onclick="sessionStorage.removeItem('t24_admin_auth');sessionStorage.removeItem('t24_admin_key');">View Site</a>
         <button class="logout" onclick="adminLogout()">Logout</button>
       </div>
     </nav>
@@ -247,6 +247,9 @@ async function archiveService(productId, btn){
   }
 }
 
+window.addEventListener('pageshow', function(){
+  if (!sessionStorage.getItem('t24_admin_auth')) { location.href = 'admin-login.html'; }
+});
 loadServices();
 </script>
 </body>
