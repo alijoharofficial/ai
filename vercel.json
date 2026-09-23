@@ -13,5 +13,8 @@
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/qr/((?!assets/).*)", "destination": "/qr/index.html" }
   ]
 }
