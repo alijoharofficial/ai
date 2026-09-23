@@ -543,12 +543,12 @@ function renderSheetView(){
   var statusPill = '<span class="pill pill-' + inv.status + '">' + (inv.status === 'active' ? 'Active' : 'Void') + '</span>';
 
   var actions = '<button class="btn btn-ghost btn-sm" onclick="window.print()">Print / Save PDF</button>';
-  if (inv.hostedInvoiceUrl) actions += '<button class="btn btn-ghost btn-sm" onclick="copyLink(\'' + inv.hostedInvoiceUrl + '\')">Copy Payment Link</button>';
+  if (inv.hostedInvoiceUrl) actions += '<button class="btn btn-ghost btn-sm" onclick="copyLink(\'' + escapeHtml(inv.hostedInvoiceUrl) + '\')">Copy Payment Link</button>';
   actions += '<button class="btn btn-ghost btn-sm" onclick="editInvoice()">Edit</button>';
   if (inv.status === 'active') {
-    actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="voidInvoiceConfirm(\'' + inv.id + '\')">Void</button>';
+    actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="voidInvoiceConfirm(\'' + escapeHtml(inv.id) + '\')">Void</button>';
   }
-  actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="deleteInvoiceConfirm(\'' + inv.id + '\')">Delete</button>';
+  actions += '<button class="btn btn-ghost btn-sm" style="color:var(--red2);" onclick="deleteInvoiceConfirm(\'' + escapeHtml(inv.id) + '\')">Delete</button>';
   document.getElementById('sheetActions').innerHTML = actions;
 
   var itemsHtml = inv.items.map(function(it){
@@ -562,7 +562,7 @@ function renderSheetView(){
   }).join('');
 
   var payBtn = inv.hostedInvoiceUrl
-    ? '<a href="' + inv.hostedInvoiceUrl + '" target="_blank" rel="noopener" class="btn-pay"><span style="font-size:17px;">&#128179;</span> Pay Securely with Stripe</a><div class="link">' + escapeHtml(inv.hostedInvoiceUrl) + '</div>'
+    ? '<a href="' + escapeHtml(inv.hostedInvoiceUrl) + '" target="_blank" rel="noopener" class="btn-pay"><span style="font-size:17px;">&#128179;</span> Pay Securely with Stripe</a><div class="link">' + escapeHtml(inv.hostedInvoiceUrl) + '</div>'
     : '';
 
   document.getElementById('sheet').innerHTML =
@@ -646,5 +646,6 @@ window.addEventListener('pageshow', function(){
 });
 showList();
 </script>
+<script defer src="security.js"></script>
 </body>
 </html>

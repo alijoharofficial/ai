@@ -191,7 +191,7 @@ function renderServices(services){
       '<td><strong>' + escapeHtml(s.name) + '</strong>' + (s.description ? '<div style="color:var(--t3);font-size:0.78rem;margin-top:2px;">' + escapeHtml(s.description) + '</div>' : '') + '</td>' +
       '<td>' + money((s.unitAmount||0)/100, s.currency) + (s.recurring ? ' / ' + s.recurring : '') + '</td>' +
       '<td style="color:var(--t3);font-size:0.78rem;">' + escapeHtml(s.productId) + '</td>' +
-      '<td><button class="btn-ghost" onclick="archiveService(\'' + s.productId + '\', this)">Archive</button></td>' +
+      '<td><button class="btn-ghost" onclick="archiveService(\'' + escapeHtml(s.productId) + '\', this)">Archive</button></td>' +
     '</tr>';
   }).join('');
   box.innerHTML = '<table class="svc"><thead><tr><th>Service</th><th>Price</th><th>Stripe Product ID</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
@@ -252,5 +252,6 @@ window.addEventListener('pageshow', function(){
 });
 loadServices();
 </script>
+<script defer src="security.js"></script>
 </body>
 </html>

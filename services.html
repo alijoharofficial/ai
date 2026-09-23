@@ -1156,8 +1156,7 @@ function sendWeb3Form(extraFields){
     body: formData
   })
   .then(function(r){ return r.json(); })
-  .then(function(d){ console.log('Web3Forms sent:', d); })
-  .catch(function(err){ console.error('Web3Forms failed:', err); });
+  .catch(function(){});
 }
 
 leadForm.addEventListener('submit', function(e){
@@ -1238,5 +1237,6 @@ window.addEventListener('message', function(e){
   }
 });
 </script>
+<script defer src="security.js"></script>
 </body>
 </html>

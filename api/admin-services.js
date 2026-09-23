@@ -1,6 +1,9 @@
 import { getStripe } from './_lib/stripe.js';
 import { cors, checkAdmin } from './_lib/auth.js';
 
+const ALLOWED_CURRENCIES = ['USD', 'GBP', 'EUR', 'AED', 'PKR', 'MYR'];
+const ALLOWED_INTERVALS = ['day', 'week', 'month', 'year'];
+
 export default async function handler(req, res) {
   cors(req, res);
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -42,14 +45,27 @@ export default async function handler(req, res) {
       if (!name || !amount || !currency) {
         return res.status(400).json({ error: 'name, amount and currency are required' });
       }
+      const nameStr = String(name).trim().slice(0, 200);
+      if (!nameStr) return res.status(400).json({ error: 'name is required' });
+      const cur = String(currency).toUpperCase();
+      if (!ALLOWED_CURRENCIES.includes(cur)) {
+        return res.status(400).json({ error: 'Unsupported currency' });
+      }
+      const amountNum = Number(amount);
+      if (!Number.isFinite(amountNum) || amountNum <= 0 || amountNum > 1000000) {
+        return res.status(400).json({ error: 'amount must be a positive number' });
+      }
+      if (interval && !ALLOWED_INTERVALS.includes(interval)) {
+        return res.status(400).json({ error: 'Unsupported billing interval' });
+      }
       const product = await stripe.products.create({
-        name,
-        description: description || undefined,
+        name: nameStr,
+        description: description ? String(description).trim().slice(0, 500) : undefined,
       });
       const priceParams = {
         product: product.id,
-        unit_amount: Math.round(Number(amount) * 100),
-        currency: String(currency).toLowerCase(),
+        unit_amount: Math.round(amountNum * 100),
+        currency: cur.toLowerCase(),
       };
       if (interval) priceParams.recurring = { interval };
       const price = await stripe.prices.create(priceParams);

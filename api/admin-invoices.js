@@ -4,6 +4,9 @@ import { cors, checkAdmin } from './_lib/auth.js';
 // Success/cancel destinations after a client pays via a generated Payment Link.
 const SUCCESS_URL = 'https://www.tech24.cc/index.html?invoice=paid';
 
+const ALLOWED_CURRENCIES = ['USD', 'GBP', 'EUR', 'AED', 'PKR', 'MYR'];
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 // Turns a Stripe Payment Link object into the flat shape the admin UI renders.
 // All the invoice-specific fields (client info, dates, itemized lines, totals)
 // live in the link's own metadata, since Payment Links don't carry them natively.
@@ -89,11 +92,33 @@ export default async function handler(req, res) {
           issueDate, dueDate, currency, taxRate, notes, items,
         } = body;
 
-        if (!clientName) return res.status(400).json({ error: 'clientName is required' });
-        if (!Array.isArray(items) || items.length === 0) {
-          return res.status(400).json({ error: 'At least one line item is required' });
+        if (!clientName || !String(clientName).trim()) {
+          return res.status(400).json({ error: 'clientName is required' });
+        }
+        if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
+          return res.status(400).json({ error: 'Between 1 and 50 line items are required' });
         }
         if (!currency) return res.status(400).json({ error: 'currency is required' });
+        if (!ALLOWED_CURRENCIES.includes(String(currency).toUpperCase())) {
+          return res.status(400).json({ error: 'Unsupported currency' });
+        }
+        if (clientEmail && !EMAIL_RE.test(String(clientEmail).trim())) {
+          return res.status(400).json({ error: 'clientEmail is not a valid email address' });
+        }
+        const taxRateNum = Number(taxRate) || 0;
+        if (taxRateNum < 0 || taxRateNum > 100) {
+          return res.status(400).json({ error: 'taxRate must be between 0 and 100' });
+        }
+        for (const it of items) {
+          const qtyNum = Number(it.qty);
+          const rateNum = Number(it.rate);
+          if (!Number.isFinite(qtyNum) || qtyNum <= 0 || qtyNum > 10000) {
+            return res.status(400).json({ error: 'Each item quantity must be a positive number' });
+          }
+          if (!Number.isFinite(rateNum) || rateNum < 0 || rateNum > 1000000) {
+            return res.status(400).json({ error: 'Each item rate must be a non-negative number' });
+          }
+        }
 
         const cur = String(currency).toLowerCase();
 
