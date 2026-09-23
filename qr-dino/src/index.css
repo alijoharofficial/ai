@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* QR container — let the canvas/svg inside fill it */
+#qr-container canvas,
+#qr-container svg {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 12px;
+}
