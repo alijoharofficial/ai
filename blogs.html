@@ -15,6 +15,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ymw05szotx");
 </script>
+<!-- Theme: apply before CSS to prevent flash of wrong theme -->
+<script>
+(function(){var t=localStorage.getItem('aj_theme')||'system';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');else if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+<link rel="stylesheet" href="/theme.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — Ali Johar</title>
@@ -553,6 +558,16 @@ a { text-decoration: none; color: inherit; }
   .blog-footer { flex-direction: column; gap: 8px; text-align: center; }
 }
 </style>
+
+<link rel="alternate" hreflang="en" href="https://alijohar.work/blogs">
+<link rel="alternate" hreflang="zh" href="https://alijohar.work/zh/blogs">
+<link rel="alternate" hreflang="hi" href="https://alijohar.work/hi/blogs">
+<link rel="alternate" hreflang="es" href="https://alijohar.work/es/blogs">
+<link rel="alternate" hreflang="ar" href="https://alijohar.work/ar/blogs">
+<link rel="alternate" hreflang="fr" href="https://alijohar.work/fr/blogs">
+<link rel="alternate" hreflang="bn" href="https://alijohar.work/bn/blogs">
+<link rel="alternate" hreflang="x-default" href="https://alijohar.work/blogs">
+<link rel="canonical" href="https://alijohar.work/blogs">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -564,27 +579,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav class="nav">
   <a href="index.html" class="nav-brand">
     <div class="nav-logo">AJ</div>
-    <span class="nav-name">Ali Johar</span>
+    <span class="nav-name" data-i18n="nav.brand">Ali Johar</span>
   </a>
-  <a href="index.html" class="nav-back">
-    &#8592; Back to Portfolio
-  </a>
+  <div class="nav-actions">
+    <a href="index.html" class="nav-back" data-i18n="nav.back">&#8592; Back to Portfolio</a>
+    <div class="lang-switcher">
+      <button class="lang-btn" title="Change language">
+        <span id="currentLang">EN</span>
+        <svg viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg>
+      </button>
+      <div class="lang-dropdown">
+        <a href="/blogs" class="active"><span class="lang-flag">🇬🇧</span> English</a>
+        <a href="/zh/blogs"><span class="lang-flag">🇨🇳</span> 中文</a>
+        <a href="/hi/blogs"><span class="lang-flag">🇮🇳</span> हिन्दी</a>
+        <a href="/es/blogs"><span class="lang-flag">🇪🇸</span> Español</a>
+        <a href="/ar/blogs"><span class="lang-flag">🇸🇦</span> العربية</a>
+        <a href="/fr/blogs"><span class="lang-flag">🇫🇷</span> Français</a>
+        <a href="/bn/blogs"><span class="lang-flag">🇧🇩</span> বাংলা</a>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="cycleTheme()" title="Toggle theme">
+      <span class="theme-icon" id="themeIcon">🌙</span>
+      <span class="theme-label" id="themeLabel">Dark</span>
+    </button>
+  </div>
 </nav>
 
 <!-- ── Hero ── -->
 <div class="hero">
-  <div class="hero-eyebrow">&#9997; Writing</div>
-  <h1 class="hero-title">Ideas worth <em>sharing</em></h1>
-  <p class="hero-sub">Deep dives on AI marketing, automation systems, and the strategies behind real business growth.</p>
+  <div class="hero-eyebrow" data-i18n="blogs.eyebrow">&#9997; Writing</div>
+  <h1 class="hero-title" data-i18n="blogs.title">Ideas worth <em>sharing</em></h1>
+  <p class="hero-sub" data-i18n="blogs.subtitle">Deep dives on AI marketing, automation systems, and the strategies behind real business growth.</p>
 </div>
 
 <!-- ── Category filters ── -->
 <div class="categories-wrap">
   <div class="categories" id="catFilter">
-    <button class="cat-btn active all"        data-cat=""           onclick="filterCat(this,'')">All Posts      <span class="cat-count" id="cAll">0</span></button>
-    <button class="cat-btn article"           data-cat="article"    onclick="filterCat(this,'article')">Articles  <span class="cat-count" id="cArticle">0</span></button>
-    <button class="cat-btn case-study"        data-cat="case-study" onclick="filterCat(this,'case-study')">Case Studies <span class="cat-count" id="cCase">0</span></button>
-    <button class="cat-btn insight"           data-cat="insight"    onclick="filterCat(this,'insight')">Insights   <span class="cat-count" id="cInsight">0</span></button>
+    <button class="cat-btn active all"        data-cat=""           onclick="filterCat(this,'')"><span data-i18n="blogs.catAll">All Posts</span>      <span class="cat-count" id="cAll">0</span></button>
+    <button class="cat-btn article"           data-cat="article"    onclick="filterCat(this,'article')"><span data-i18n="blogs.catArticle">Articles</span>  <span class="cat-count" id="cArticle">0</span></button>
+    <button class="cat-btn case-study"        data-cat="case-study" onclick="filterCat(this,'case-study')"><span data-i18n="blogs.catCase">Case Studies</span> <span class="cat-count" id="cCase">0</span></button>
+    <button class="cat-btn insight"           data-cat="insight"    onclick="filterCat(this,'insight')"><span data-i18n="blogs.catInsight">Insights</span>   <span class="cat-count" id="cInsight">0</span></button>
   </div>
 </div>
 
@@ -593,7 +627,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Featured -->
   <div class="featured-wrap" id="featuredWrap" style="display:none;">
-    <div class="featured-label">Featured Post</div>
+    <div class="featured-label" data-i18n="blogs.featuredLabel">Featured Post</div>
     <div class="featured-card" id="featuredCard"></div>
   </div>
 
@@ -618,7 +652,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="nav-logo" style="width:24px;height:24px;font-size:9px;">AJ</div>
     <span>Ali Johar &copy; 2025</span>
   </div>
-  <span>AI Marketing &amp; Automation Specialist &mdash; Kuala Lumpur</span>
+  <span data-i18n="blogs.footer.tagline">AI Marketing &amp; Automation Specialist &mdash; Kuala Lumpur</span>
 </footer>
 
 <script>
@@ -642,12 +676,23 @@ let activeCat = '';
 let featuredPost = null;
 
 /* ── Init ── */
-function init() {
+async function init() {
   const raw = localStorage.getItem(KEY);
   let stored = raw ? JSON.parse(raw) : [];
-  const publishedStored = stored.filter(p => p.status === 'published');
-  allPosts = publishedStored.length ? publishedStored : SAMPLES;
+  let publishedStored = stored.filter(p => p.status === 'published');
 
+  if (!publishedStored.length) {
+    try {
+      const resp = await fetch('/data/posts.json?t=' + Date.now());
+      if (resp.ok) {
+        const remote = await resp.json();
+        const pub = remote.filter(p => p.status === 'published');
+        if (pub.length) { publishedStored = pub; localStorage.setItem(KEY, JSON.stringify(remote)); }
+      }
+    } catch(e) {}
+  }
+
+  allPosts = publishedStored.length ? publishedStored : SAMPLES;
   updateCounts();
   render();
 }
@@ -802,6 +847,32 @@ function hashCode(str) {
 }
 
 init();
+
+/* ── Theme toggle ── */
+const THEMES = ['system','light','dark'];
+function cycleTheme() {
+  const cur  = localStorage.getItem('aj_theme') || 'system';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+}
+function applyTheme(t) {
+  localStorage.setItem('aj_theme', t);
+  const html = document.documentElement;
+  if (t === 'dark')       html.setAttribute('data-theme','dark');
+  else if (t === 'light') html.setAttribute('data-theme','light');
+  else                    html.removeAttribute('data-theme');
+  updateThemeBtn();
+}
+function updateThemeBtn() {
+  const t = localStorage.getItem('aj_theme') || 'system';
+  const icons  = { system:'🖥', light:'☀️', dark:'🌙' };
+  const labels = { system:'System', light:'Light', dark:'Dark' };
+  const icon = document.getElementById('themeIcon');
+  const lbl  = document.getElementById('themeLabel');
+  if (icon) icon.textContent = icons[t] || '🌙';
+  if (lbl)  lbl.textContent  = labels[t] || 'Dark';
+}
+updateThemeBtn();
 </script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+{
+  "defaultLang": "en",
+  "languages": [
+    { "code": "en", "name": "English",    "native": "English",    "dir": "ltr", "flag": "🇬🇧" },
+    { "code": "zh", "name": "Chinese",    "native": "中文",        "dir": "ltr", "flag": "🇨🇳" },
+    { "code": "hi", "name": "Hindi",      "native": "हिन्दी",       "dir": "ltr", "flag": "🇮🇳" },
+    { "code": "es", "name": "Spanish",    "native": "Español",    "dir": "ltr", "flag": "🇪🇸" },
+    { "code": "ar", "name": "Arabic",     "native": "العربية",    "dir": "rtl", "flag": "🇸🇦" },
+    { "code": "fr", "name": "French",     "native": "Français",   "dir": "ltr", "flag": "🇫🇷" },
+    { "code": "bn", "name": "Bengali",    "native": "বাংলা",       "dir": "ltr", "flag": "🇧🇩" }
+  ],
+  "pages": ["index", "blogs", "post"],
+  "fonts": {
+    "ar": "https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap",
+    "zh": "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap",
+    "hi": "https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap",
+    "bn": "https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap"
+  }
+}

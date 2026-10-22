@@ -1,0 +1,14 @@
+{
+  "name": "alijohar-work",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal brand site for alijohar.work",
+  "scripts": {
+    "build": "node scripts/build-i18n.js",
+    "translate:ui": "node scripts/translate-ui.js",
+    "translate:posts": "node scripts/translate-posts.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "buildCommand": null,
+  "buildCommand": "node scripts/build-i18n.js",
   "outputDirectory": ".",
   "installCommand": null,
   "framework": null,
