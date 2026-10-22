@@ -15,6 +15,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ymw05szotx");
 </script>
+<!-- Theme: apply before CSS to prevent flash of wrong theme -->
+<script>
+(function(){var t=localStorage.getItem('aj_theme')||'system';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');else if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+<link rel="stylesheet" href="/theme.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Post — Ali Johar</title>
@@ -130,6 +135,16 @@ a { text-decoration: none; color: inherit; }
   .blog-footer { flex-direction: column; gap: 8px; text-align: center; }
 }
 </style>
+
+<link rel="alternate" hreflang="en" href="https://alijohar.work/post">
+<link rel="alternate" hreflang="zh" href="https://alijohar.work/zh/post">
+<link rel="alternate" hreflang="hi" href="https://alijohar.work/hi/post">
+<link rel="alternate" hreflang="es" href="https://alijohar.work/es/post">
+<link rel="alternate" hreflang="ar" href="https://alijohar.work/ar/post">
+<link rel="alternate" hreflang="fr" href="https://alijohar.work/fr/post">
+<link rel="alternate" hreflang="bn" href="https://alijohar.work/bn/post">
+<link rel="alternate" hreflang="x-default" href="https://alijohar.work/post">
+<link rel="canonical" href="https://alijohar.work/post">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -140,9 +155,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav class="nav">
   <a href="index.html" class="nav-brand">
     <div class="nav-logo">AJ</div>
-    <span class="nav-name">Ali Johar</span>
+    <span class="nav-name" data-i18n="nav.brand">Ali Johar</span>
   </a>
-  <a href="blogs.html" class="nav-back">&#8592; All Posts</a>
+  <div class="nav-actions">
+    <a href="blogs.html" class="nav-back" data-i18n="nav.backBlogs">&#8592; All Posts</a>
+    <div class="lang-switcher">
+      <button class="lang-btn" title="Change language">
+        <span id="currentLang">EN</span>
+        <svg viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg>
+      </button>
+      <div class="lang-dropdown">
+        <a href="/blogs" class="active"><span class="lang-flag">🇬🇧</span> English</a>
+        <a href="/zh/blogs"><span class="lang-flag">🇨🇳</span> 中文</a>
+        <a href="/hi/blogs"><span class="lang-flag">🇮🇳</span> हिन्दी</a>
+        <a href="/es/blogs"><span class="lang-flag">🇪🇸</span> Español</a>
+        <a href="/ar/blogs"><span class="lang-flag">🇸🇦</span> العربية</a>
+        <a href="/fr/blogs"><span class="lang-flag">🇫🇷</span> Français</a>
+        <a href="/bn/blogs"><span class="lang-flag">🇧🇩</span> বাংলা</a>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="cycleTheme()" title="Toggle theme">
+      <span class="theme-icon" id="themeIcon">🌙</span>
+      <span class="theme-label" id="themeLabel">Dark</span>
+    </button>
+  </div>
 </nav>
 
 <div id="root"></div>
@@ -152,7 +188,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="nav-logo" style="width:24px;height:24px;font-size:9px;">AJ</div>
     <span>Ali Johar &copy; 2025</span>
   </div>
-  <span>AI Marketing &amp; Automation Specialist &mdash; Kuala Lumpur</span>
+  <span data-i18n="blogs.footer.tagline">AI Marketing &amp; Automation Specialist &mdash; Kuala Lumpur</span>
 </footer>
 
 <script>
@@ -313,6 +349,32 @@ function showNotFound() {
 }
 
 loadPost();
+
+/* ── Theme toggle ── */
+const THEMES = ['system','light','dark'];
+function cycleTheme() {
+  const cur  = localStorage.getItem('aj_theme') || 'system';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+}
+function applyTheme(t) {
+  localStorage.setItem('aj_theme', t);
+  const html = document.documentElement;
+  if (t === 'dark')       html.setAttribute('data-theme','dark');
+  else if (t === 'light') html.setAttribute('data-theme','light');
+  else                    html.removeAttribute('data-theme');
+  updateThemeBtn();
+}
+function updateThemeBtn() {
+  const t = localStorage.getItem('aj_theme') || 'system';
+  const icons  = { system:'🖥', light:'☀️', dark:'🌙' };
+  const labels = { system:'System', light:'Light', dark:'Dark' };
+  const icon = document.getElementById('themeIcon');
+  const lbl  = document.getElementById('themeLabel');
+  if (icon) icon.textContent = icons[t] || '🌙';
+  if (lbl)  lbl.textContent  = labels[t] || 'Dark';
+}
+updateThemeBtn();
 </script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+name: Auto-Translate Blog Posts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/posts.json'
+
+# Prevent concurrent runs to avoid merge conflicts on posts.json
+concurrency:
+  group: translate-posts
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    # Don't run if commit was made by this workflow (prevents infinite loop)
+    if: "!contains(github.event.head_commit.message, '[skip translate]')"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run translation
+        env:
+          # API key stored as a GitHub Actions secret — NEVER in source code or HTML
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+        run: node scripts/translate-posts.js
+
+      - name: Commit translations
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/posts.json data/backup/
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No translation changes to commit."
+          else
+            git commit -m "chore: auto-translate posts [skip translate]"
+            git push
+          fi

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Theme: apply before CSS to prevent flash -->
+<script>
+(function(){var t=localStorage.getItem('aj_theme')||'system';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');else if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+<link rel="stylesheet" href="/theme.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>All Posts — Ali Johar</title>
@@ -548,6 +553,10 @@ body {
     </div>
 
     <div class="sb-footer">
+      <button class="sb-link" onclick="cycleTheme()" title="Toggle theme" style="margin-bottom:4px;">
+        <span class="sb-icon" id="themeIcon">🌙</span>
+        <span class="sb-label" id="themeLabel">Dark</span>
+      </button>
       <button class="sb-link sb-logout" onclick="logout()">
         <span class="sb-icon">&#8592;</span>
         <span class="sb-label">Logout</span>
@@ -770,7 +779,7 @@ function renderTable(list) {
       </td>
       <td>${catBadge(p.category)}</td>
       <td>${tagChips(p.tags)}</td>
-      <td>${statusBadge(p.status)}</td>
+      <td>${statusBadge(p.status)}${translationBadge(p)}</td>
       <td class="td-mono">${fmtDate(p.date)}</td>
       <td class="td-mono">${p.read_time ? p.read_time+' min' : '—'}</td>
       <td class="td-center">${p.featured ? '⭐' : '<span style="color:#3f3f46">☆</span>'}</td>
@@ -794,6 +803,17 @@ function catBadge(c) {
   const M = { article:['Article','badge-article'], 'case-study':['Case Study','badge-case-study'], insight:['Insight','badge-insight'] };
   const [l,cls] = M[c]||[c||'—',''];
   return `<span class="badge ${cls}">${l}</span>`;
+}
+
+function translationBadge(p) {
+  if (!p.translations) return '';
+  const done   = Object.values(p.translations).filter(t => t.status === 'done').length;
+  const failed = Object.values(p.translations).filter(t => t.status === 'failed').length;
+  const total  = 6; // 6 non-English languages
+  if (!done && !failed) return '';
+  const color = failed ? 'rgba(239,68,68,0.2)' : done===total ? 'rgba(34,197,94,0.15)' : 'rgba(234,179,8,0.15)';
+  const tc    = failed ? '#f87171' : done===total ? '#86efac' : '#fcd34d';
+  return ` <span style="font-size:10px;padding:2px 6px;border-radius:99px;background:${color};color:${tc};border:1px solid ${tc}33;margin-left:4px;" title="${done}/${total} languages translated">🌐 ${done}/${total}</span>`;
 }
 
 function statusBadge(s) {
@@ -850,6 +870,32 @@ function toggleSidebar() {
 function openMob()  { document.getElementById('sidebar').classList.add('mob-open');    document.getElementById('overlay').classList.add('on'); }
 function closeMob() { document.getElementById('sidebar').classList.remove('mob-open'); document.getElementById('overlay').classList.remove('on'); }
 function logout()   { sessionStorage.removeItem('aj_auth'); window.location.href='login.html'; }
+
+/* ── Theme toggle ── */
+const THEMES = ['system','light','dark'];
+function cycleTheme() {
+  const cur  = localStorage.getItem('aj_theme') || 'system';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+}
+function applyTheme(t) {
+  localStorage.setItem('aj_theme', t);
+  const html = document.documentElement;
+  if (t === 'dark')       html.setAttribute('data-theme','dark');
+  else if (t === 'light') html.setAttribute('data-theme','light');
+  else                    html.removeAttribute('data-theme');
+  updateThemeBtn();
+}
+function updateThemeBtn() {
+  const t = localStorage.getItem('aj_theme') || 'system';
+  const icons  = { system:'🖥', light:'☀️', dark:'🌙' };
+  const labels = { system:'System', light:'Light', dark:'Dark' };
+  const icon = document.getElementById('themeIcon');
+  const lbl  = document.getElementById('themeLabel');
+  if (icon) icon.textContent = icons[t] || '🌙';
+  if (lbl)  lbl.textContent  = labels[t] || 'Dark';
+}
+updateThemeBtn();
 
 init();
 </script>

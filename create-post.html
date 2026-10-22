@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Theme: apply before CSS to prevent flash -->
+<script>
+(function(){var t=localStorage.getItem('aj_theme')||'system';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');else if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+<link rel="stylesheet" href="/theme.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>New Blog Post — Ali Johar</title>
@@ -1157,6 +1162,10 @@
     </a>
   </div>
   <div class="sb-footer">
+    <button class="sb-link" onclick="cycleTheme()" title="Toggle theme" style="margin-bottom:4px;">
+      <span class="sb-icon" id="themeIcon">🌙</span>
+      <span class="sb-label" id="themeLabel">Dark</span>
+    </button>
     <button class="sb-link sb-logout" onclick="logout()">
       <span class="sb-icon">&#8592;</span>
       <span class="sb-label">Logout</span>
@@ -1174,6 +1183,7 @@
   </div>
   <div class="header-actions">
     <button class="btn btn-ghost" onclick="handleSave('draft')">Save Draft</button>
+    <button class="btn btn-ghost" id="retransBtn" onclick="retranslatePost()" title="Clear auto-translations and retranslate" style="display:none;">🌐 Retranslate</button>
     <button class="btn btn-primary" onclick="handleSave('publish')">Publish</button>
   </div>
 </header>
@@ -2006,6 +2016,32 @@
   function closeMob() { document.getElementById('sidebar').classList.remove('mob-open'); document.getElementById('overlay').classList.remove('on'); }
   function logout()   { sessionStorage.removeItem('aj_auth'); window.location.href = 'login.html'; }
 
+  /* ── Theme toggle ── */
+  const THEMES = ['system','light','dark'];
+  function cycleTheme() {
+    const cur  = localStorage.getItem('aj_theme') || 'system';
+    const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+    applyTheme(next);
+  }
+  function applyTheme(t) {
+    localStorage.setItem('aj_theme', t);
+    const html = document.documentElement;
+    if (t === 'dark')       html.setAttribute('data-theme','dark');
+    else if (t === 'light') html.setAttribute('data-theme','light');
+    else                    html.removeAttribute('data-theme');
+    updateThemeBtn();
+  }
+  function updateThemeBtn() {
+    const t = localStorage.getItem('aj_theme') || 'system';
+    const icons  = { system:'🖥', light:'☀️', dark:'🌙' };
+    const labels = { system:'System', light:'Light', dark:'Dark' };
+    const icon = document.getElementById('themeIcon');
+    const lbl  = document.getElementById('themeLabel');
+    if (icon) icon.textContent = icons[t] || '🌙';
+    if (lbl)  lbl.textContent  = labels[t] || 'Dark';
+  }
+  updateThemeBtn();
+
   // ── Classification ──
 
   // Category pill selection
@@ -2123,6 +2159,41 @@
       .replace(/^(?!<[a-z])(.+)/gm, '$1')
       .replace(/^<\/p><p>$/gm, '')
       .replace(/\n/g, '<br>');
+  }
+
+  /* ── Show Retranslate button when editing a post that has translations ── */
+  function checkShowRetransBtn() {
+    const params = new URLSearchParams(window.location.search);
+    const editId = params.get('edit');
+    if (!editId) return;
+    const posts = JSON.parse(localStorage.getItem('aj_blog_posts') || '[]');
+    const post  = posts.find(p => p.id === editId);
+    if (post && post.translations && Object.keys(post.translations).length) {
+      const btn = document.getElementById('retransBtn');
+      if (btn) btn.style.display = '';
+    }
+  }
+  checkShowRetransBtn();
+
+  function retranslatePost() {
+    const params = new URLSearchParams(window.location.search);
+    const editId = params.get('edit');
+    if (!editId) return;
+    if (!confirm('Clear all existing auto-translations for this post? They will be retranslated on next publish.')) return;
+    const stored = JSON.parse(localStorage.getItem('aj_blog_posts') || '[]');
+    const idx    = stored.findIndex(p => p.id === editId);
+    if (idx === -1) return;
+    // Reset all auto-translated langs (preserve manuallyEdited ones)
+    const t = stored[idx].translations || {};
+    for (const lang of Object.keys(t)) {
+      if (!t[lang].manuallyEdited) delete t[lang];
+    }
+    stored[idx].translations = t;
+    // Clear sourceHash to force re-translation on next publish
+    delete stored[idx].sourceHash;
+    localStorage.setItem('aj_blog_posts', JSON.stringify(stored));
+    alert('Translations cleared. They will be regenerated automatically after the next publish commits posts.json to GitHub.');
+    document.getElementById('retransBtn').style.display = 'none';
   }
 </script>
 

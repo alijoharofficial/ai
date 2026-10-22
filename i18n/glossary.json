@@ -1,0 +1,21 @@
+{
+  "_comment": "Terms that must never be translated — proper nouns, brand names, tech terms",
+  "never_translate": [
+    "Ali Johar",
+    "alijohar.work",
+    "Go High Level",
+    "GHL",
+    "GoHighLevel",
+    "Kuala Lumpur",
+    "Malaysia",
+    "AI",
+    "SEO",
+    "CRM",
+    "GTM",
+    "Vercel",
+    "GitHub",
+    "Web3Forms",
+    "Google Tag Manager",
+    "Microsoft Clarity"
+  ]
+}
